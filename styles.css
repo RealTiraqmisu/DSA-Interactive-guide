@@ -5,6 +5,7 @@
     --bg-sidebar: #0b0f1a;
     --border-color: rgba(255, 255, 255, 0.08);
     --border-accent: rgba(59, 130, 246, 0.3);
+    --sidebar-width: 280px;
     
     /* Neon Colors */
     --accent-blue: #3b82f6;
@@ -25,6 +26,10 @@
     /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
+}
+
+.app-container.collapsed {
+    --sidebar-width: 72px;
 }
 
 * {
@@ -68,13 +73,40 @@ body {
 
 /* Sidebar Styling */
 .sidebar {
-    width: 280px;
+    width: var(--sidebar-width);
     background-color: var(--bg-sidebar);
     border-right: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
     z-index: 10;
+    position: relative;
+    transition: width var(--transition-normal);
+}
+
+.sidebar-toggle-btn {
+    position: absolute;
+    top: 22px;
+    right: -12px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    transition: var(--transition-normal);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.sidebar-toggle-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 8px var(--accent-blue-glow);
 }
 
 .sidebar-header {
@@ -140,7 +172,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    transition: var(--transition-fast);
+    /* transition: var(--transition-fast); */
 }
 
 .nav-item i {
@@ -215,7 +247,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: rgba(15, 22, 38, 0.5);
     backdrop-filter: blur(8px);
     flex-shrink: 0;
 }
@@ -433,9 +464,9 @@ body {
 
 /* Comparison Tables */
 .table-container {
-    overflow-x: auto;
     border: 1px solid var(--border-color);
     border-radius: 8px;
+    margin-bottom: 1rem;
 }
 
 .comparison-table {
@@ -688,7 +719,6 @@ body {
     width: 100%;
     border-collapse: collapse;
     font-size: 13px;
-    margin: 16px 0;
 }
 
 .data-type-table th {
@@ -1108,7 +1138,6 @@ body {
 
 .bigo-svg {
     width: 100%;
-    height: 180px;
 }
 
 .slider-group {
@@ -1154,7 +1183,6 @@ body {
     border-radius: 8px;
     display: flex;
     flex-direction: column;
-    height: 220px;
 }
 
 .terminal-body {
@@ -1317,12 +1345,12 @@ body {
 .console-drawer {
     position: fixed;
     bottom: 0;
-    left: 280px; /* Sidebar offset */
+    left: var(--sidebar-width); /* Sidebar offset */
     right: 0;
     background-color: var(--bg-sidebar);
     border-top: 1px solid var(--border-color);
     z-index: 100;
-    transition: transform var(--transition-normal);
+    transition: left var(--transition-normal), transform var(--transition-normal);
     box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
     height: 300px;
     transform: translateY(255px); /* Only title bar visible initially */
@@ -1330,6 +1358,10 @@ body {
 
 .console-drawer.expanded {
     transform: translateY(0);
+}
+
+.app-container.collapsed + .console-drawer {
+    --sidebar-width: 72px;
 }
 
 .console-header {
@@ -1434,4 +1466,228 @@ body {
     font-size: 11.5px;
     overflow-y: auto;
     white-space: pre-wrap;
+}
+
+/* Collapsed Sidebar Rules */
+.app-container.collapsed .logo-text,
+.app-container.collapsed .nav-section-title,
+.app-container.collapsed .status-text {
+    display: none;
+}
+
+.app-container.collapsed .sidebar-header {
+    padding: 24px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.app-container.collapsed .logo-area {
+    justify-content: center;
+    gap: 0;
+}
+
+.app-container.collapsed .sidebar-nav {
+    padding: 20px 8px;
+}
+
+.app-container.collapsed .sidebar-footer {
+    padding: 16px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.app-container.collapsed .interpreter-status {
+    justify-content: center;
+}
+
+.app-container.collapsed .nav-item {
+    font-size: 0;
+    justify-content: center;
+    padding: 10px 0;
+    gap: 0;
+}
+
+.app-container.collapsed .nav-item i {
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Light Mode Theme Overrides */
+body.light-mode {
+    --bg-primary: #f1f5f9;      /* slate-100 */
+    --bg-secondary: #f8fafc;    /* slate-50 */
+    --bg-sidebar: #ffffff;      /* pure white */
+    --border-color: rgba(0, 0, 0, 0.08);
+    --border-accent: rgba(59, 130, 246, 0.2);
+    
+    /* Text */
+    --text-primary: #0f172a;    /* slate-900 */
+    --text-secondary: #334155;  /* slate-700 */
+    --text-muted: #64748b;      /* slate-500 */
+    
+    /* Adjusted glow intensities */
+    --accent-blue-glow: rgba(59, 130, 246, 0.12);
+    --accent-purple-glow: rgba(168, 85, 247, 0.12);
+    --accent-green-glow: rgba(16, 185, 129, 0.1);
+    --accent-red-glow: rgba(239, 68, 68, 0.1);
+}
+
+/* Light Mode Specific Components */
+body.light-mode .card.glass {
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode .nav-item:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+body.light-mode .nav-item.active {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: var(--accent-blue);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+body.light-mode .nav-section-title {
+    color: var(--text-muted);
+}
+
+body.light-mode .comparison-table th {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+body.light-mode .comparison-table td {
+    color: var(--text-secondary);
+}
+
+body.light-mode .c-theme {
+    color: #EF4344 !important;
+}
+
+body.light-mode .py-theme {
+    color: #2563eb !important;
+}
+
+body.light-mode .code-compare-block {
+    background-color: #f8fafc;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+body.light-mode .code-compare-block.c-block {
+    border-left: 3px solid #ef4444;
+}
+body.light-mode .code-compare-block.py-block {
+    border-left: 3px solid #3b82f6;
+}
+
+body.light-mode .code-compare-block code {
+    color: #1e293b;
+}
+
+body.light-mode .block-title {
+    background-color: rgba(0, 0, 0, 0.02);
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Light mode recursion visualizer panels */
+body.light-mode .visualizer-code-panel,
+body.light-mode .visualizer-stack-panel,
+body.light-mode .visualizer-log-panel {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode #visualizer-code-display {
+    color: #1e293b;
+    background-color: #f8fafc;
+}
+
+body.light-mode .stack-container,
+body.light-mode .trace-log {
+    background-color: #f8fafc;
+}
+
+body.light-mode .stack-frame {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(59, 130, 246, 0.08));
+    border-color: rgba(168, 85, 247, 0.2);
+}
+
+body.light-mode .stack-frame.active {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(6, 182, 212, 0.1));
+    border-color: var(--accent-blue);
+}
+
+body.light-mode .frame-title {
+    color: #0f172a;
+}
+
+body.light-mode .frame-vars {
+    color: #475569;
+}
+
+/* Light mode for empirical benchmark */
+body.light-mode .terminal-box,
+body.light-mode .chart-box {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode .terminal-body {
+    background-color: #f8fafc;
+    color: #0284c7;
+}
+
+body.light-mode .empirical-chart-container {
+    background-color: #f8fafc;
+}
+
+body.light-mode .bigo-chart-container {
+    background-color: #f8fafc;
+}
+
+/* Light mode accordion adjustments */
+body.light-mode .accordion-content {
+    background-color: rgba(0, 0, 0, 0.015);
+}
+
+/* Form controls in light mode */
+body.light-mode .form-control {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.12);
+    color: #0f172a;
+}
+
+/* Quiz option adjustments */
+body.light-mode .quiz-option {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+body.light-mode .quiz-option:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--text-primary);
+}
+
+body.light-mode .quiz-option.selected {
+    background-color: rgba(59, 130, 246, 0.08);
+}
+
+body.light-mode .quiz-explanation {
+    background-color: rgba(0, 0, 0, 0.01);
+}
+
+body.light-mode .embedded-editor-container {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode .editor-textarea {
+    background-color: #f8fafc;
+    color: #047857; /* Deep green for code text in light mode */
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode .editor-output {
+    background-color: #f8fafc;
+    color: #0f172a;
+    border-color: rgba(0, 0, 0, 0.08);
 }

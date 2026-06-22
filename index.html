@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,9 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <!-- FontAwesome for Premium Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Main Style -->
@@ -15,10 +18,14 @@
     <!-- Pyodide (WASM Python interpreter) -->
     <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
 </head>
+
 <body>
     <div class="app-container">
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
+            <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" title="Toggle Sidebar">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
             <div class="sidebar-header">
                 <div class="logo-area">
                     <span class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></span>
@@ -75,7 +82,10 @@
                     <span class="breadcrumb">C to Python Transition Guide</span>
                     <h2 id="current-section-title">Course Introduction</h2>
                 </div>
-                <div class="header-right">
+                <div class="header-right" style="display: flex; gap: 12px;">
+                    <button class="btn btn-secondary" id="theme-toggle-btn" title="Toggle Light/Dark Mode">
+                        <i class="fa-solid fa-sun"></i> <span id="theme-text">Light Mode</span>
+                    </button>
                     <button class="btn btn-secondary toggle-console-btn" id="toggle-console-btn">
                         <i class="fa-solid fa-terminal"></i> Terminal Console
                     </button>
@@ -87,12 +97,7 @@
 
                 <!-- 1. WELCOME SECTION -->
                 <section id="welcome-section" class="content-section active">
-                    <div class="banner-container">
-                        <img src="interactive_guide_banner.png" alt="C to Python Course Banner" class="banner-img">
-                        <div class="banner-overlay">
-                            <h2>Welcome to Data Structures & Algorithms</h2>
-                        </div>
-                    </div>
+                    
 
                     <div class="grid-2col">
                         <div class="card glass">
@@ -102,9 +107,14 @@
                             </div>
                             <div class="card-body">
                                 <ul>
-                                    <li><strong>Focus on Logic:</strong> Python allows you to write abstract algorithms without worrying about raw memory address management, segmentation faults, and manual buffer reallocations.</li>
-                                    <li><strong>Rich Built-in Types:</strong> Python lists, tuples, and dictionaries are powerful natively-implemented data structures.</li>
-                                    <li><strong>Readability & Speed:</strong> Python code reads like pseudo-code. It will enable you to prototype, test, and implement advanced algorithms faster.</li>
+                                    <li><strong>Focus on Logic:</strong> Python allows you to write abstract algorithms
+                                        without worrying about raw memory address management, segmentation faults, and
+                                        manual buffer reallocations.</li>
+                                    <li><strong>Rich Built-in Types:</strong> Python lists, tuples, and dictionaries are
+                                        powerful natively-implemented data structures.</li>
+                                    <li><strong>Readability & Speed:</strong> Python code reads like pseudo-code. It
+                                        will enable you to prototype, test, and implement advanced algorithms faster.
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -137,7 +147,7 @@
                                             </tr>
                                             <tr>
                                                 <td><strong>Braces</strong></td>
-                                                <td class="c-theme">Curly braces `{}` & semicolons `;`</td>
+                                                <td class="c-theme">Curly braces {} & semicolons ;</td>
                                                 <td class="py-theme">Whitespace & Indentation</td>
                                             </tr>
                                             <tr>
@@ -174,9 +184,12 @@
                                 <span class="accordion-arrow"><i class="fa-solid fa-chevron-down"></i></span>
                             </button>
                             <div class="accordion-content">
-                                <p>In <strong>C</strong>, variables are bound to a type at compile-time (static typing). Memory size is fixed.</p>
-                                <p>In <strong>Python</strong>, variables are names pointing to dynamic objects. You do not declare types, and a variable can reference different types of objects during execution.</p>
-                                
+                                <p>In <strong>C</strong>, variables are bound to a type at compile-time (static typing).
+                                    Memory size is fixed.</p>
+                                <p>In <strong>Python</strong>, variables are names pointing to dynamic objects. You do
+                                    not declare types, and a variable can reference different types of objects during
+                                    execution.</p>
+
                                 <div class="code-compare-grid">
                                     <div class="code-compare-block c-block">
                                         <div class="block-title">C Code</div>
@@ -197,7 +210,9 @@ age = "twenty"   # Now refers to a string</code></pre>
                                 </div>
                                 <div class="info-alert">
                                     <i class="fa-solid fa-circle-info"></i>
-                                    <span><strong>Pro-Tip:</strong> In Python, everything is an object. Numbers, strings, and functions are all objects. The variable name is just a pointer!</span>
+                                    <span><strong>Pro-Tip:</strong> In Python, everything is an object. Numbers,
+                                        strings, and functions are all objects. The variable name is just a
+                                        pointer!</span>
                                 </div>
                             </div>
                         </div>
@@ -205,12 +220,14 @@ age = "twenty"   # Now refers to a string</code></pre>
                         <!-- Accordion 2 -->
                         <div class="accordion-item glass">
                             <button class="accordion-trigger">
-                                <span><i class="fa-solid fa-list-ol"></i> Core Collections: Strings, Tuples, Lists, & Dicts</span>
+                                <span><i class="fa-solid fa-list-ol"></i> Core Collections: Strings, Tuples, Lists, &
+                                    Dicts</span>
                                 <span class="accordion-arrow"><i class="fa-solid fa-chevron-down"></i></span>
                             </button>
                             <div class="accordion-content">
-                                <p>This is the most critical shift. In C, you used raw contiguous arrays. Python introduces rich native collections:</p>
-                                
+                                <p>This is the most critical shift. In C, you used raw contiguous arrays. Python
+                                    introduces rich native collections:</p>
+
                                 <div class="table-container">
                                     <table class="data-type-table">
                                         <thead>
@@ -224,27 +241,30 @@ age = "twenty"   # Now refers to a string</code></pre>
                                         <tbody>
                                             <tr>
                                                 <td><strong>String (str)</strong></td>
-                                                <td>`char[]` (Null-terminated)</td>
-                                                <td>`s = "Hello DSA"`</td>
-                                                <td><strong>Immutable</strong> (cannot modify elements directly). Rich string methods.</td>
+                                                <td>char[] (Null-terminated)</td>
+                                                <td>s = "Hello DSA"</td>
+                                                <td><strong>Immutable</strong> (cannot modify elements directly). Rich
+                                                    string methods.</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>List (list)</strong></td>
-                                                <td>`int*` with manual realloc</td>
-                                                <td>`fruits = ["apple", 123]`</td>
-                                                <td><strong>Mutable</strong> dynamic array. Can hold elements of different types.</td>
+                                                <td>int* with manual realloc</td>
+                                                <td>fruits = ["apple", 123]</td>
+                                                <td><strong>Mutable</strong> dynamic array. Can hold elements of
+                                                    different types.</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>Tuple (tuple)</strong></td>
                                                 <td>Read-only Struct or Array</td>
-                                                <td>`point = (10, 20)`</td>
-                                                <td><strong>Immutable</strong> sequence. Used for fixed records or multiple return values.</td>
+                                                <td>point = (10, 20)</td>
+                                                <td><strong>Immutable</strong> sequence. Used for fixed records or
+                                                    multiple return values.</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>Dictionary (dict)</strong></td>
                                                 <td>Custom Hash Map implementation</td>
-                                                <td>`grades = {"Anna": A, "Ben": B}`</td>
-                                                <td><strong>Mutable</strong> key-value mapping. Near $O(1)$ lookups.</td>
+                                                <td>grades = {"Anna": A, "Ben": B}</td>
+                                                <td><strong>Mutable</strong> key-value mapping. Near O(1) lookups.</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -270,7 +290,8 @@ x, y = point
 print(f"Coordinates: x={x}, y={y}")
 </textarea>
                                     <div class="editor-actions">
-                                        <button class="btn btn-success run-editor-btn"><i class="fa-solid fa-play"></i> Run Code</button>
+                                        <button class="btn btn-success run-editor-btn"><i class="fa-solid fa-play"></i>
+                                            Run Code</button>
                                     </div>
                                     <div class="editor-output-header">Output:</div>
                                     <pre class="editor-output">Click Run Code to see output...</pre>
@@ -281,12 +302,14 @@ print(f"Coordinates: x={x}, y={y}")
                         <!-- Accordion 3 -->
                         <div class="accordion-item glass">
                             <button class="accordion-trigger">
-                                <span><i class="fa-solid fa-repeat"></i> Control Flow & Indentation: Loops & Conditionals</span>
+                                <span><i class="fa-solid fa-repeat"></i> Control Flow & Indentation: Loops &
+                                    Conditionals</span>
                                 <span class="accordion-arrow"><i class="fa-solid fa-chevron-down"></i></span>
                             </button>
                             <div class="accordion-content">
-                                <p>In C, code blocks are delimited by curly braces `{}`. In Python, blocks are defined strictly by **indentation** (typically 4 spaces) and preceded by a colon `:`.</p>
-                                
+                                <p>In C, code blocks are delimited by curly braces {}. In Python, blocks are defined
+                                    strictly by indentation (typically 4 spaces) and preceded by a colon :.</p>
+
                                 <div class="code-compare-grid">
                                     <div class="code-compare-block c-block">
                                         <div class="block-title">C Code</div>
@@ -345,13 +368,17 @@ for index, val in enumerate(arr):
                         <!-- Accordion 4 -->
                         <div class="accordion-item glass">
                             <button class="accordion-trigger">
-                                <span><i class="fa-solid fa-triangle-exclamation"></i> Exception Handling: Try-Except</span>
+                                <span><i class="fa-solid fa-triangle-exclamation"></i> Exception Handling:
+                                    Try-Except</span>
                                 <span class="accordion-arrow"><i class="fa-solid fa-chevron-down"></i></span>
                             </button>
                             <div class="accordion-content">
-                                <p>C does not have try-catch blocks. Standard error handling involves checking return codes (e.g., if a pointer returned by `malloc` is `NULL`, or if `fopen` returns `NULL`).</p>
-                                <p>Python employs structural Exception Handling via `try-except-finally`. This keeps critical algorithms clean of constant nested checks.</p>
-                                
+                                <p>C does not have try-catch blocks. Standard error handling involves checking return
+                                    codes (e.g., if a pointer returned by malloc is NULL, or if fopen returns
+                                    NULL).</p>
+                                <p>Python employs structural Exception Handling via try-except-finally. This keeps
+                                    critical algorithms clean of constant nested checks.</p>
+
                                 <div class="code-compare-grid">
                                     <div class="code-compare-block c-block">
                                         <div class="block-title">C Error Checking</div>
@@ -389,16 +416,19 @@ except IOError:
                 <section id="lab1-section" class="content-section">
                     <div class="module-header-block">
                         <h2>Lab 1: Basic Python Coding Exercises</h2>
-                        <p>Write your own code directly in the browser to solve actual lab assignments. Click "Verify Solution" to grade your code automatically.</p>
+                        <p>Write your own code directly in the browser to solve actual lab assignments. Click "Verify
+                            Solution" to grade your code automatically.</p>
                     </div>
 
                     <!-- Lab Selector Tabs -->
                     <div class="lab-tabs">
-                        <button class="lab-tab active" onclick="switchLabTab('lab-1-1')">Lab 1-1: Multiple Check</button>
+                        <button class="lab-tab active" onclick="switchLabTab('lab-1-1')">Lab 1-1: Multiple
+                            Check</button>
                         <button class="lab-tab" onclick="switchLabTab('lab-1-2')">Lab 1-2: Even Without Modulo</button>
                         <button class="lab-tab" onclick="switchLabTab('lab-1-3')">Lab 1-3: MinMax Loop</button>
                         <button class="lab-tab" onclick="switchLabTab('lab-1-4')">Challenge 1-1: Vowels Counter</button>
-                        <button class="lab-tab" onclick="switchLabTab('lab-1-5')">Challenge 1-2: List Comprehension</button>
+                        <button class="lab-tab" onclick="switchLabTab('lab-1-5')">Challenge 1-2: List
+                            Comprehension</button>
                     </div>
 
                     <!-- Lab Contents -->
@@ -407,7 +437,11 @@ except IOError:
                         <div id="lab-1-1" class="lab-tab-content active">
                             <div class="problem-desc">
                                 <h3>Lab 1-1: is_multiple(n, m)</h3>
-                                <p>Write a function <code>is_multiple(n, m)</code> that accepts two integers <code>n</code> and <code>m</code> and returns <code>True</code> if <code>n</code> is a multiple of <code>m</code> (that is, $n = m \times i$ for some integer $i$), and <code>False</code> otherwise.</p>
+                                <p>Write a function <code>is_multiple(n, m)</code> that accepts two integers
+                                    <code>n</code> and <code>m</code> and returns <code>True</code> if <code>n</code> is
+                                    a multiple of <code>m</code> (that is, n = m \times i for some integer i), and
+                                    <code>False</code> otherwise.
+                                </p>
                                 <strong>Inputs:</strong> Two integers. <br>
                                 <strong>Output:</strong> Boolean (<code>True</code> or <code>False</code>).
                             </div>
@@ -417,8 +451,10 @@ except IOError:
     return False
 </textarea>
                                 <div class="editor-actions">
-                                    <button class="btn btn-secondary run-editor-btn"><i class="fa-solid fa-play"></i> Run Code</button>
-                                    <button class="btn btn-primary verify-editor-btn" data-lab="lab1_1"><i class="fa-solid fa-circle-check"></i> Verify Solution</button>
+                                    <button class="btn btn-secondary run-editor-btn"><i class="fa-solid fa-play"></i>
+                                        Run Code</button>
+                                    <button class="btn btn-primary verify-editor-btn" data-lab="lab1_1"><i
+                                            class="fa-solid fa-circle-check"></i> Verify Solution</button>
                                 </div>
                                 <div class="verification-status" id="lab1_1-status"></div>
                                 <div class="editor-output-header">Output Console:</div>
@@ -430,12 +466,17 @@ except IOError:
                         <div id="lab-1-2" class="lab-tab-content">
                             <div class="problem-desc">
                                 <h3>Lab 1-2: is_even(k) Without Arithmetic Operators</h3>
-                                <p>Write a function <code>is_even(k)</code> that accepts an integer <code>k</code> and returns <code>True</code> if <code>k</code> is even, and <code>False</code> otherwise.</p>
+                                <p>Write a function <code>is_even(k)</code> that accepts an integer <code>k</code> and
+                                    returns <code>True</code> if <code>k</code> is even, and <code>False</code>
+                                    otherwise.</p>
                                 <div class="warning-alert">
                                     <i class="fa-solid fa-triangle-exclamation"></i>
-                                    <span><strong>Constraint:</strong> You cannot use multiplication (<code>*</code>), division (<code>/</code>, <code>//</code>), or modulo (<code>%</code>) operators in your solution.</span>
+                                    <span><strong>Constraint:</strong> You cannot use multiplication (<code>*</code>),
+                                        division (<code>/</code>, <code>//</code>), or modulo (<code>%</code>) operators
+                                        in your solution.</span>
                                 </div>
-                                <p><em>Hint: Think about how binary representations work. What characterizes an even number in binary? Or think of bitwise operator <code>&</code> (AND).</em></p>
+                                <p><em>Hint: Think about how binary representations work. What characterizes an even
+                                        number in binary? Or think of bitwise operator <code>&</code> (AND).</em></p>
                             </div>
                             <div class="embedded-editor-container" data-editor-id="lab1-2-editor">
                                 <textarea class="editor-textarea">def is_even(k: int):
@@ -443,8 +484,10 @@ except IOError:
     pass
 </textarea>
                                 <div class="editor-actions">
-                                    <button class="btn btn-secondary run-editor-btn"><i class="fa-solid fa-play"></i> Run Code</button>
-                                    <button class="btn btn-primary verify-editor-btn" data-lab="lab1_2"><i class="fa-solid fa-circle-check"></i> Verify Solution</button>
+                                    <button class="btn btn-secondary run-editor-btn"><i class="fa-solid fa-play"></i>
+                                        Run Code</button>
+                                    <button class="btn btn-primary verify-editor-btn" data-lab="lab1_2"><i
+                                            class="fa-solid fa-circle-check"></i> Verify Solution</button>
                                 </div>
                                 <div class="verification-status" id="lab1_2-status"></div>
                                 <div class="editor-output-header">Output Console:</div>
@@ -456,10 +499,14 @@ except IOError:
                         <div id="lab-1-3" class="lab-tab-content">
                             <div class="problem-desc">
                                 <h3>Lab 1-3: Iterative MinMax</h3>
-                                <p>Write a function <code>minmax_iter(data)</code> that takes a list of one or more numbers and returns a tuple of length two <code>(smallest, largest)</code> containing the minimum and maximum values in the list.</p>
+                                <p>Write a function <code>minmax_iter(data)</code> that takes a list of one or more
+                                    numbers and returns a tuple of length two <code>(smallest, largest)</code>
+                                    containing the minimum and maximum values in the list.</p>
                                 <div class="warning-alert">
                                     <i class="fa-solid fa-triangle-exclamation"></i>
-                                    <span><strong>Constraint:</strong> You must use iteration (a loop). You cannot use built-in functions <code>min()</code>, <code>max()</code>, <code>sorted()</code>, or the list method <code>.sort()</code>.</span>
+                                    <span><strong>Constraint:</strong> You must use iteration (a loop). You cannot use
+                                        built-in functions <code>min()</code>, <code>max()</code>,
+                                        <code>sorted()</code>, or the list method <code>.sort()</code>.</span>
                                 </div>
                             </div>
                             <div class="embedded-editor-container" data-editor-id="lab1-3-editor">
@@ -475,8 +522,10 @@ except IOError:
     return (smallest, largest)
 </textarea>
                                 <div class="editor-actions">
-                                    <button class="btn btn-secondary run-editor-btn"><i class="fa-solid fa-play"></i> Run Code</button>
-                                    <button class="btn btn-primary verify-editor-btn" data-lab="lab1_3"><i class="fa-solid fa-circle-check"></i> Verify Solution</button>
+                                    <button class="btn btn-secondary run-editor-btn"><i class="fa-solid fa-play"></i>
+                                        Run Code</button>
+                                    <button class="btn btn-primary verify-editor-btn" data-lab="lab1_3"><i
+                                            class="fa-solid fa-circle-check"></i> Verify Solution</button>
                                 </div>
                                 <div class="verification-status" id="lab1_3-status"></div>
                                 <div class="editor-output-header">Output Console:</div>
@@ -488,8 +537,13 @@ except IOError:
                         <div id="lab-1-4" class="lab-tab-content">
                             <div class="problem-desc">
                                 <h3>Challenge 1-1: Vowels Dictionary Counter</h3>
-                                <p>Write a function <code>count_vowels(word)</code> that counts the number of occurrences of each vowel (a, e, i, o, u) in a given string. Your function should return a dictionary with vowel characters as keys and their counts as values (regardless of capitalization, though input is typically lowercase).</p>
-                                <p><strong>Example output for <code>"tissue"</code>:</strong> <code>{'a': 0, 'e': 1, 'i': 1, 'o': 0, 'u': 1}</code></p>
+                                <p>Write a function <code>count_vowels(word)</code> that counts the number of
+                                    occurrences of each vowel (a, e, i, o, u) in a given string. Your function should
+                                    return a dictionary with vowel characters as keys and their counts as values
+                                    (regardless of capitalization, though input is typically lowercase).</p>
+                                <p><strong>Example output for <code>"tissue"</code>:</strong>
+                                    <code>{'a': 0, 'e': 1, 'i': 1, 'o': 0, 'u': 1}</code>
+                                </p>
                             </div>
                             <div class="embedded-editor-container" data-editor-id="lab1-4-editor">
                                 <textarea class="editor-textarea">def count_vowels(word):
@@ -502,8 +556,10 @@ except IOError:
     return result
 </textarea>
                                 <div class="editor-actions">
-                                    <button class="btn btn-secondary run-editor-btn"><i class="fa-solid fa-play"></i> Run Code</button>
-                                    <button class="btn btn-primary verify-editor-btn" data-lab="lab1_4"><i class="fa-solid fa-circle-check"></i> Verify Solution</button>
+                                    <button class="btn btn-secondary run-editor-btn"><i class="fa-solid fa-play"></i>
+                                        Run Code</button>
+                                    <button class="btn btn-primary verify-editor-btn" data-lab="lab1_4"><i
+                                            class="fa-solid fa-circle-check"></i> Verify Solution</button>
                                 </div>
                                 <div class="verification-status" id="lab1_4-status"></div>
                                 <div class="editor-output-header">Output Console:</div>
@@ -515,22 +571,26 @@ except IOError:
                         <div id="lab-1-5" class="lab-tab-content">
                             <div class="problem-desc">
                                 <h3>Challenge 1-2: List Comprehension</h3>
-                                <p>Use Python's compact **List Comprehension** syntax to produce the exact sequence of numbers: <br>
-                                <code>[0, 2, 6, 12, 20, 30, 42, 56, 72, 90]</code></p>
+                                <p>Use Python's compact List Comprehension syntax to produce the exact sequence of
+                                    numbers: <br>
+                                    <code>[0, 2, 6, 12, 20, 30, 42, 56, 72, 90]</code>
+                                </p>
                                 <p><em>Hint: Analyze the relationship between elements. Look at their indexes: <br>
-                                $Idx\ 0 \rightarrow 0 \times 1 = 0$ <br>
-                                $Idx\ 1 \rightarrow 1 \times 2 = 2$ <br>
-                                $Idx\ 2 \rightarrow 2 \times 3 = 6$ <br>
-                                ... <br>
-                                $Idx\ i \rightarrow i \times (i + 1)$ for $i \in [0, 9]$.</em></p>
+                                        Idx\ 0 \rightarrow 0 \times 1 = 0 <br>
+                                        Idx\ 1 \rightarrow 1 \times 2 = 2 <br>
+                                        Idx\ 2 \rightarrow 2 \times 3 = 6 <br>
+                                        ... <br>
+                                        Idx\ i \rightarrow i \times (i + 1) for i \in [0, 9].</em></p>
                             </div>
                             <div class="embedded-editor-container" data-editor-id="lab1-5-editor">
                                 <textarea class="editor-textarea"># Replace the expression below with list comprehension syntax
 result = [] # Replace this
 </textarea>
                                 <div class="editor-actions">
-                                    <button class="btn btn-secondary run-editor-btn"><i class="fa-solid fa-play"></i> Run Code</button>
-                                    <button class="btn btn-primary verify-editor-btn" data-lab="lab1_5"><i class="fa-solid fa-circle-check"></i> Verify Solution</button>
+                                    <button class="btn btn-secondary run-editor-btn"><i class="fa-solid fa-play"></i>
+                                        Run Code</button>
+                                    <button class="btn btn-primary verify-editor-btn" data-lab="lab1_5"><i
+                                            class="fa-solid fa-circle-check"></i> Verify Solution</button>
                                 </div>
                                 <div class="verification-status" id="lab1_5-status"></div>
                                 <div class="editor-output-header">Output Console:</div>
@@ -554,13 +614,21 @@ result = [] # Replace this
                                 <h3>Understanding Recursion</h3>
                             </div>
                             <div class="card-body">
-                                <p>A recursive function is simply a function that calls itself. In DSA, recursion is critical for traversing non-linear structures like Trees and Graphs.</p>
+                                <p>A recursive function is simply a function that calls itself. In DSA, recursion is
+                                    critical for traversing non-linear structures like Trees and Graphs.</p>
                                 <p>Every correct recursive function needs two components:</p>
                                 <ol>
-                                    <li><strong>Base Case(s):</strong> The simplest input configuration where the result is computed immediately, ending the recursive chain. Without this, you get an infinite loop resulting in a <strong>Stack Overflow</strong> (in Python, a <code>RecursionError</code>).</li>
-                                    <li><strong>Recursive Step:</strong> Reducing the current problem parameters so they move closer to the base case, and calling the function again with those reduced parameters.</li>
+                                    <li><strong>Base Case(s):</strong> The simplest input configuration where the result
+                                        is computed immediately, ending the recursive chain. Without this, you get an
+                                        infinite loop resulting in a <strong>Stack Overflow</strong> (in Python, a
+                                        <code>RecursionError</code>).
+                                    </li>
+                                    <li><strong>Recursive Step:</strong> Reducing the current problem parameters so they
+                                        move closer to the base case, and calling the function again with those reduced
+                                        parameters.</li>
                                 </ol>
-                                <p>In Python, the default recursion limit is 1000 frames (to prevent system memory crash). In C, the limit is based on your OS stack frame memory size.</p>
+                                <p>In Python, the default recursion limit is 1000 frames (to prevent system memory
+                                    crash). In C, the limit is based on your OS stack frame memory size.</p>
                             </div>
                         </div>
 
@@ -601,8 +669,9 @@ result = [] # Replace this
                             <h3>Interactive Call Stack Visualizer</h3>
                         </div>
                         <div class="card-body">
-                            <p>Select a recursive function, choose an input size, and step through the execution. Watch how memory stack frames are pushed when calling, and popped when returning values!</p>
-                            
+                            <p>Select a recursive function, choose an input size, and step through the execution. Watch
+                                how memory stack frames are pushed when calling, and popped when returning values!</p>
+
                             <div class="visualizer-controls">
                                 <div class="control-group">
                                     <label for="rec-algorithm">Algorithm:</label>
@@ -617,16 +686,20 @@ result = [] # Replace this
                                     <input type="number" id="rec-input" class="form-control" min="1" max="5" value="4">
                                 </div>
                                 <div class="btn-group">
-                                    <button class="btn btn-secondary" id="rec-start-btn"><i class="fa-solid fa-play"></i> Initialize</button>
-                                    <button class="btn btn-primary" id="rec-step-btn" disabled><i class="fa-solid fa-angles-right"></i> Next Step</button>
-                                    <button class="btn btn-danger" id="rec-reset-btn"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+                                    <button class="btn btn-secondary" id="rec-start-btn"><i
+                                            class="fa-solid fa-play"></i> Initialize</button>
+                                    <button class="btn btn-primary" id="rec-step-btn" disabled><i
+                                            class="fa-solid fa-angles-right"></i> Next Step</button>
+                                    <button class="btn btn-danger" id="rec-reset-btn"><i
+                                            class="fa-solid fa-rotate-left"></i> Reset</button>
                                 </div>
                             </div>
 
                             <div class="visualizer-display">
                                 <div class="visualizer-code-panel">
                                     <div class="panel-title">Active Code Execution:</div>
-                                    <pre id="visualizer-code-display">Select an algorithm and click Initialize to begin...</pre>
+                                    <pre
+                                        id="visualizer-code-display">Select an algorithm and click Initialize to begin...</pre>
                                 </div>
                                 <div class="visualizer-stack-panel">
                                     <div class="panel-title">Memory Call Stack:</div>
@@ -649,7 +722,8 @@ result = [] # Replace this
                 <section id="module3-section" class="content-section">
                     <div class="module-header-block">
                         <h2>Module 3: Complexity Analysis & timeit Module</h2>
-                        <p>Evaluate code performance theoretically using Big-O, and empirically using Python's timing tools.</p>
+                        <p>Evaluate code performance theoretically using Big-O, and empirically using Python's timing
+                            tools.</p>
                     </div>
 
                     <div class="grid-2col">
@@ -659,18 +733,24 @@ result = [] # Replace this
                                 <h3>Theoretical Complexity: Big-O</h3>
                             </div>
                             <div class="card-body">
-                                <p>Big-O notation describes how execution time or space requirement scales relative to the input size $N$ in the worst-case scenario.</p>
-                                <p>In Python, collections have highly optimized underlying implementations that dictate different operations' efficiency:</p>
+                                <p>Big-O notation describes how execution time or space requirement scales relative to
+                                    the input size N in the worst-case scenario.</p>
+                                <p>In Python, collections have highly optimized underlying implementations that dictate
+                                    different operations' efficiency:</p>
                                 <ul>
-                                    <li><strong>List index access (`lst[i]`):</strong> $O(1)$ - contiguous array lookups.</li>
-                                    <li><strong>List append (`lst.append(x)`):</strong> Amortized $O(1)$ - over-allocates space.</li>
-                                    <li><strong>List search (`x in lst`):</strong> $O(N)$ - linear scan.</li>
-                                    <li><strong>Dict lookup (`dict[key]`):</strong> Average $O(1)$ - hash table buckets.</li>
-                                    <li><strong>Dict insertion (`dict[key] = val`):</strong> Average $O(1)$.</li>
+                                    <li><strong>List index access (lst[i]):</strong> O(1) - contiguous array lookups.
+                                    </li>
+                                    <li><strong>List append (lst.append(x)):</strong> Amortized O(1) - over-allocates
+                                        space.</li>
+                                    <li><strong>List search (x in lst):</strong> O(N) - linear scan.</li>
+                                    <li><strong>Dict lookup (dict[key]):</strong> Average O(1) - hash table buckets.
+                                    </li>
+                                    <li><strong>Dict insertion (dict[key] = val):</strong> Average O(1).</li>
                                 </ul>
                                 <div class="info-alert">
                                     <i class="fa-solid fa-circle-info"></i>
-                                    <span>Because dict search is $O(1)$ while list search is $O(N)$, selecting the right data structure dramatically improves algorithm performance!</span>
+                                    <span>Because dict search is O(1) while list search is O(N), selecting the right
+                                        data structure dramatically improves algorithm performance!</span>
                                 </div>
                             </div>
                         </div>
@@ -685,20 +765,21 @@ result = [] # Replace this
                                 <div class="bigo-chart-container">
                                     <svg viewBox="0 0 400 250" class="bigo-svg" id="bigo-svg">
                                         <!-- Axis -->
-                                        <line x1="40" y1="210" x2="380" y2="210" stroke="#475569" stroke-width="2"/>
-                                        <line x1="40" y1="20" x2="40" y2="210" stroke="#475569" stroke-width="2"/>
-                                        
+                                        <line x1="40" y1="210" x2="380" y2="210" stroke="#475569" stroke-width="2" />
+                                        <line x1="40" y1="20" x2="40" y2="210" stroke="#475569" stroke-width="2" />
+
                                         <!-- Axis Labels -->
                                         <text x="370" y="230" fill="#94a3b8" font-size="10">N</text>
-                                        <text x="15" y="30" fill="#94a3b8" font-size="10" transform="rotate(-90 15 30)">Time</text>
-                                        
+                                        <text x="15" y="30" fill="#94a3b8" font-size="10"
+                                            transform="rotate(-90 15 30)">Time</text>
+
                                         <!-- Curves (Placeholder paths, updated by JS) -->
-                                        <path id="curve-constant" d="" stroke="#10b981" stroke-width="2" fill="none"/>
-                                        <path id="curve-log" d="" stroke="#06b6d4" stroke-width="2" fill="none"/>
-                                        <path id="curve-linear" d="" stroke="#3b82f6" stroke-width="2" fill="none"/>
-                                        <path id="curve-nlogn" d="" stroke="#a855f7" stroke-width="2" fill="none"/>
-                                        <path id="curve-quadratic" d="" stroke="#f43f5e" stroke-width="2" fill="none"/>
-                                        
+                                        <path id="curve-constant" d="" stroke="#10b981" stroke-width="2" fill="none" />
+                                        <path id="curve-log" d="" stroke="#06b6d4" stroke-width="2" fill="none" />
+                                        <path id="curve-linear" d="" stroke="#3b82f6" stroke-width="2" fill="none" />
+                                        <path id="curve-nlogn" d="" stroke="#a855f7" stroke-width="2" fill="none" />
+                                        <path id="curve-quadratic" d="" stroke="#f43f5e" stroke-width="2" fill="none" />
+
                                         <!-- Legend -->
                                         <text x="50" y="35" fill="#f43f5e" font-size="9">O(N²)</text>
                                         <text x="180" y="65" fill="#a855f7" font-size="9">O(N log N)</text>
@@ -719,47 +800,58 @@ result = [] # Replace this
                     <div class="card glass benchmark-card">
                         <div class="card-header">
                             <span class="card-icon"><i class="fa-solid fa-stopwatch"></i></span>
-                            <h3>Empirical Timing: Live Python `timeit` Benchmark</h3>
+                            <h3>Empirical Timing: Live Python timeit Benchmark</h3>
                         </div>
                         <div class="card-body">
-                            <p>In Python, the <code>timeit</code> module measures the execution time of small code snippets by repeating them thousands of times. Here, we run actual searches and sorts directly inside the Pyodide environment on lists of size $N$ and plot the result live.</p>
-                            
+                            <p>In Python, the <code>timeit</code> module measures the execution time of small code
+                                snippets by repeating them thousands of times. Here, we run actual searches and sorts
+                                directly inside the Pyodide environment on lists of size N and plot the result live.</p>
+
                             <div class="benchmark-config">
                                 <div class="control-group">
                                     <label for="benchmark-type">Compare Algorithms:</label>
                                     <select id="benchmark-type" class="form-control">
                                         <option value="search">Linear Search O(N) vs. Binary Search O(log N)</option>
-                                        <option value="sort">Bubble Sort O(N²) vs. Built-in List Sort O(N log N)</option>
+                                        <option value="sort">Bubble Sort O(N²) vs. Built-in List Sort O(N log N)
+                                        </option>
                                     </select>
                                 </div>
-                                <button class="btn btn-success" id="run-benchmark-btn"><i class="fa-solid fa-gauge"></i> Run Benchmarks</button>
+                                <button class="btn btn-success" id="run-benchmark-btn"><i class="fa-solid fa-gauge"></i>
+                                    Run Benchmarks</button>
                             </div>
 
                             <div class="grid-2col">
                                 <div class="terminal-box">
                                     <div class="panel-title">Benchmark Log Terminal:</div>
-                                    <pre id="benchmark-terminal" class="terminal-body">Select algorithms and click Run Benchmarks...</pre>
+                                    <pre id="benchmark-terminal"
+                                        class="terminal-body">Select algorithms and click Run Benchmarks...</pre>
                                 </div>
                                 <div class="chart-box">
                                     <div class="panel-title">Live Empirical Timing Curve:</div>
                                     <div class="empirical-chart-container">
-                                        <svg viewBox="0 0 400 220" class="empirical-svg" id="empirical-svg">
+                                        <svg viewBox="0 -30 400 240" class="empirical-svg" id="empirical-svg">
                                             <!-- Axis -->
-                                            <line x1="40" y1="180" x2="380" y2="180" stroke="#475569" stroke-width="2"/>
-                                            <line x1="40" y1="20" x2="40" y2="180" stroke="#475569" stroke-width="2"/>
+                                            <line x1="40" y1="180" x2="380" y2="180" stroke="#475569"
+                                                stroke-width="2" />
+                                            <line x1="40" y1="20" x2="40" y2="180" stroke="#475569" stroke-width="2" />
                                             <text x="370" y="195" fill="#94a3b8" font-size="10">N</text>
-                                            <text x="15" y="30" fill="#94a3b8" font-size="10" transform="rotate(-90 15 30)">Time (ms)</text>
-                                            
+                                            <text x="15" y="30" fill="#94a3b8" font-size="10"
+                                                transform="rotate(-90 15 30)">Time (ms)</text>
+
                                             <!-- Paths plotting empirical data -->
-                                            <path id="emp-path-1" d="" stroke="#f43f5e" stroke-width="2.5" fill="none"/>
-                                            <path id="emp-path-2" d="" stroke="#10b981" stroke-width="2.5" fill="none"/>
-                                            
+                                            <path id="emp-path-1" d="" stroke="#f43f5e" stroke-width="2.5"
+                                                fill="none" />
+                                            <path id="emp-path-2" d="" stroke="#10b981" stroke-width="2.5"
+                                                fill="none" />
+
                                             <!-- Legend -->
                                             <g id="emp-legend" transform="translate(50, 30)">
-                                                <rect x="0" y="0" width="10" height="10" fill="#f43f5e"/>
-                                                <text x="15" y="9" fill="#e2e8f0" font-size="9" id="emp-legend-lbl1">Algorithm A</text>
-                                                <rect x="0" y="15" width="10" height="10" fill="#10b981"/>
-                                                <text x="15" y="24" fill="#e2e8f0" font-size="9" id="emp-legend-lbl2">Algorithm B</text>
+                                                <rect x="0" y="0" width="10" height="10" fill="#f43f5e" />
+                                                <text x="15" y="9" fill="#e2e8f0" font-size="9"
+                                                    id="emp-legend-lbl1">Algorithm A</text>
+                                                <rect x="0" y="15" width="10" height="10" fill="#10b981" />
+                                                <text x="15" y="24" fill="#e2e8f0" font-size="9"
+                                                    id="emp-legend-lbl2">Algorithm B</text>
                                             </g>
                                         </svg>
                                     </div>
@@ -773,7 +865,9 @@ result = [] # Replace this
                 <section id="module4-section" class="content-section">
                     <div class="module-header-block">
                         <h2>Module 4: Transition to Object-Oriented Programming (OOP)</h2>
-                        <p>Re-organize data structures from C Structs to Python Classes, understanding the mechanics of <code>self</code>.</p>
+                        <p>Re-organize data structures from C Structs to Python Classes, understanding the mechanics of
+                            <code>self</code>.
+                        </p>
                     </div>
 
                     <div class="grid-2col">
@@ -783,11 +877,19 @@ result = [] # Replace this
                                 <h3>From Structs to Classes</h3>
                             </div>
                             <div class="card-body">
-                                <p>In C, code and data are separate. You define a <code>struct</code> containing only variables (fields), and write standard functions that accept pointers to that struct to modify them.</p>
-                                <p>In Python OOP, a <strong>Class</strong> bundles data (attributes) and behavior (methods) together into a single blueprint.</p>
+                                <p>In C, code and data are separate. You define a <code>struct</code> containing only
+                                    variables (fields), and write standard functions that accept pointers to that struct
+                                    to modify them.</p>
+                                <p>In Python OOP, a <strong>Class</strong> bundles data (attributes) and behavior
+                                    (methods) together into a single blueprint.</p>
                                 <p><strong>Demystifying <code>self</code>:</strong><br>
-                                In Python class methods, the first parameter is always <code>self</code>. What is it? <br>
-                                It is simply the pointer/reference to the active object instance. In C, you explicitly write <code>print_student(&s)</code>. In Python, you write <code>s.print_student()</code>. Under the hood, Python passes the address of <code>s</code> as the first argument, bound to the keyword <code>self</code>!</p>
+                                    In Python class methods, the first parameter is always <code>self</code>. What is
+                                    it? <br>
+                                    It is simply the pointer/reference to the active object instance. In C, you
+                                    explicitly write <code>print_student(&s)</code>. In Python, you write
+                                    <code>s.print_student()</code>. Under the hood, Python passes the address of
+                                    <code>s</code> as the first argument, bound to the keyword <code>self</code>!
+                                </p>
                             </div>
                         </div>
 
@@ -841,7 +943,10 @@ pt.move(5, -5)</code></pre>
                             <h3>OOP Mechanics Sandbox: Try Inheritance & Encapsulation</h3>
                         </div>
                         <div class="card-body">
-                            <p>Run the code below to see inheritance in Python. Notice how <code>Dog</code> inherits attributes and methods from <code>Animal</code>, and uses <code>super().__init__()</code> to initialize base attributes.</p>
+                            <p>Run the code below to see inheritance in Python. Notice how <code>Dog</code> inherits
+                                attributes and methods from <code>Animal</code>, and uses
+                                <code>super().__init__()</code> to initialize base attributes.
+                            </p>
                             <div class="embedded-editor-container" data-editor-id="oop-editor">
                                 <textarea class="editor-textarea">class Animal:
     def __init__(self, name):
@@ -865,7 +970,8 @@ print(f"Breed: {my_dog.breed}")
 print(f"Sound: {my_dog.speak()}")
 </textarea>
                                 <div class="editor-actions">
-                                    <button class="btn btn-success run-editor-btn"><i class="fa-solid fa-play"></i> Run Code</button>
+                                    <button class="btn btn-success run-editor-btn"><i class="fa-solid fa-play"></i> Run
+                                        Code</button>
                                 </div>
                                 <div class="editor-output-header">Output Console:</div>
                                 <pre class="editor-output">Click Run Code to see output...</pre>
@@ -878,7 +984,8 @@ print(f"Sound: {my_dog.speak()}")
                 <section id="quiz-section" class="content-section">
                     <div class="module-header-block">
                         <h2>C to Python Transition Quiz</h2>
-                        <p>Assess your structural understanding of how programming paradigms transition from low-level C code to Python abstractions.</p>
+                        <p>Assess your structural understanding of how programming paradigms transition from low-level C
+                            code to Python abstractions.</p>
                     </div>
 
                     <div class="quiz-container" id="quiz-container">
@@ -888,10 +995,13 @@ print(f"Sound: {my_dog.speak()}")
                     <div class="quiz-summary-card glass" id="quiz-summary-card" style="display:none;">
                         <h3>Quiz Results</h3>
                         <div class="score-display">
-                            <span class="score-num" id="quiz-score-num">0</span> / <span class="score-total" id="quiz-score-total">5</span>
+                            <span class="score-num" id="quiz-score-num">0</span> / <span class="score-total"
+                                id="quiz-score-total">5</span>
                         </div>
-                        <p id="quiz-feedback-text">Nice try! Review the feedback below each question to master the transition concepts.</p>
-                        <button class="btn btn-primary" onclick="resetQuiz()"><i class="fa-solid fa-rotate-left"></i> Retake Quiz</button>
+                        <p id="quiz-feedback-text">Nice try! Review the feedback below each question to master the
+                            transition concepts.</p>
+                        <button class="btn btn-primary" onclick="resetQuiz()"><i class="fa-solid fa-rotate-left"></i>
+                            Retake Quiz</button>
                     </div>
                 </section>
 
@@ -906,8 +1016,10 @@ print(f"Sound: {my_dog.speak()}")
                 <i class="fa-solid fa-terminal"></i> Global Python Interpreter Playground
             </div>
             <div class="console-actions">
-                <button class="console-btn" id="clear-console-btn" title="Clear Console"><i class="fa-solid fa-trash-can"></i></button>
-                <button class="console-btn" id="minimize-console-btn" title="Toggle Console"><i class="fa-solid fa-chevron-down"></i></button>
+                <button class="console-btn" id="clear-console-btn" title="Clear Console"><i
+                        class="fa-solid fa-trash-can"></i></button>
+                <button class="console-btn" id="minimize-console-btn" title="Toggle Console"><i
+                        class="fa-solid fa-chevron-down"></i></button>
             </div>
         </div>
         <div class="console-content">
@@ -919,7 +1031,8 @@ nums = [i for i in range(10) if i % 2 == 0]
 print("Even numbers generated:", nums)
 print("Square values:", [x*x for x in nums])
 </textarea>
-                    <button class="btn btn-success" id="run-global-console-btn"><i class="fa-solid fa-play"></i> Execute Code</button>
+                    <button class="btn btn-success" id="run-global-console-btn"><i class="fa-solid fa-play"></i> Execute
+                        Code</button>
                 </div>
                 <div class="console-terminal-section">
                     <div class="panel-subtitle">Standard Output (stdout):</div>
@@ -928,7 +1041,8 @@ print("Square values:", [x*x for x in nums])
             </div>
         </div>
     </div>
-    
+
     <script src="app.js"></script>
 </body>
+
 </html>

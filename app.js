@@ -99,6 +99,38 @@ function navigateToSection(sectionId) {
 
 // Setup navigation listeners
 document.addEventListener("DOMContentLoaded", () => {
+    // Sidebar toggle trigger
+    const sidebarToggleBtn = document.getElementById("sidebar-toggle-btn");
+    const appContainer = document.querySelector(".app-container");
+    if (sidebarToggleBtn && appContainer) {
+        sidebarToggleBtn.addEventListener("click", () => {
+            appContainer.classList.toggle("collapsed");
+            const icon = sidebarToggleBtn.querySelector("i");
+            if (appContainer.classList.contains("collapsed")) {
+                icon.className = "fa-solid fa-chevron-right";
+            } else {
+                icon.className = "fa-solid fa-chevron-left";
+            }
+        });
+    }
+
+    // Theme toggle trigger
+    const themeToggleBtn = document.getElementById("theme-toggle-btn");
+    const themeText = document.getElementById("theme-text");
+    if (themeToggleBtn && themeText) {
+        themeToggleBtn.addEventListener("click", () => {
+            document.body.classList.toggle("light-mode");
+            const icon = themeToggleBtn.querySelector("i");
+            if (document.body.classList.contains("light-mode")) {
+                icon.className = "fa-solid fa-moon";
+                themeText.textContent = "Dark Mode";
+            } else {
+                icon.className = "fa-solid fa-sun";
+                themeText.textContent = "Light Mode";
+            }
+        });
+    }
+
     // Nav menu items
     const navItems = document.querySelectorAll(".nav-item");
     navItems.forEach(item => {
@@ -792,7 +824,7 @@ function updateBigOGraph(N) {
     vLine.setAttribute("y2", 20);
     vLine.setAttribute("stroke", "rgba(255, 255, 255, 0.15)");
     vLine.setAttribute("stroke-dasharray", "4 4");
-    vLine.className = "indicator-elem";
+    vLine.setAttribute("class", "indicator-elem");
     svg.appendChild(vLine);
 
     // Update the paths dynamically for each complexity
@@ -837,7 +869,7 @@ function updateBigOGraph(N) {
         circle.setAttribute("fill", point.color);
         circle.setAttribute("stroke", "#fff");
         circle.setAttribute("stroke-width", 1);
-        circle.className = "indicator-elem";
+        circle.setAttribute("class", "indicator-elem");
         svg.appendChild(circle);
     });
 }
@@ -1057,14 +1089,14 @@ function plotEmpiricalGraph(sizes, times1, times2, label1, label2) {
         dot1.setAttribute("cy", y1);
         dot1.setAttribute("r", 4);
         dot1.setAttribute("fill", "#f43f5e");
-        dot1.className = "bench-dot";
+        dot1.setAttribute("class", "bench-dot");
         
         const dot2 = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         dot2.setAttribute("cx", x);
         dot2.setAttribute("cy", y2);
         dot2.setAttribute("r", 4);
         dot2.setAttribute("fill", "#10b981");
-        dot2.className = "bench-dot";
+        dot2.setAttribute("class", "bench-dot");
         
         svg.appendChild(dot1);
         svg.appendChild(dot2);
