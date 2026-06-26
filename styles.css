@@ -5,6 +5,8 @@
     --bg-sidebar: #0b0f1a;
     --border-color: rgba(255, 255, 255, 0.08);
     --border-accent: rgba(59, 130, 246, 0.3);
+    --bg-card: rgba(15, 22, 38, 0.7);
+    --border-radius-card: 12px;
     --sidebar-width: 280px;
     
     /* Neon Colors */
@@ -1636,6 +1638,7 @@ body.light-mode {
     --bg-sidebar: #ffffff;      /* pure white */
     --border-color: rgba(0, 0, 0, 0.08);
     --border-accent: rgba(59, 130, 246, 0.2);
+    --bg-card: #ffffff;
     
     /* Text */
     --text-primary: #0f172a;    /* slate-900 */
@@ -1897,12 +1900,14 @@ body.light-mode .editor-output {
 }
 
 .why-tab-btn:hover {
-    background-color: rgba(255, 255, 255, 0.03);
-    border-color: var(--accent-blue-glow);
+    background-color: var(--accent-blue-glow);
+    border-color: var(--accent-blue);
+    box-shadow: 0 4px 12px var(--accent-blue-glow);
 }
 
-body.light-mode .why-tab-btn:hover {
-    background-color: rgba(0, 0, 0, 0.02);
+.why-tab-btn:hover i {
+    color: var(--accent-blue);
+    text-shadow: 0 0 8px var(--accent-blue-glow);
 }
 
 .why-tab-btn.active {
@@ -2717,7 +2722,7 @@ body.light-mode .mem-side.py-mem-side {
 /* Python Collections Explorer CSS */
 .explorer-tab-btn.active {
     background-color: var(--accent-purple-glow) !important;
-    border: 1px solid var(--border-accent) !important;
+    border-color: var(--border-accent) !important;
     color: #ffffff !important;
 }
 
@@ -2762,7 +2767,6 @@ body.light-mode .explorer-tab-btn.active {
     padding: 6px 12px;
     min-width: 60px;
     text-align: center;
-    animation: scaleIn 0.25s ease;
     transition: all var(--transition-normal);
 }
 
@@ -2809,7 +2813,6 @@ body.light-mode .explorer-tab-btn.active {
     border: 1px solid var(--border-color);
     border-radius: 8px;
     overflow: hidden;
-    animation: scaleIn 0.3s ease;
 }
 
 .dict-table {
@@ -2857,4 +2860,294 @@ body.light-mode .explorer-tab-btn.active {
     20%, 60% { transform: translateX(-4px); }
     40%, 80% { transform: translateX(4px); }
 }
+
+/* -------------------------------------------------------------
+   Mini-Games Base Styles
+   ------------------------------------------------------------- */
+.minigame-card {
+    margin: 2rem 0 1rem 0;
+    padding: 1.5rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+}
+
+.minigame-header {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.minigame-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.minigame-title i.text-accent {
+    color: var(--accent-blue);
+}
+
+.minigame-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.4;
+}
+
+.minigame-body {
+    margin-bottom: 1rem;
+}
+
+.minigame-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+    margin-top: 1.25rem;
+}
+
+/* -------------------------------------------------------------
+   Interactive Control Flow Simulator Styles
+   ------------------------------------------------------------- */
+.flow-code-line {
+    padding: 3px 8px;
+    border-radius: 4px;
+    transition: all var(--transition-fast);
+    opacity: 0.65;
+    border-left: 3px solid transparent;
+    display: block;
+}
+
+.flow-code-line.active {
+    background-color: rgba(6, 182, 212, 0.15);
+    border-left-color: var(--accent-cyan);
+    opacity: 1;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.light-mode .flow-code-line.active {
+    background-color: rgba(6, 182, 212, 0.1);
+    color: #0b1329;
+}
+
+.flow-tabs .explorer-tab-btn.active {
+    background-color: rgba(6, 182, 212, 0.25) !important;
+    border-color: var(--accent-cyan) !important;
+    color: #ffffff !important;
+}
+
+.light-mode .flow-tabs .explorer-tab-btn.active {
+    background-color: rgba(6, 182, 212, 0.12) !important;
+    color: var(--accent-cyan) !important;
+}
+
+/* -------------------------------------------------------------
+   Exception Shield Game Styles
+   ------------------------------------------------------------- */
+.exception-instructions {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+}
+
+.exception-progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    background-color: rgba(255, 255, 255, 0.02);
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.light-mode .exception-progress {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.progress-label {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    font-family: 'Outfit', sans-serif;
+}
+
+.progress-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.progress-dots .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.15);
+    transition: all var(--transition-fast);
+}
+
+.light-mode .progress-dots .dot {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.progress-dots .dot.active {
+    background-color: var(--accent-blue);
+    box-shadow: 0 0 8px var(--accent-blue-glow);
+}
+
+.progress-dots .dot.completed {
+    background-color: var(--accent-green);
+    box-shadow: 0 0 8px var(--accent-green-glow);
+}
+
+.exception-workspace {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 1.25rem;
+}
+
+@media (max-width: 768px) {
+    .exception-workspace {
+        grid-template-columns: 1fr;
+    }
+}
+
+.exception-code-window {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #0b0f19;
+    box-shadow: var(--shadow-sm);
+}
+
+.window-titlebar {
+    background-color: rgba(255, 255, 255, 0.03);
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.window-titlebar .dot-red,
+.window-titlebar .dot-yellow,
+.window-titlebar .dot-green {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.window-titlebar .dot-red { background-color: #ef4444; }
+.window-titlebar .dot-yellow { background-color: #f59e0b; }
+.window-titlebar .dot-green { background-color: #10b981; }
+
+.window-title-text {
+    font-size: 10.5px;
+    color: var(--text-muted);
+    margin-left: 6px;
+    font-family: monospace;
+    font-weight: 600;
+}
+
+.exception-code-window .code-content {
+    padding: 14px;
+    font-family: 'Fira Code', monospace;
+    font-size: 12.5px;
+    line-height: 1.65;
+    min-height: 145px;
+    overflow-x: auto;
+    color: #f8fafc;
+}
+
+.shield-selection-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.shield-header-text {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    font-family: 'Outfit', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.shield-buttons-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.shield-btn {
+    border: 1px solid var(--border-color);
+    background-color: rgba(255, 255, 255, 0.03);
+    color: var(--text-secondary);
+    border-radius: 6px;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 12.5px;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all var(--transition-fast);
+}
+
+.light-mode .shield-btn {
+    background-color: #ffffff;
+}
+
+.shield-btn:hover:not(:disabled) {
+    border-color: var(--accent-blue);
+    background-color: var(--accent-blue-glow);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+.light-mode .shield-btn:hover:not(:disabled) {
+    background-color: rgba(59, 130, 246, 0.08);
+}
+
+.shield-btn.selected-correct {
+    border-color: var(--accent-green) !important;
+    background-color: var(--accent-green-glow) !important;
+    color: #ffffff !important;
+}
+
+.light-mode .shield-btn.selected-correct {
+    color: #065f46 !important;
+    background-color: rgba(16, 185, 129, 0.12) !important;
+}
+
+.shield-btn.selected-incorrect {
+    border-color: var(--accent-red) !important;
+    background-color: var(--accent-red-glow) !important;
+    color: #ffffff !important;
+}
+
+.light-mode .shield-btn.selected-incorrect {
+    color: #991b1b !important;
+    background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+.shield-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
 

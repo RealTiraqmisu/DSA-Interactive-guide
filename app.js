@@ -153,20 +153,34 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Accordions toggle
+    // Accordions toggle (Single Open Behavior)
     const accordionTriggers = document.querySelectorAll(".accordion-trigger");
     accordionTriggers.forEach(trigger => {
         trigger.addEventListener("click", () => {
             const item = trigger.closest(".accordion-item");
-            item.classList.toggle("open");
-            // If the item contains the dynamic typing visualizer, redraw lines after transition
-            if (item.querySelector("#dynamic-typing-visualizer-section") && item.classList.contains("open")) {
-                setTimeout(() => {
-                    if (typeof updateTypingConnections === "function") {
-                        updateTypingConnections();
+            const isOpen = item.classList.contains("open");
+            
+            // Close all other accordions in the same group
+            const group = item.closest(".accordion-group");
+            if (group) {
+                const siblingItems = group.querySelectorAll(".accordion-item");
+                siblingItems.forEach(sib => {
+                    if (sib !== item) {
+                        sib.classList.remove("open");
                     }
-                }, 350);
+                });
             }
+            
+            // Toggle current item
+            item.classList.toggle("open", !isOpen);
+            
+            // Scroll to the newly opened item
+            if (item.classList.contains("open")) {
+                setTimeout(() => {
+                    item.scrollIntoView({ behavior: "smooth", block: "start" });
+                }, 150);
+            }
+
         });
     });
 
@@ -198,6 +212,15 @@ document.addEventListener("DOMContentLoaded", () => {
     setupWhyPythonSimulators();
     setupDynamicTypingVisualizer();
     setupCollectionsExplorer();
+    if (typeof loadExceptionLevel === "function") {
+        loadExceptionLevel(0);
+    }
+    if (typeof updateGpaBranches === "function") {
+        updateGpaBranches(2.5);
+    }
+    if (typeof selectLoopType === "function") {
+        selectLoopType('range');
+    }
 
     // Enable Tab indentation for all code editors
     const allCodeEditors = document.querySelectorAll(".editor-textarea, #global-console-textarea");
@@ -216,48 +239,28 @@ document.addEventListener("DOMContentLoaded", () => {
         consoleDrawer.classList.toggle("expanded");
     };
 
-    toggleConsoleBtn.addEventListener("click", toggleDrawer);
-    minimizeConsoleBtn.addEventListener("click", toggleDrawer);
+    if (toggleConsoleBtn) toggleConsoleBtn.addEventListener("click", toggleDrawer);
+    if (minimizeConsoleBtn) minimizeConsoleBtn.addEventListener("click", toggleDrawer);
     
     // Clear terminal console
-    clearConsoleBtn.addEventListener("click", () => {
-        document.getElementById("global-console-terminal").textContent = "Console cleared.\n";
-    });
+    if (clearConsoleBtn) {
+        clearConsoleBtn.addEventListener("click", () => {
+            document.getElementById("global-console-terminal").textContent = "Console cleared.\n";
+        });
+    }
 
-    // Run global editor
-    runConsoleBtn.addEventListener("click", async () => {
-        const consoleTextarea = document.getElementById("global-console-textarea");
-        const consoleTerminal = document.getElementById("global-console-terminal");
-        consoleTerminal.textContent = "Running...\n";
-        const result = await runPythonCode(consoleTextarea.value);
-        consoleTerminal.textContent = result || ">>> Code executed with no printed output.";
-    });
+    if (runConsoleBtn) {
+        runConsoleBtn.addEventListener("click", async () => {
+            const consoleTextarea = document.getElementById("global-console-textarea");
+            const consoleTerminal = document.getElementById("global-console-terminal");
+            consoleTerminal.textContent = "Running...\n";
+            const result = await runPythonCode(consoleTextarea.value);
+            consoleTerminal.textContent = result || ">>> Code executed with no printed output.";
+        });
+    }
 });
 
-// -------------------------------------------------------------
-// Textarea Editors Setup
-// -------------------------------------------------------------
-function setupEditors() {
-    const editors = document.querySelectorAll(".embedded-editor-container");
-    
-    editors.forEach(container => {
-        const textarea = container.querySelector(".editor-textarea");
-        const runBtn = container.querySelector(".run-editor-btn");
-        const outputField = container.querySelector(".editor-output");
-        
-        if (runBtn && textarea && outputField) {
-            runBtn.addEventListener("click", async () => {
-                outputField.textContent = "Running code...";
-                const result = await runPythonCode(textarea.value);
-                outputField.textContent = result || "Execution finished (no output).";
-            });
-        }
-    });
-}
 
-// -------------------------------------------------------------
-// Labs Verification & Testing Logic
-// -------------------------------------------------------------
 const labTests = {
     lab1_1: {
         tests: `
@@ -423,6 +426,27 @@ function switchLabTab(tabId) {
 }
 
 // -------------------------------------------------------------
+// Textarea Editors Setup
+// -------------------------------------------------------------
+function setupEditors() {
+    const editors = document.querySelectorAll(".embedded-editor-container");
+    editors.forEach(container => {
+        const textarea = container.querySelector(".editor-textarea");
+        const runBtn = container.querySelector(".run-editor-btn");
+        const outputField = container.querySelector(".editor-output");
+        
+        if (runBtn && textarea && outputField) {
+            runBtn.addEventListener("click", async () => {
+                outputField.textContent = "Running code...";
+                const result = await runPythonCode(textarea.value);
+                outputField.textContent = result || "Execution finished (no output).";
+            });
+        }
+    });
+}
+
+// -------------------------------------------------------------
+
 // Module 2: Recursion Visualizer Engine
 // -------------------------------------------------------------
 let recursionSteps = [];
@@ -1647,7 +1671,6 @@ print("Sliced Array:", slice_arr)`;
         updateSlicer();
     }
 }
-
 // -------------------------------------------------------------
 // Module 1: Python Dynamic Typing Step-by-Step Visualizer
 // -------------------------------------------------------------
@@ -1924,6 +1947,19 @@ function setupCollectionsExplorer() {
             renderCollectionExplorer();
         });
     });
+    
+    // Reset Button logic
+    const resetBtn = document.getElementById("explorer-reset-btn");
+    if (resetBtn) {
+        resetBtn.addEventListener("click", () => {
+            resetCollectionExplorerStates();
+            renderCollectionExplorer();
+            const explanationBox = document.getElementById("explorer-explanation-box");
+            if (explanationBox) {
+                explanationBox.innerHTML = `<span style="color: var(--accent-purple); font-weight:600;"><i class="fa-solid fa-rotate-left"></i> Explorer states reset back to initial values!</span>`;
+            }
+        });
+    }
     
     // Initial Render
     resetCollectionExplorerStates();
@@ -2320,3 +2356,464 @@ function executeCollectionAction(action) {
         }
     }
 }
+
+
+
+
+/* -------------------------------------------------------------
+   Interactive Control Flow & Loops Simulator Logic
+   ------------------------------------------------------------- */
+let flowActiveTab = 'cond';
+
+function switchFlowTab(tabId) {
+    flowActiveTab = tabId;
+    
+    const tabCond = document.getElementById("flow-tab-cond");
+    const tabLoop = document.getElementById("flow-tab-loop");
+    if (tabCond && tabLoop) {
+        if (tabId === 'cond') {
+            tabCond.classList.add("active");
+            tabLoop.classList.remove("active");
+        } else {
+            tabCond.classList.remove("active");
+            tabLoop.classList.add("active");
+        }
+    }
+    
+    const ctrlCond = document.getElementById("flow-controls-cond");
+    const ctrlLoop = document.getElementById("flow-controls-loop");
+    if (ctrlCond && ctrlLoop) {
+        ctrlCond.style.display = tabId === 'cond' ? 'block' : 'none';
+        ctrlLoop.style.display = tabId === 'loop' ? 'block' : 'none';
+    }
+    
+    const varsTracker = document.getElementById("loop-vars-tracker");
+    if (tabId === 'cond') {
+        document.getElementById("flow-code-title").textContent = "conditional_test.py";
+        if (varsTracker) varsTracker.textContent = "Active vars: gpa";
+        const slider = document.getElementById("flow-gpa-slider");
+        if (slider) {
+            updateGpaBranches(slider.value);
+        }
+    } else {
+        document.getElementById("flow-code-title").textContent = "loop_simulation.py";
+        selectLoopType(currentLoopType);
+    }
+}
+
+const condCodeTemplate = [
+    { line: 1, text: "gpa = [val]", isCode: true },
+    { line: 2, text: "", isCode: false },
+    { line: 3, text: "if gpa >= 3.50:", isCode: true },
+    { line: 4, text: "    print(\"Honor Roll\")", isCode: true },
+    { line: 5, text: "elif gpa >= 2.00:", isCode: true },
+    { line: 6, text: "    print(\"Pass\")", isCode: true },
+    { line: 7, text: "else:", isCode: true },
+    { line: 8, text: "    print(\"Fail\")", isCode: true }
+];
+
+function updateGpaBranches(gpaVal) {
+    const gpaFloat = parseFloat(gpaVal);
+    const sliderValSpan = document.getElementById("flow-gpa-val");
+    if (sliderValSpan) {
+        sliderValSpan.textContent = gpaFloat.toFixed(1);
+    }
+    
+    let activeLines = [1];
+    let output = "";
+    let explanation = "";
+    
+    if (gpaFloat >= 3.50) {
+        activeLines.push(3, 4);
+        output = "Honor Roll";
+        explanation = `GPA ${gpaFloat.toFixed(2)} >= 3.50 evaluates <strong>True</strong>. The first <code>if</code> branch triggers, outputting <code>"Honor Roll"</code>. Other branches are ignored.`;
+    } else if (gpaFloat >= 2.00) {
+        activeLines.push(3, 5, 6);
+        output = "Pass";
+        explanation = `GPA ${gpaFloat.toFixed(2)} is &lt; 3.50 (<code>if</code> evaluates <strong>False</strong>), but is >= 2.00 (<code>elif</code> evaluates <strong>True</strong>), outputting <code>"Pass"</code>.`;
+    } else {
+        activeLines.push(3, 5, 7, 8);
+        output = "Fail";
+        explanation = `GPA ${gpaFloat.toFixed(2)} is &lt; 2.00. Both <code>if</code> and <code>elif</code> check expressions evaluate <strong>False</strong>. The fallback <code>else</code> block is executed, outputting <code>"Fail"</code>.`;
+    }
+    
+    renderFlowCode(condCodeTemplate, activeLines, { "[val]": gpaFloat.toFixed(2) });
+    
+    const consoleText = document.getElementById("flow-console-text");
+    if (consoleText) {
+        consoleText.textContent = `>>> gpa = ${gpaFloat.toFixed(2)}\n>>> running conditional_test.py...\n${output}`;
+    }
+    
+    const explanationEl = document.getElementById("flow-cond-explanation");
+    if (explanationEl) {
+        explanationEl.innerHTML = explanation;
+        explanationEl.style.borderLeftColor = gpaFloat >= 3.50 ? 'var(--accent-green)' : (gpaFloat >= 2.00 ? 'var(--accent-cyan)' : 'var(--accent-red)');
+    }
+    
+    const varsTracker = document.getElementById("loop-vars-tracker");
+    if (varsTracker) {
+        varsTracker.textContent = `Active vars: gpa = ${gpaFloat.toFixed(2)}`;
+    }
+}
+
+let currentLoopType = 'range';
+let loopSimStep = 0;
+
+const loopTemplates = {
+    range: {
+        code: [
+            { line: 1, text: "# counting with range()", isCode: false },
+            { line: 2, text: "for i in range(5):", isCode: true },
+            { line: 3, text: "    print(f\"Val: {i}\")", isCode: true }
+        ],
+        steps: [
+            { activeLines: [2], vars: { i: 0 }, output: ">>> running loop_simulation.py...\n" },
+            { activeLines: [3], vars: { i: 0 }, output: ">>> running loop_simulation.py...\nVal: 0\n" },
+            { activeLines: [2], vars: { i: 1 }, output: ">>> running loop_simulation.py...\nVal: 0\n" },
+            { activeLines: [3], vars: { i: 1 }, output: ">>> running loop_simulation.py...\nVal: 0\nVal: 1\n" },
+            { activeLines: [2], vars: { i: 2 }, output: ">>> running loop_simulation.py...\nVal: 0\nVal: 1\n" },
+            { activeLines: [3], vars: { i: 2 }, output: ">>> running loop_simulation.py...\nVal: 0\nVal: 1\nVal: 2\n" },
+            { activeLines: [2], vars: { i: 3 }, output: ">>> running loop_simulation.py...\nVal: 0\nVal: 1\nVal: 2\n" },
+            { activeLines: [3], vars: { i: 3 }, output: ">>> running loop_simulation.py...\nVal: 0\nVal: 1\nVal: 2\nVal: 3\n" },
+            { activeLines: [2], vars: { i: 4 }, output: ">>> running loop_simulation.py...\nVal: 0\nVal: 1\nVal: 2\nVal: 3\n" },
+            { activeLines: [3], vars: { i: 4 }, output: ">>> running loop_simulation.py...\nVal: 0\nVal: 1\nVal: 2\nVal: 3\nVal: 4\n" },
+            { activeLines: [], vars: { i: 'Finished' }, output: ">>> running loop_simulation.py...\nVal: 0\nVal: 1\nVal: 2\nVal: 3\nVal: 4\n\n>>> Loop execution finished." }
+        ]
+    },
+    list: {
+        code: [
+            { line: 1, text: "arr = [10, 20, 30]", isCode: true },
+            { line: 2, text: "for val in arr:", isCode: true },
+            { line: 3, text: "    print(f\"Element: {val}\")", isCode: true }
+        ],
+        steps: [
+            { activeLines: [1], vars: { arr: "[10, 20, 30]", val: "undefined" }, output: ">>> running loop_simulation.py...\n" },
+            { activeLines: [2], vars: { arr: "[10, 20, 30]", val: 10 }, output: ">>> running loop_simulation.py...\n" },
+            { activeLines: [3], vars: { arr: "[10, 20, 30]", val: 10 }, output: ">>> running loop_simulation.py...\nElement: 10\n" },
+            { activeLines: [2], vars: { arr: "[10, 20, 30]", val: 20 }, output: ">>> running loop_simulation.py...\nElement: 10\n" },
+            { activeLines: [3], vars: { arr: "[10, 20, 30]", val: 20 }, output: ">>> running loop_simulation.py...\nElement: 10\nElement: 20\n" },
+            { activeLines: [2], vars: { arr: "[10, 20, 30]", val: 30 }, output: ">>> running loop_simulation.py...\nElement: 10\nElement: 20\n" },
+            { activeLines: [3], vars: { arr: "[10, 20, 30]", val: 30 }, output: ">>> running loop_simulation.py...\nElement: 10\nElement: 20\nElement: 30\n" },
+            { activeLines: [], vars: { arr: "[10, 20, 30]", val: "Finished" }, output: ">>> running loop_simulation.py...\nElement: 10\nElement: 20\nElement: 30\n\n>>> Loop execution finished." }
+        ]
+    },
+    while: {
+        code: [
+            { line: 1, text: "count = 0", isCode: true },
+            { line: 2, text: "while count < 3:", isCode: true },
+            { line: 3, text: "    print(count)", isCode: true },
+            { line: 4, text: "    count += 1", isCode: true }
+        ],
+        steps: [
+            { activeLines: [1], vars: { count: 0 }, output: ">>> running loop_simulation.py...\n" },
+            { activeLines: [2], vars: { count: 0 }, output: ">>> running loop_simulation.py...\n" },
+            { activeLines: [3], vars: { count: 0 }, output: ">>> running loop_simulation.py...\n0\n" },
+            { activeLines: [4], vars: { count: 0 }, output: ">>> running loop_simulation.py...\n0\n" },
+            { activeLines: [2], vars: { count: 1 }, output: ">>> running loop_simulation.py...\n0\n" },
+            { activeLines: [3], vars: { count: 1 }, output: ">>> running loop_simulation.py...\n0\n1\n" },
+            { activeLines: [4], vars: { count: 1 }, output: ">>> running loop_simulation.py...\n0\n1\n" },
+            { activeLines: [2], vars: { count: 2 }, output: ">>> running loop_simulation.py...\n0\n1\n" },
+            { activeLines: [3], vars: { count: 2 }, output: ">>> running loop_simulation.py...\n0\n1\n2\n" },
+            { activeLines: [4], vars: { count: 2 }, output: ">>> running loop_simulation.py...\n0\n1\n2\n" },
+            { activeLines: [2], vars: { count: 3 }, output: ">>> running loop_simulation.py...\n0\n1\n2\n" },
+            { activeLines: [], vars: { count: 3 }, output: ">>> running loop_simulation.py...\n0\n1\n2\n\n>>> while loop test: count < 3 evaluates False. Loop ended." }
+        ]
+    }
+};
+
+function selectLoopType(loopType) {
+    currentLoopType = loopType;
+    loopSimStep = 0;
+    
+    ['range', 'list', 'while'].forEach(type => {
+        const btn = document.getElementById("loop-btn-" + type);
+        if (btn) {
+            if (type === loopType) {
+                btn.classList.add("active");
+                btn.style.backgroundColor = "rgba(6, 182, 212, 0.25)";
+                btn.style.borderColor = "var(--accent-cyan)";
+                btn.style.color = "#ffffff";
+            } else {
+                btn.classList.remove("active");
+                btn.style.backgroundColor = "rgba(255, 255, 255, 0.03)";
+                btn.style.borderColor = "var(--border-color)";
+                btn.style.color = "var(--text-secondary)";
+            }
+        }
+    });
+    
+    const stepBtn = document.getElementById("flow-step-btn");
+    if (stepBtn) {
+        stepBtn.disabled = false;
+        stepBtn.innerHTML = '<i class="fa-solid fa-forward-step"></i> Step Loop';
+    }
+    
+    const template = loopTemplates[loopType];
+    renderFlowCode(template.code, template.steps[0].activeLines);
+    
+    const consoleText = document.getElementById("flow-console-text");
+    if (consoleText) {
+        consoleText.textContent = template.steps[0].output;
+    }
+    
+    updateVarsTracker(template.steps[0].vars);
+}
+
+function stepLoopSimulation() {
+    const template = loopTemplates[currentLoopType];
+    loopSimStep++;
+    
+    if (loopSimStep >= template.steps.length) {
+        resetLoopSimulation();
+        return;
+    }
+    
+    const step = template.steps[loopSimStep];
+    renderFlowCode(template.code, step.activeLines);
+    
+    const consoleText = document.getElementById("flow-console-text");
+    if (consoleText) {
+        consoleText.textContent = step.output;
+    }
+    
+    updateVarsTracker(step.vars);
+    
+    if (loopSimStep === template.steps.length - 1) {
+        const stepBtn = document.getElementById("flow-step-btn");
+        if (stepBtn) {
+            stepBtn.innerHTML = '<i class="fa-solid fa-rotate-left"></i> Start Over';
+        }
+    }
+}
+
+function resetLoopSimulation() {
+    selectLoopType(currentLoopType);
+}
+
+function updateVarsTracker(varsObj) {
+    const tracker = document.getElementById("loop-vars-tracker");
+    if (tracker) {
+        let varsStr = "Active vars: ";
+        let pairs = [];
+        for (let name in varsObj) {
+            pairs.push(`${name} = ${varsObj[name]}`);
+        }
+        tracker.textContent = varsStr + (pairs.length > 0 ? pairs.join(", ") : "(none)");
+    }
+}
+
+function renderFlowCode(codeArr, activeLines, replacements = {}) {
+    const container = document.getElementById("flow-code-display");
+    if (!container) return;
+    
+    let html = "";
+    codeArr.forEach(lineObj => {
+        let lineText = lineObj.text;
+        for (let key in replacements) {
+            lineText = lineText.replace(key, replacements[key]);
+        }
+        
+        const escapedText = lineText.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const isActive = activeLines.includes(lineObj.line);
+        if (lineObj.isCode) {
+            html += `<span class="flow-code-line${isActive ? ' active' : ''}">${escapedText}</span>`;
+        } else {
+            html += `<span class="flow-code-comment" style="color: var(--text-muted); padding: 3px 8px; opacity: 0.6; display: block;">${escapedText}</span>`;
+        }
+    });
+    
+    container.innerHTML = html;
+}
+
+
+/* -------------------------------------------------------------
+   Exception Shield Game Logic
+   ------------------------------------------------------------- */
+const exceptionLevels = [
+    {
+        level: 1,
+        title: "vulnerable_program.py (ZeroDivisionError)",
+        code: `# Level 1: division by zero\nx = 10\ny = 0\nresult = x / y\nprint(result)`,
+        correctAnswer: "ZeroDivisionError",
+        successText: "Excellent! You caught ZeroDivisionError. In Python, dividing any number by zero raises a ZeroDivisionError. Without a try-except block, your program crashes instantly.",
+        explanation: "ZeroDivisionError is raised when the second argument of a division or modulo operation is zero.",
+        codeWrapped: `try:\n    x = 10\n    y = 0\n    result = x / y\n    print(result)\nexcept ZeroDivisionError:\n    print("Caught division by zero!")`
+    },
+    {
+        level: 2,
+        title: "vulnerable_program.py (ValueError)",
+        code: `# Level 2: invalid type conversion\nuser_input = "forty-two"\nnumber = int(user_input)\nprint(number)`,
+        correctAnswer: "ValueError",
+        successText: "Awesome! You caught ValueError. The int() function throws a ValueError because 'forty-two' is not a valid representation of an integer numeric value.",
+        explanation: "ValueError is raised when an operation or function receives an argument that has the right type but an inappropriate value.",
+        codeWrapped: `try:\n    user_input = "forty-two"\n    number = int(user_input)\n    print(number)\nexcept ValueError:\n    print("Caught ValueError: invalid literal for int()!")`
+    },
+    {
+        level: 3,
+        title: "vulnerable_program.py (IndexError)",
+        code: `# Level 3: index out of range\nelements = [10, 20, 30]\nfifth_val = elements[5]\nprint(fifth_val)`,
+        correctAnswer: "IndexError",
+        successText: "Perfect! You caught IndexError. Python lists throw this exception when you try to access an index that is less than 0 or greater than or equal to the list size.",
+        explanation: "IndexError is raised when a sequence subscript is out of range.",
+        codeWrapped: `try:\n    elements = [10, 20, 30]\n    fifth_val = elements[5]\n    print(fifth_val)\nexcept IndexError:\n    print("Caught IndexError: list index out of range!")`
+    },
+    {
+        level: 4,
+        title: "vulnerable_program.py (KeyError)",
+        code: `# Level 4: dictionary key lookup\nstudent_records = {"id": "B680001", "name": "Somchai"}\ngpa_record = student_records["gpa"]\nprint(gpa_record)`,
+        correctAnswer: "KeyError",
+        successText: "Spectacular! You caught KeyError. Python dictionaries raise this when you attempt to retrieve a value using a key that does not exist in the dictionary map.",
+        explanation: "KeyError is raised when a mapping (dictionary) key is not found in the set of existing keys.",
+        codeWrapped: `try:\n    student_records = {"id": "B680001", "name": "Somchai"}\n    gpa_record = student_records["gpa"]\n    print(gpa_record)\nexcept KeyError:\n    print("Caught KeyError: 'gpa' not found!")`
+    }
+];
+
+let currentExceptionLevelIdx = 0;
+let hasSelectedShield = false;
+
+function loadExceptionLevel(lvlIdx) {
+    currentExceptionLevelIdx = lvlIdx;
+    hasSelectedShield = false;
+    
+    const level = exceptionLevels[lvlIdx];
+    const levelNumEl = document.getElementById("exception-level-num");
+    const codeDisplayEl = document.getElementById("exception-code-display");
+    const titleTextEl = document.querySelector("#exception-game-card .window-title-text");
+    const feedbackEl = document.getElementById("exception-feedback");
+    const nextBtn = document.getElementById("next-level-btn");
+    
+    if (levelNumEl) levelNumEl.textContent = level.level;
+    if (codeDisplayEl) codeDisplayEl.textContent = level.code.replace(/\\n/g, '\n');
+    if (titleTextEl) titleTextEl.textContent = level.title;
+    
+    if (feedbackEl) {
+        feedbackEl.style.display = "none";
+        feedbackEl.className = "minigame-feedback";
+    }
+    
+    if (nextBtn) {
+        nextBtn.style.display = "none";
+        nextBtn.innerHTML = lvlIdx === exceptionLevels.length - 1 ? 'Restart Game <i class="fa-solid fa-arrow-rotate-left"></i>' : 'Next Level <i class="fa-solid fa-arrow-right"></i>';
+    }
+    
+    // Reset buttons
+    const shieldButtons = document.querySelectorAll(".shield-btn");
+    shieldButtons.forEach(btn => {
+        btn.disabled = false;
+        btn.className = "shield-btn";
+    });
+    
+    // Update progress dots
+    for (let i = 1; i <= exceptionLevels.length; i++) {
+        const dot = document.getElementById("exc-dot-" + i);
+        if (dot) {
+            dot.className = "dot";
+            if (i < lvlIdx + 1) {
+                dot.classList.add("completed");
+            } else if (i === lvlIdx + 1) {
+                dot.classList.add("active");
+            }
+        }
+    }
+}
+
+function selectExceptionShield(selectedError) {
+    if (hasSelectedShield) return;
+    
+    const level = exceptionLevels[currentExceptionLevelIdx];
+    const isCorrect = (selectedError === level.correctAnswer);
+    
+    const feedbackEl = document.getElementById("exception-feedback");
+    const codeDisplayEl = document.getElementById("exception-code-display");
+    const shieldButtons = document.querySelectorAll(".shield-btn");
+    const nextBtn = document.getElementById("next-level-btn");
+    
+    // Find selected button
+    let clickedBtn = null;
+    shieldButtons.forEach(btn => {
+        if (btn.textContent.includes(selectedError)) {
+            clickedBtn = btn;
+        }
+    });
+    
+    if (isCorrect) {
+        hasSelectedShield = true;
+        
+        if (clickedBtn) {
+            clickedBtn.className = "shield-btn selected-correct";
+        }
+        
+        // Disable other buttons
+        shieldButtons.forEach(btn => {
+            if (btn !== clickedBtn) btn.disabled = true;
+        });
+        
+        // Show wrapped code execution
+        if (codeDisplayEl) {
+            codeDisplayEl.textContent = level.codeWrapped.replace(/\\n/g, '\n');
+        }
+        
+        // Show success feedback
+        if (feedbackEl) {
+            feedbackEl.style.display = "block";
+            feedbackEl.className = "minigame-feedback success";
+            feedbackEl.innerHTML = `<strong><i class="fa-solid fa-shield-halved"></i> Shield Deployed Successfully!</strong><br>${level.successText}<br><em style="font-size:11px; opacity:0.85;">Details: ${level.explanation}</em>`;
+        }
+        
+        // Update current dot to completed
+        const dot = document.getElementById("exc-dot-" + (currentExceptionLevelIdx + 1));
+        if (dot) {
+            dot.className = "dot completed";
+        }
+        
+        // Show next button
+        if (nextBtn) {
+            nextBtn.style.display = "inline-flex";
+        }
+    } else {
+        if (clickedBtn) {
+            clickedBtn.className = "shield-btn selected-incorrect";
+            clickedBtn.disabled = true;
+        }
+        
+        // Simulate python crash traceback
+        if (codeDisplayEl) {
+            const crashTraceback = `Traceback (most recent call last):
+  File "vulnerable_program.py", line 4, in <module>
+${level.correctAnswer}: exception raised in expression
+
+CRASH! Your shield [${selectedError}] did not catch the error. Try deploying a different shield!`;
+            codeDisplayEl.textContent = crashTraceback;
+        }
+        
+        // Show error feedback
+        if (feedbackEl) {
+            feedbackEl.style.display = "block";
+            feedbackEl.className = "minigame-feedback error";
+            feedbackEl.innerHTML = `<strong><i class="fa-solid fa-circle-xmark"></i> Runtime Crash!</strong><br>The selected shield failed to catch the exception. The program has terminated unexpectedly. Try another shield!`;
+        }
+    }
+}
+
+function advanceExceptionLevel() {
+    if (currentExceptionLevelIdx < exceptionLevels.length - 1) {
+        loadExceptionLevel(currentExceptionLevelIdx + 1);
+    } else {
+        resetExceptionGame();
+    }
+}
+
+function resetExceptionGame() {
+    loadExceptionLevel(0);
+}
+
+// Bind to window to allow HTML onClick access
+window.switchFlowTab = switchFlowTab;
+window.updateGpaBranches = updateGpaBranches;
+window.selectLoopType = selectLoopType;
+window.stepLoopSimulation = stepLoopSimulation;
+window.resetLoopSimulation = resetLoopSimulation;
+window.selectExceptionShield = selectExceptionShield;
+window.advanceExceptionLevel = advanceExceptionLevel;
+window.resetExceptionGame = resetExceptionGame;
+window.loadExceptionLevel = loadExceptionLevel;

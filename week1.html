@@ -100,15 +100,13 @@
 
                 <!-- 1. WELCOME SECTION -->
                 <section id="welcome-section" class="content-section active">
-                    
+                    <div class="module-header-block">
+                        <h2>Why Python for Data Structures & Algorithms?</h2>
+                    </div>
 
                     <div class="grid-2col">
-                        <div class="card glass interactive-why-python">
-                            <div class="card-header">
-                                <span class="card-icon"><i class="fa-solid fa-bridge"></i></span>
-                                <h3>Why Python for Data Structures & Algorithms?</h3>
-                            </div>
-                            <div class="card-body stacked-body">
+                        <!-- <div class="card glass interactive-why-python"> -->
+                            <!-- <div class="card-body stacked-body"> -->
                                 <!-- Top: Horizontal Interactive Tab Buttons -->
                                 <div class="why-horizontal-tabs">
                                     <button class="why-tab-btn active" data-tab="logic">
@@ -258,8 +256,11 @@ print("David's Grade:", grades.get("David"))</textarea>
                                             </div>
                                         </div>
 
-                                        <!-- Interactive Simulator 2 -->
-                                        <div class="simulator-box">
+
+                                    </div>
+
+                                     <!-- Interactive Simulator 2 -->
+                                        <!-- <div class="simulator-box">
                                             <span class="sim-title"><i class="fa-solid fa-desktop"></i> Interactive Hash Table Collision Simulator</span>
                                             <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px;">Select a student name. "David" collides with "Alice" on Bucket Index 1, demonstrating C's linked list traversal vs Python's native O(1) lookup.</p>
                                             <div class="sim-controls">
@@ -347,8 +348,7 @@ print("David's Grade:", grades.get("David"))</textarea>
                                                 </div>
                                             </div>
                                             <div class="sim-status" id="hash-status-text">Select a student name and click Find Grade to start simulation.</div>
-                                        </div>
-                                    </div>
+                                        </div> -->
 
                                     <!-- Content 3: Readability & Speed -->
                                     <div class="why-tab-content" id="why-content-readability">
@@ -444,7 +444,7 @@ for(int i = 0; i &lt; n; i++) {
 
                                         <!-- <h5 style="font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 700; margin-top: 1.75rem; margin-bottom: 0.5rem; color: var(--text-primary);"><i class="fa-solid fa-scissors" style="color: var(--accent-blue);"></i> 4. Array Slicing: Extracting Sub-Arrays</h5>
                                         <p style="margin-bottom: 1rem;">Consider extracting a portion of an array. Python uses the elegant slice notation <code>arr[start:end]</code>, which mirrors logical index intervals. In C, you must write a copy loop, manage target offset counters, and allocate sufficient contiguous elements.</p>
-
+ 
                                         <div class="code-compare-grid compact-compare">
                                             <div class="code-compare-block c-block">
                                                 <div class="block-title">C Array Slicing</div>
@@ -467,7 +467,7 @@ print("Sliced Array:", slice_arr)</textarea>
                                                 <pre class="live-code-output" id="readability-py-output">Click Run Code to execute...</pre>
                                             </div>
                                         </div> -->
-
+ 
                                         <!-- Interactive Simulator 3 -->
                                         <!-- <div class="simulator-box">
                                             <span class="sim-title"><i class="fa-solid fa-desktop"></i> Interactive Array Slicing Simulator</span>
@@ -493,7 +493,7 @@ print("Sliced Array:", slice_arr)</textarea>
                                                 </div>
                                             </div>
                                             <div class="sim-status" id="slice-status-text">Result array: [30, 40, 50]</div>
-                                        </div> -->
+                                        </div>
                                     </div>
 
                                 </div>
@@ -546,7 +546,7 @@ print("Sliced Array:", slice_arr)</textarea>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                 </section>
 
@@ -745,12 +745,16 @@ age = "twenty"   # Now refers to a string</code></pre>
                                         <h5 class="sim-title" style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
                                             <i class="fa-solid fa-layer-group" style="color: var(--accent-purple);"></i> Python Collections Interactive Explorer
                                         </h5>
-                                        <!-- Mini Tabs for selection -->
-                                        <div class="explorer-tabs" style="display: flex; gap: 4px; background: var(--bg-primary); padding: 3px; border-radius: 8px; border: 1px solid var(--border-color);">
-                                            <button class="explorer-tab-btn active" data-type="list" style="background: none; border: none; padding: 4px 10px; font-size: 11px; font-weight: 600; color: var(--text-secondary); border-radius: 6px; cursor: pointer; transition: var(--transition-fast);">List</button>
-                                            <button class="explorer-tab-btn" data-type="tuple" style="background: none; border: none; padding: 4px 10px; font-size: 11px; font-weight: 600; color: var(--text-secondary); border-radius: 6px; cursor: pointer; transition: var(--transition-fast);">Tuple</button>
-                                            <button class="explorer-tab-btn" data-type="dict" style="background: none; border: none; padding: 4px 10px; font-size: 11px; font-weight: 600; color: var(--text-secondary); border-radius: 6px; cursor: pointer; transition: var(--transition-fast);">Dict</button>
-                                            <button class="explorer-tab-btn" data-type="str" style="background: none; border: none; padding: 4px 10px; font-size: 11px; font-weight: 600; color: var(--text-secondary); border-radius: 6px; cursor: pointer; transition: var(--transition-fast);">String</button>
+                                        <div style="display: flex; gap: 10px; align-items: center;">
+                                            <!-- Mini Tabs for selection -->
+                                            <div class="explorer-tabs" style="display: flex; gap: 4px; background: var(--bg-primary); padding: 3px; border-radius: 8px; border: 1px solid var(--border-color);">
+                                                <button class="explorer-tab-btn active" data-type="list" style="background: none; border: 1px solid transparent; padding: 4px 10px; font-size: 11px; font-weight: 600; color: var(--text-secondary); border-radius: 6px; cursor: pointer; transition: var(--transition-fast);">List</button>
+                                                <button class="explorer-tab-btn" data-type="tuple" style="background: none; border: 1px solid transparent; padding: 4px 10px; font-size: 11px; font-weight: 600; color: var(--text-secondary); border-radius: 6px; cursor: pointer; transition: var(--transition-fast);">Tuple</button>
+                                                <button class="explorer-tab-btn" data-type="dict" style="background: none; border: 1px solid transparent; padding: 4px 10px; font-size: 11px; font-weight: 600; color: var(--text-secondary); border-radius: 6px; cursor: pointer; transition: var(--transition-fast);">Dict</button>
+                                                <button class="explorer-tab-btn" data-type="str" style="background: none; border: 1px solid transparent; padding: 4px 10px; font-size: 11px; font-weight: 600; color: var(--text-secondary); border-radius: 6px; cursor: pointer; transition: var(--transition-fast);">String</button>
+                                            </div>
+                                            <!-- Reset Button -->
+                                            <button class="btn btn-secondary" id="explorer-reset-btn" style="padding: 4px 10px; font-size: 11px; height: 26px;" title="Reset State"><i class="fa-solid fa-rotate-left"></i> Reset</button>
                                         </div>
                                     </div>
                                     <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 1rem 0; line-height: 1.4;">
@@ -795,10 +799,19 @@ age = "twenty"   # Now refers to a string</code></pre>
                                     </div>
                                 </div>
 
-                                <h4>Interactive Code Sandbox for Collections</h4>
-                                <p>Run this code to inspect Python types and operations:</p>
-                                <div class="embedded-editor-container" data-editor-id="collections-editor">
-                                    <textarea class="editor-textarea"># Let's explore Python structures
+                                <!-- Interactive Code Sandbox for Collections -->
+                                <div class="visualizer-simulator-box collections-sandbox" id="collections-sandbox-section" style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--border-radius-card); padding: 1.5rem; box-shadow: var(--shadow-sm); margin: 1.5rem 0;">
+                                    <div class="visualizer-header-row" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; margin-bottom: 0.75rem;">
+                                        <h5 class="sim-title" style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                                            <i class="fa-solid fa-terminal" style="color: var(--accent-green);"></i> Interactive Code Sandbox for Collections
+                                        </h5>
+                                    </div>
+                                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 1rem 0; line-height: 1.4;">
+                                        Run this code to inspect Python types and operations. Feel free to modify the list, tuple, and dictionary to observe dynamic output changes!
+                                    </p>
+                                    
+                                    <div class="embedded-editor-container" data-editor-id="collections-editor" style="margin-top: 0;">
+                                        <textarea class="editor-textarea"># Let's explore Python structures
 point = (3, 4) # Tuple
 names = ["Alice", "Bob", "Charlie"] # List
 grades = {"Alice": "A", "Bob": "B"} # Dictionary
@@ -814,12 +827,12 @@ print("Alice's Grade:", grades["Alice"])
 x, y = point
 print(f"Coordinates: x={x}, y={y}")
 </textarea>
-                                    <div class="editor-actions">
-                                        <button class="btn btn-success run-editor-btn"><i class="fa-solid fa-play"></i>
-                                            Run Code</button>
+                                        <div class="editor-actions">
+                                            <button class="btn btn-success run-editor-btn"><i class="fa-solid fa-play"></i> Run Code</button>
+                                        </div>
+                                        <div class="editor-output-header">Output:</div>
+                                        <pre class="editor-output">Click Run Code to see output...</pre>
                                     </div>
-                                    <div class="editor-output-header">Output:</div>
-                                    <pre class="editor-output">Click Run Code to see output...</pre>
                                 </div>
                             </div>
                         </div>
@@ -887,6 +900,96 @@ for index, val in enumerate(arr):
     print(f"Index {index} has value {val}")</code></pre>
                                     </div>
                                 </div>
+
+                                <!-- Interactive Control Flow Simulator -->
+                                <div class="minigame-card" id="flow-simulator-card">
+                                    <div class="minigame-header">
+                                        <div class="minigame-title">
+                                            <i class="fa-solid fa-code-branch text-accent" style="color: var(--accent-cyan) !important;"></i>
+                                            <span>Interactive Loops & Conditionals Simulator</span>
+                                        </div>
+                                        <div class="minigame-subtitle">Control variables dynamically and step through executions to see how Python evaluates branches and loops.</div>
+                                    </div>
+                                    <div class="minigame-body">
+                                        <!-- Tabs selectors -->
+                                        <div class="flow-tabs" style="display: flex; gap: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; margin-bottom: 1rem;">
+                                            <button class="explorer-tab-btn active" id="flow-tab-cond" onclick="switchFlowTab('cond')" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all var(--transition-fast);">
+                                                <i class="fa-solid fa-filter"></i> Conditionals (if-elif-else)
+                                            </button>
+                                            <button class="explorer-tab-btn" id="flow-tab-loop" onclick="switchFlowTab('loop')" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all var(--transition-fast);">
+                                                <i class="fa-solid fa-rotate"></i> Loops (for & while)
+                                            </button>
+                                        </div>
+
+                                        <!-- Simulator Workspace -->
+                                        <div class="flow-workspace" style="display: grid; grid-template-columns: 1.2fr 1.2fr; gap: 1.25rem;">
+                                            <!-- Panel Left: Interactive Code Display -->
+                                            <div class="flow-code-panel" style="border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; background-color: #0b0f19; font-family: 'Fira Code', monospace; font-size: 12px; display: flex; flex-direction: column;">
+                                                <div class="window-titlebar" style="background-color: rgba(255, 255, 255, 0.02); padding: 6px 12px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
+                                                    <span style="display: flex; gap: 4px;">
+                                                        <span class="dot-red" style="width:8px; height:8px; border-radius:50%; background-color:#ef4444; display:inline-block;"></span>
+                                                        <span class="dot-yellow" style="width:8px; height:8px; border-radius:50%; background-color:#f59e0b; display:inline-block;"></span>
+                                                        <span class="dot-green" style="width:8px; height:8px; border-radius:50%; background-color:#10b981; display:inline-block;"></span>
+                                                    </span>
+                                                    <span class="window-title-text" id="flow-code-title" style="font-size: 10px; color: var(--text-muted); font-family: monospace;">conditional_test.py</span>
+                                                </div>
+                                                <div class="code-container" id="flow-code-display" style="padding: 1rem; color: #f8fafc; line-height: 1.65; white-space: pre; overflow-x: auto; flex-grow: 1;">
+                                                    <!-- Dynamic Code with lines will be injected here -->
+                                                </div>
+                                            </div>
+
+                                            <!-- Panel Right: Controls & Output -->
+                                            <div class="flow-control-panel" style="display: flex; flex-direction: column; justify-content: space-between; border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem; background-color: rgba(0, 0, 0, 0.15);">
+                                                
+                                                <!-- Dynamic Section: Conditionals Controls -->
+                                                <div id="flow-controls-cond">
+                                                    <h5 style="margin: 0 0 0.5rem 0; font-family: 'Outfit', sans-serif; color: var(--text-primary); font-size: 13px; font-weight: 700;">Set GPA Variable:</h5>
+                                                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1rem;">
+                                                        <input type="range" id="flow-gpa-slider" min="0.0" max="4.0" step="0.1" value="2.5" oninput="updateGpaBranches(this.value)" style="flex-grow: 1; cursor: pointer;">
+                                                        <span id="flow-gpa-val" style="font-size: 14px; font-weight: 700; color: var(--accent-cyan); width: 35px; text-align: right;">2.5</span>
+                                                    </div>
+                                                    
+                                                    <div class="flow-explanation-box" id="flow-cond-explanation" style="font-size: 12px; color: var(--text-secondary); margin-bottom: 1rem; padding: 8px 12px; background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent-cyan); border-radius: 4px; line-height: 1.45;">
+                                                        GPA is 2.50. Evaluates True for `gpa >= 2.00` check.
+                                                    </div>
+                                                </div>
+
+                                                <!-- Dynamic Section: Loops Controls -->
+                                                <div id="flow-controls-loop" style="display: none;">
+                                                    <h5 style="margin: 0 0 0.5rem 0; font-family: 'Outfit', sans-serif; color: var(--text-primary); font-size: 13px; font-weight: 700;">Select Loop Type:</h5>
+                                                    <div class="loop-selector-grid" style="display: grid; grid-template-columns: 1fr; gap: 6px; margin-bottom: 1rem;">
+                                                        <button class="explorer-btn" id="loop-btn-range" onclick="selectLoopType('range')" style="width: 100%; border-radius: 6px; padding: 6px 10px; font-size: 11px;">
+                                                            <i class="fa-solid fa-arrow-down-1-9"></i> counting: for i in range(5)
+                                                        </button>
+                                                        <button class="explorer-btn" id="loop-btn-list" onclick="selectLoopType('list')" style="width: 100%; border-radius: 6px; padding: 6px 10px; font-size: 11px;">
+                                                            <i class="fa-solid fa-list-ul"></i> iter list: for val in arr
+                                                        </button>
+                                                        <button class="explorer-btn" id="loop-btn-while" onclick="selectLoopType('while')" style="width: 100%; border-radius: 6px; padding: 6px 10px; font-size: 11px;">
+                                                            <i class="fa-solid fa-arrows-spin"></i> conditional: while count &lt; 3
+                                                        </button>
+                                                    </div>
+
+                                                    <div style="display: flex; gap: 8px; margin-bottom: 1rem;">
+                                                        <button class="btn btn-secondary btn-sm" onclick="resetLoopSimulation()" style="flex: 1; font-size: 11px;"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+                                                        <button class="btn btn-primary btn-sm" id="flow-step-btn" onclick="stepLoopSimulation()" style="flex: 1; font-size: 11px;"><i class="fa-solid fa-forward-step"></i> Step Loop</button>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Console Mock Output (Shared) -->
+                                                <div class="console-output-box" style="display: flex; flex-direction: column; flex-grow: 1; min-height: 90px; background-color: #05070c; border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden; font-family: 'Fira Code', monospace; font-size: 11.5px;">
+                                                    <div style="background-color: rgba(255,255,255,0.02); padding: 4px 8px; font-size: 9px; color: var(--text-muted); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between;">
+                                                        <span>Output Console</span>
+                                                        <span id="loop-vars-tracker">Active vars: (none)</span>
+                                                    </div>
+                                                    <div id="flow-console-text" style="padding: 8px; color: #a3e635; white-space: pre-line; flex-grow: 1; line-height: 1.45; overflow-y: auto;">
+                                                        Console cleared.
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -924,6 +1027,71 @@ except FileNotFoundError:
     print("Error: The file does not exist!")
 except IOError:
     print("Error: General reading error!")</code></pre>
+                                    </div>
+                                </div>
+
+                                <!-- Exception Shield Game -->
+                                <div class="minigame-card" id="exception-game-card">
+                                    <div class="minigame-header">
+                                        <div class="minigame-title">
+                                            <i class="fa-solid fa-shield-halved text-accent"></i>
+                                            <span>Minigame: Exception Shield</span>
+                                        </div>
+                                        <div class="minigame-subtitle">Deploy the correct Exception Shield to catch the runtime crash!</div>
+                                    </div>
+                                    <div class="minigame-body">
+                                        <div class="exception-instructions">
+                                            In Python, standard runtime errors crash the program. By wrapping vulnerable code in a <code>try-except</code> block, you can "catch" these exceptions. Select the correct exception class to shield your program from crashing.
+                                        </div>
+                                        <div class="exception-progress">
+                                            <div class="progress-label">Progress: Level <span id="exception-level-num">1</span> of 4</div>
+                                            <div class="progress-dots">
+                                                <span class="dot active" id="exc-dot-1"></span>
+                                                <span class="dot" id="exc-dot-2"></span>
+                                                <span class="dot" id="exc-dot-3"></span>
+                                                <span class="dot" id="exc-dot-4"></span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Simulator Window -->
+                                        <div class="exception-workspace">
+                                            <div class="exception-code-window">
+                                                <div class="window-titlebar">
+                                                    <span class="dot-red"></span>
+                                                    <span class="dot-yellow"></span>
+                                                    <span class="dot-green"></span>
+                                                    <span class="window-title-text">vulnerable_program.py</span>
+                                                </div>
+                                                <div class="code-content" id="exception-code-display">
+                                                    <!-- Dynamic Level Code Goes Here -->
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Shields Selection -->
+                                            <div class="shield-selection-container">
+                                                <div class="shield-header-text">Select Exception Shield:</div>
+                                                <div class="shield-buttons-grid">
+                                                    <button class="shield-btn" onclick="selectExceptionShield('ZeroDivisionError')">
+                                                        <i class="fa-solid fa-shield-halved"></i> ZeroDivisionError
+                                                    </button>
+                                                    <button class="shield-btn" onclick="selectExceptionShield('ValueError')">
+                                                        <i class="fa-solid fa-shield-halved"></i> ValueError
+                                                    </button>
+                                                    <button class="shield-btn" onclick="selectExceptionShield('IndexError')">
+                                                        <i class="fa-solid fa-shield-halved"></i> IndexError
+                                                    </button>
+                                                    <button class="shield-btn" onclick="selectExceptionShield('KeyError')">
+                                                        <i class="fa-solid fa-shield-halved"></i> KeyError
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="minigame-feedback" id="exception-feedback" style="display: none;"></div>
+                                    </div>
+                                    <div class="minigame-actions">
+                                        <button class="btn btn-secondary btn-sm" onclick="resetExceptionGame()"><i class="fa-solid fa-arrow-rotate-left"></i> Restart Game</button>
+                                        <button class="btn btn-primary btn-sm" id="next-level-btn" onclick="advanceExceptionLevel()" style="display: none;">Next Level <i class="fa-solid fa-arrow-right"></i></button>
                                     </div>
                                 </div>
                             </div>
