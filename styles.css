@@ -86,7 +86,8 @@ body {
 
 .sidebar-toggle-btn {
     position: absolute;
-    top: 22px;
+    top: 50%;
+    transform: translateY(-50%);
     right: -12px;
     width: 24px;
     height: 24px;
@@ -99,7 +100,7 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 20;
-    transition: var(--transition-normal);
+    transition: transform var(--transition-normal), color var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
@@ -322,6 +323,66 @@ body {
 
 .btn-secondary:hover {
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Back to Home Button (Top Left) */
+.back-home-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    transition: transform var(--transition-normal), background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+    text-decoration: none;
+}
+
+.back-home-btn:hover {
+    background-color: var(--accent-blue-glow);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    transform: translateX(-3px);
+    box-shadow: 0 0 8px var(--accent-blue-glow);
+}
+
+body.light-mode .back-home-btn {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+body.light-mode .back-home-btn:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Header Action Buttons Text Reveal on Hover */
+.main-header .btn {
+    gap: 0;
+    padding: 8px 12px;
+    transition: padding var(--transition-normal), background-color var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+    border-radius: 8px;
+}
+
+.main-header .btn .btn-text {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+    transition: max-width var(--transition-normal), opacity var(--transition-normal), margin-left var(--transition-normal);
+    margin-left: 0;
+}
+
+.main-header .btn:hover {
+    padding: 8px 16px;
+}
+
+.main-header .btn:hover .btn-text {
+    max-width: 150px;
+    opacity: 1;
+    margin-left: 8px;
 }
 
 .btn-success {
@@ -674,6 +735,10 @@ body {
     color: #e2e8f0;
 }
 
+.light-mode .code-compare-block code {
+    color: #334155;
+}
+
 /* Pro Tips Info Box */
 .info-alert {
     background-color: var(--accent-blue-glow);
@@ -921,6 +986,20 @@ body {
     border: 1px solid rgba(239, 68, 68, 0.3);
     color: #fca5a5;
 }
+
+.light-mode .verification-status.success {
+    background-color: var(--accent-green-glow);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: rgba(16, 185, 129, 1);
+    
+}
+
+.light-mode .verification-status.failed {
+    background-color: var(--accent-red-glow);
+    border: 1px solid #ef4444;
+    color: #ef4444;
+}
+
 
 .editor-actions {
     display: flex;
@@ -1685,7 +1764,7 @@ body.light-mode .bigo-chart-container {
 
 /* Light mode accordion adjustments */
 body.light-mode .accordion-content {
-    background-color: rgba(0, 0, 0, 0.015);
+    background-color: rgb(255, 255, 255);
 }
 
 /* Form controls in light mode */
@@ -1743,3 +1822,1039 @@ body.light-mode .editor-output {
 .light-mode .problem-desc {
     background-color: #ffffff;
 }
+
+/* Why Python Interactive Tab Component */
+.split-body {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+@media (max-width: 900px) {
+    .split-body {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+}
+
+.why-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+@media (max-width: 900px) {
+    .why-tabs {
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 8px;
+    }
+}
+
+.why-tab-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px 16px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--text-secondary);
+    transition: var(--transition-normal);
+}
+
+@media (max-width: 900px) {
+    .why-tab-btn {
+        flex-shrink: 0;
+        width: max-content;
+    }
+}
+
+.why-tab-btn i {
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    transition: var(--transition-fast);
+}
+
+.tab-btn-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-btn-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.tab-btn-desc {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.why-tab-btn:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-color: var(--accent-blue-glow);
+}
+
+body.light-mode .why-tab-btn:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.why-tab-btn.active {
+    background-color: var(--accent-blue-glow);
+    border-color: var(--accent-blue);
+    box-shadow: 0 4px 12px var(--accent-blue-glow);
+}
+
+.why-tab-btn.active i {
+    color: var(--accent-blue);
+    text-shadow: 0 0 8px var(--accent-blue-glow);
+}
+
+/* Right Content Panel Styling */
+.why-content-panel {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+    justify-content: flex-start;
+}
+
+body.light-mode .why-content-panel {
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.why-tab-content {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    animation: fadeIn var(--transition-normal) forwards;
+}
+
+.why-tab-content.active {
+    display: flex;
+}
+
+.why-tab-content h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.why-tab-content p {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.compact-compare {
+    margin-top: 12px !important;
+    gap: 12px !important;
+}
+
+.compact-compare pre {
+    padding: 12px 16px !important;
+}
+
+.compact-compare code {
+    font-size: 11.5px !important;
+}
+
+/* Stacked Body layout for horizontal tabs */
+.stacked-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+/* Horizontal tab layout */
+.why-horizontal-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+}
+
+@media (max-width: 900px) {
+    .why-horizontal-tabs {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Premium Interactive Simulators */
+.simulator-box {
+    padding: 1.25rem;
+    background-color: rgba(9, 13, 22, 0.4);
+    border: 1px dashed var(--border-accent);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: var(--transition-normal);
+}
+
+body.light-mode .simulator-box {
+    background-color: rgba(241, 245, 249, 0.6);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.sim-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-shadow: 0 0 8px var(--accent-blue-glow);
+}
+
+.sim-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.sim-status {
+    padding: 10px 14px;
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-left: 3px solid var(--accent-blue);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    transition: var(--transition-normal);
+}
+
+body.light-mode .sim-status {
+    background-color: #f1f5f9;
+    border-left-color: var(--accent-blue);
+}
+
+/* 1. Memory Resizer Simulator styles */
+.mem-blocks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 8px 0;
+    padding: 0 14px 0 14px;
+    ;
+}
+
+.mem-row-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mem-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.mem-cell {
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.02);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.light-mode .mem-cell {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.15);
+    color: var(--text-muted);
+}
+
+.mem-cell.filled {
+    background-color: var(--accent-blue-glow);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    box-shadow: 0 0 10px var(--accent-blue-glow);
+    transform: scale(1.05);
+}
+
+body.light-mode .mem-cell.filled {
+    background-color: rgba(59, 130, 246, 0.12);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+.mem-cell.reallocated {
+    background-color: var(--accent-green-glow);
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+    box-shadow: 0 0 10px var(--accent-green-glow);
+    transform: scale(1.05);
+}
+
+body.light-mode .mem-cell.reallocated {
+    background-color: rgba(16, 185, 129, 0.12);
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+}
+
+/* 2. Hash Map Simulator styles */
+.hash-buckets {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.hash-bucket {
+    display: flex;
+    align-items: center;
+    background-color: rgba(9, 13, 22, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 16px;
+    gap: 16px;
+    min-height: 52px;
+}
+
+body.light-mode .hash-bucket {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+.hash-bucket-index {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    min-width: 80px;
+}
+
+.hash-bucket-nodes {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.hash-node {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.light-mode .hash-node {
+    background-color: #f8fafc;
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.hash-node strong {
+    color: var(--text-primary);
+}
+
+.hash-arrow {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    animation: pulse 1.5s infinite;
+}
+
+.hash-node.active-search {
+    border-color: #f97316;
+    background-color: rgba(249, 115, 22, 0.15);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(249, 115, 22, 0.3);
+    transform: scale(1.05);
+}
+
+body.light-mode .hash-node.active-search {
+    border-color: #f97316;
+    background-color: rgba(249, 115, 22, 0.1);
+    color: #f97316;
+    box-shadow: 0 0 10px rgba(249, 115, 22, 0.15);
+}
+
+.hash-node.found {
+    border-color: var(--accent-green);
+    background-color: var(--accent-green-glow);
+    color: #fff;
+    box-shadow: 0 0 10px var(--accent-green-glow);
+    transform: scale(1.05);
+}
+
+body.light-mode .hash-node.found {
+    border-color: var(--accent-green);
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--accent-green);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.15);
+}
+
+/* 3. Array Slicing Simulator styles */
+.slice-blocks {
+    display: flex;
+    gap: 8px;
+    margin: 12px 0;
+    width: 100%;
+}
+
+.slice-block {
+    flex: 1;
+    height: 58px;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.light-mode .slice-block {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.slice-block-val {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+}
+
+.slice-block-idx {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 1px;
+}
+
+.slice-block.highlighted {
+    background-color: var(--accent-purple-glow);
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 12px var(--accent-purple-glow);
+    transform: translateY(-4px);
+}
+
+body.light-mode .slice-block.highlighted {
+    background-color: rgba(168, 85, 247, 0.12);
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.15);
+}
+
+.slice-block.highlighted .slice-block-val {
+    color: var(--text-primary);
+}
+
+.slice-block.highlighted .slice-block-idx {
+    color: var(--accent-purple);
+    font-weight: 600;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 8px 0;
+    background-color: rgba(0, 0, 0, 0.15);
+    padding: 14px;
+    border-radius: 8px;
+}
+
+body.light-mode .slider-container {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.slider-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.slider-row label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    min-width: 120px;
+}
+
+.slider-row label span {
+    color: var(--accent-blue);
+    font-family: 'Fira Code', monospace;
+    font-weight: 700;
+}
+
+.sim-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border-color);
+    outline: none;
+    transition: background 0.3s;
+}
+
+body.light-mode .sim-slider {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.sim-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent-blue);
+    cursor: pointer;
+    box-shadow: 0 0 8px var(--accent-blue-glow);
+    transition: transform 0.15s ease;
+}
+
+.sim-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.25);
+}
+
+/* Python Live Code Editor styling */
+.live-editor-block {
+    position: relative;
+    border-left: 3px solid var(--accent-blue) !important;
+}
+
+.live-editor-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.live-code-textarea {
+    width: 100%;
+    background-color: #02040a;
+    border: 1px solid var(--border-color);
+    border-radius: 0 0 8px 8px;
+    border-top: none;
+    color: #38bdf8; /* Nice sky blue for Python live code */
+    font-family: 'Fira Code', monospace;
+    font-size: 11.5px;
+    padding: 14px;
+    resize: vertical;
+    outline: none;
+    line-height: 1.5;
+}
+
+body.light-mode .live-code-textarea {
+    background-color: #f8fafc;
+    border-color: rgba(0, 0, 0, 0.08);
+    color: #0369a1; /* Deep blue */
+}
+
+.live-code-textarea:focus {
+    border-color: var(--accent-blue);
+    box-shadow: inset 0 0 8px var(--accent-blue-glow);
+}
+
+.btn-run-live {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    background-color: var(--accent-green);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 10px var(--accent-green-glow);
+    transition: var(--transition-fast);
+    z-index: 5;
+}
+
+.btn-run-live:hover {
+    background-color: #059669;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
+}
+
+.btn-run-live:active {
+    transform: translateY(0);
+}
+
+.live-code-output {
+    margin-top: 8px;
+    padding: 10px 14px;
+    background-color: #010307;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    color: #e2e8f0;
+    white-space: pre-wrap;
+    min-height: 38px;
+    transition: all var(--transition-normal);
+}
+
+body.light-mode .live-code-output {
+    background-color: #f1f5f9;
+    border-color: rgba(0, 0, 0, 0.08);
+    color: #1e293b;
+}
+
+.live-code-output.running {
+    border-left: 3px solid var(--accent-blue);
+    color: var(--text-secondary);
+}
+
+.live-code-output.success {
+    border-left: 3px solid var(--accent-green);
+}
+
+/* Hash comparison side-by-side split styling */
+.hash-comparison-split {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 20px;
+    width: 100%;
+}
+
+@media (max-width: 900px) {
+    .hash-comparison-split {
+        grid-template-columns: 1fr;
+    }
+}
+
+.hash-c-panel, .hash-py-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.panel-subtitle-small {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    padding: 8px 16px;
+    background-color: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid var(--border-color);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+/* Python flat dict table styling */
+.py-dict-table {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.01);
+}
+
+body.light-mode .py-dict-table {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+.py-dict-row {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr 1.6fr 0.8fr;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.light-mode .py-dict-row {
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+.py-dict-row:last-child {
+    border-bottom: none;
+}
+
+.py-dict-row.header {
+    font-weight: 600;
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.03);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+body.light-mode .py-dict-row.header {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.py-dict-row span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.py-dict-row.active-search {
+    border-left: 3px solid #f97316;
+    background-color: rgba(249, 115, 22, 0.12);
+    color: #fff;
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(249, 115, 22, 0.15);
+}
+
+body.light-mode .py-dict-row.active-search {
+    background-color: rgba(249, 115, 22, 0.08);
+    color: #f97316;
+}
+
+.py-dict-row.found {
+    border-left: 3px solid var(--accent-green);
+    background-color: var(--accent-green-glow);
+    color: #fff;
+    transform: scale(1.02);
+    box-shadow: 0 0 10px var(--accent-green-glow);
+}
+
+body.light-mode .py-dict-row.found {
+    background-color: rgba(16, 185, 129, 0.08);
+    color: var(--accent-green);
+}
+
+.mem-cell .fa-brands.fa-python {
+    filter: drop-shadow(0 0 4px var(--accent-blue-glow));
+    animation: fadeIn 0.3s ease;
+}
+
+/* Memory Comparison side-by-side split styling */
+.mem-comparison-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .mem-comparison-split {
+        grid-template-columns: 1fr;
+    }
+}
+
+.mem-side {
+    display: flex;
+    flex-direction: column;
+    background-color: #060913;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.mem-side.c-mem-side {
+    border-left: 3px solid #ef4444;
+}
+
+.mem-side.py-mem-side {
+    border-left: 3px solid #3b82f6;
+}
+
+body.light-mode .mem-side {
+    background-color: #f8fafc;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode .mem-side.c-mem-side {
+    border-left: 3px solid #ef4444;
+}
+
+body.light-mode .mem-side.py-mem-side {
+    border-left: 3px solid #3b82f6;
+}
+
+/* Python Dynamic Typing Visualizer CSS */
+.v-code-line.active {
+    background-color: rgba(59, 130, 246, 0.15) !important;
+    border-left: 3px solid var(--accent-blue) !important;
+    font-weight: 600;
+}
+
+.light-mode .v-code-line.active {
+    background-color: rgba(59, 130, 246, 0.1) !important;
+    border-left: 3px solid var(--accent-blue) !important;
+}
+
+.v-explanation-box {
+    transition: all var(--transition-normal);
+}
+
+.var-tag {
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 6px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    animation: scaleIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    border-right: 3px solid var(--accent-blue);
+}
+
+.light-mode .var-tag {
+    color: #1e293b;
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+}
+
+.heap-obj-card {
+    background-color: rgba(15, 22, 38, 0.85);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
+    animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.light-mode .heap-obj-card {
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.heap-obj-card.active-obj {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 12px var(--accent-blue-glow);
+}
+
+.heap-obj-card.orphan {
+    opacity: 0.35;
+    border-style: dashed;
+    border-color: var(--text-muted) !important;
+    background-color: rgba(15, 22, 38, 0.3) !important;
+    transform: scale(0.95);
+}
+
+.light-mode .heap-obj-card.orphan {
+    background-color: #f1f5f9 !important;
+}
+
+.heap-obj-type {
+    font-size: 9px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    letter-spacing: 0.5px;
+}
+
+.heap-obj-val {
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.heap-obj-ref {
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--border-color);
+    padding-top: 2px;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Python Collections Explorer CSS */
+.explorer-tab-btn.active {
+    background-color: var(--accent-purple-glow) !important;
+    border: 1px solid var(--border-accent) !important;
+    color: #ffffff !important;
+}
+
+body.light-mode .explorer-tab-btn.active {
+    background-color: rgba(168, 85, 247, 0.15) !important;
+    color: var(--accent-purple) !important;
+}
+
+.explorer-btn {
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition-fast);
+}
+
+.explorer-btn:hover {
+    background-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.explorer-btn i {
+    width: 14px;
+    text-align: center;
+}
+
+.col-item-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(15, 22, 38, 0.8);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 6px 12px;
+    min-width: 60px;
+    text-align: center;
+    animation: scaleIn 0.25s ease;
+    transition: all var(--transition-normal);
+}
+
+.light-mode .col-item-box {
+    background-color: #ffffff;
+}
+
+.col-item-box.highlight {
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 8px var(--accent-purple-glow);
+}
+
+.col-item-box.locked {
+    border-color: rgba(239, 68, 68, 0.4);
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+.light-mode .col-item-box.locked {
+    background-color: rgba(239, 68, 68, 0.03);
+}
+
+.col-item-idx {
+    font-size: 9px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.col-item-val {
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.col-item-lock {
+    font-size: 9px;
+    color: var(--accent-red);
+    margin-top: 4px;
+}
+
+.dict-table-container {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    animation: scaleIn 0.3s ease;
+}
+
+.dict-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+}
+
+.dict-table th {
+    background-color: rgba(255, 255, 255, 0.02);
+    padding: 8px 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.dict-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+.dict-table tr:last-child td {
+    border-bottom: none;
+}
+
+.dict-table tr.highlight td {
+    background-color: var(--accent-purple-glow);
+    color: var(--text-primary);
+}
+
+.light-mode .dict-table tr.highlight td {
+    background-color: rgba(168, 85, 247, 0.1);
+}
+
+.type-error-flash {
+    animation: shakeFlash 0.4s ease;
+    border-color: var(--accent-red) !important;
+    box-shadow: 0 0 12px var(--accent-red-glow) !important;
+}
+
+@keyframes shakeFlash {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-4px); }
+    40%, 80% { transform: translateX(4px); }
+}
+

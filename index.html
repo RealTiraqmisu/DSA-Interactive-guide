@@ -1,1048 +1,908 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C to Python: Interactive Transition Guide | DSA BIT</title>
+    <title>Data Structures and Algorithms | Course Dashboard</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- FontAwesome for Premium Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Main Style -->
-    <link rel="stylesheet" href="styles.css">
-    <!-- Pyodide (WASM Python interpreter) -->
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+    
+    <style>
+        /* Design System & Variables */
+        :root {
+            /* Dark Mode Variables (Default base for the CSS) */
+            --bg-primary: #090d16;
+            --bg-secondary: #0f1626;
+            --bg-card: rgba(15, 22, 38, 0.7);
+            --bg-header: linear-gradient(135deg, #0b0f1a, #05070b);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-accent: rgba(59, 130, 246, 0.25);
+            
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            /* Accents & Glows */
+            --accent-blue: #3b82f6;
+            --accent-blue-glow: rgba(59, 130, 246, 0.2);
+            --accent-purple: #a855f7;
+            --accent-purple-glow: rgba(168, 85, 247, 0.2);
+            --accent-cyan: #06b6d4;
+            --accent-cyan-glow: rgba(6, 182, 212, 0.2);
+            --accent-green: #10b981;
+            --accent-green-glow: rgba(16, 185, 129, 0.2);
+            --accent-red: #ef4444;
+            --accent-red-glow: rgba(239, 68, 68, 0.2);
+            --accent-orange: #f97316;
+            --accent-orange-glow: rgba(249, 115, 22, 0.2);
+            
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+            
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --border-radius-card: 16px;
+            --border-radius-btn: 10px;
+        }
+
+        /* Light Mode Theme Overrides */
+        body.light-mode {
+            --bg-primary: #f1f5f9;      /* slate-100 */
+            --bg-secondary: #f8fafc;    /* slate-50 */
+            --bg-card: #ffffff;         /* pure white */
+            --bg-header: linear-gradient(135deg, #1e293b, #0f172a);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --border-accent: rgba(59, 130, 246, 0.15);
+            
+            --text-primary: #0f172a;    /* slate-900 */
+            --text-secondary: #334155;  /* slate-700 */
+            --text-muted: #64748b;      /* slate-500 */
+            
+            --accent-blue-glow: rgba(59, 130, 246, 0.1);
+            --accent-purple-glow: rgba(168, 85, 247, 0.1);
+            --accent-cyan-glow: rgba(6, 182, 212, 0.1);
+            --accent-green-glow: rgba(16, 185, 129, 0.1);
+            --accent-red-glow: rgba(239, 68, 68, 0.1);
+            --accent-orange-glow: rgba(249, 115, 22, 0.1);
+            
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Base & Reset Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color var(--transition-normal), color var(--transition-normal);
+        }
+
+        a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Course Header Dashboard */
+        header {
+            background: var(--bg-header);
+            color: #ffffff;
+            padding: 2.5rem 2rem 2rem;
+            position: relative;
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .header-title-area h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin-bottom: 0.4rem;
+        }
+
+        .header-title-area p {
+            font-size: 1rem;
+            color: #cbd5e1;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-title-area p i {
+            color: var(--accent-blue);
+        }
+
+        /* Theme Toggle Button in Header */
+        .theme-toggle-btn {
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            padding: 10px 16px;
+            border-radius: var(--border-radius-btn);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-fast);
+        }
+
+        .theme-toggle-btn:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-mode .theme-toggle-btn {
+            /* Keep header styling clean in dark header context */
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Main Workspace Container */
+        main {
+            max-width: 1200px;
+            width: 100%;
+            margin: 2rem auto 4rem;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        /* Top Widgets Grid (Overview, Contact & Resources) */
+
+        .info-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-card);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+
+        body:not(.light-mode) .info-card {
+            backdrop-filter: blur(12px);
+        }
+
+        .info-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.75rem;
+        }
+
+        .info-card-icon {
+            font-size: 1.4rem;
+            color: var(--accent-blue);
+        }
+
+        .info-card-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .info-card-body {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .info-card-body p.tagline {
+            font-style: italic;
+            color: var(--accent-blue);
+            font-weight: 500;
+        }
+
+        .key-info-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .key-info-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .key-info-list li strong {
+            color: var(--text-primary);
+            min-width: 110px;
+        }
+
+        .discord-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #5865f2;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: var(--border-radius-btn);
+            font-weight: 600;
+            font-size: 0.85rem;
+            width: fit-content;
+            transition: var(--transition-fast);
+        }
+
+        .discord-btn:hover {
+            background-color: #4752c4;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(88, 101, 242, 0.35);
+        }
+
+        /* Course Outline Control Center */
+        .controls-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-card);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .controls-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .controls-title h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .controls-title p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+
+
+        /* Filter buttons container */
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+
+        .filter-btn {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .filter-btn:hover {
+            color: var(--text-primary);
+            background-color: var(--border-color);
+        }
+
+        .filter-btn.active {
+            background-color: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: #ffffff;
+            box-shadow: 0 4px 10px var(--accent-blue-glow);
+        }
+
+        /* Course Weeks Grid */
+        .weeks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Week card general styling */
+        .week-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-card);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+            transition: opacity var(--transition-normal), transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+        }
+
+        .week-card.hidden {
+            display: none !important;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .week-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border-accent);
+        }
+
+        /* Category left borders on hover */
+        .week-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: transparent;
+            transition: var(--transition-fast);
+        }
+        
+        .week-card[data-category="basics"]:hover::before { background-color: var(--accent-blue); }
+        .week-card[data-category="complexity"]:hover::before { background-color: var(--accent-orange); }
+        .week-card[data-category="lists"]:hover::before { background-color: var(--accent-purple); }
+        .week-card[data-category="trees"]:hover::before { background-color: var(--accent-cyan); }
+
+        /* Week card header details */
+        .week-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .week-badge {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        /* Color configurations for week badges */
+        .week-card[data-category="basics"] .week-badge {
+            background-color: var(--accent-blue-glow);
+            color: var(--accent-blue);
+        }
+        .week-card[data-category="complexity"] .week-badge {
+            background-color: var(--accent-orange-glow);
+            color: var(--accent-orange);
+        }
+        .week-card[data-category="lists"] .week-badge {
+            background-color: var(--accent-purple-glow);
+            color: var(--accent-purple);
+        }
+        .week-card[data-category="trees"] .week-badge {
+            background-color: var(--accent-cyan-glow);
+            color: var(--accent-cyan);
+        }
+
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Material buttons listing */
+        .materials-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .material-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 10px 14px;
+            border-radius: var(--border-radius-btn);
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: var(--transition-fast);
+        }
+
+        .material-link i {
+            font-size: 1.05rem;
+            width: 18px;
+            text-align: center;
+        }
+
+        .material-link:hover {
+            color: var(--text-primary);
+            background-color: var(--border-color);
+            text-decoration: none;
+            transform: translateX(2px);
+        }
+
+        /* Specific link icon colors */
+        .material-link i.fa-file-pdf { color: var(--accent-red); }
+        .material-link i.fa-laptop-code { color: var(--accent-blue); }
+        .material-link i.fa-book-open { color: var(--accent-orange); }
+
+        /* Special Card styles (Holidays/Exams) */
+        .week-card.special-card {
+            border-style: dashed;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.03), rgba(239, 68, 68, 0.01));
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .week-card.special-card[data-special="midterm"],
+        .week-card.special-card[data-special="final"] {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.03), rgba(249, 115, 22, 0.01));
+            border-color: rgba(249, 115, 22, 0.25);
+        }
+
+        .week-card.special-card .week-badge {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--accent-red);
+        }
+
+        .week-card.special-card[data-special="midterm"] .week-badge,
+        .week-card.special-card[data-special="final"] .week-badge {
+            background-color: rgba(249, 115, 22, 0.1);
+            color: var(--accent-orange);
+        }
+
+        .special-placeholder {
+            margin: auto;
+            text-align: center;
+            padding: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-muted);
+        }
+
+        .special-placeholder i {
+            font-size: 2.2rem;
+            opacity: 0.6;
+        }
+
+        .special-placeholder[data-icon="midterm"] i,
+        .special-placeholder[data-icon="final"] i {
+            color: var(--accent-orange);
+        }
+        .special-placeholder[data-icon="holiday"] i {
+            color: var(--accent-red);
+        }
+
+        .special-placeholder span {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        /* Footer styling */
+        footer {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--bg-secondary);
+            margin-top: auto;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .weeks-grid > div {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            main {
+                margin: 1.5rem auto 3rem;
+            }
+        }
+    </style>
 </head>
+<body class="light-mode">
 
-<body>
-    <div class="app-container">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" title="Toggle Sidebar">
-                <i class="fa-solid fa-chevron-left"></i>
+    <!-- Course Header -->
+    <header>
+        <div class="header-container">
+            <div class="header-title-area">
+                <h1>Data Structures and Algorithms</h1>
+                <p><i class="fa-solid fa-building-columns"></i>Course Home Dashboard</p>
+            </div>
+            <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Light/Dark Mode">
+                <i class="fa-solid fa-moon"></i> <span id="theme-text">Dark Mode</span>
             </button>
-            <div class="sidebar-header">
-                <div class="logo-area">
-                    <span class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></span>
-                    <div class="logo-text">
-                        <h1>DSA Course</h1>
-                    </div>
-                </div>
-            </div>
-
-            <nav class="sidebar-nav">
-                <div class="nav-section-title">Course Overview</div>
-                <button class="nav-item active" data-target="welcome-section">
-                    <i class="fa-solid fa-door-open"></i> Course Introduction
-                </button>
-
-                <div class="nav-section-title"> Basics & Recursion</div>
-                <button class="nav-item" data-target="module1-section">
-                    <i class="fa-solid fa-code"></i> Module 1: Python Basics
-                </button>
-                <button class="nav-item" data-target="lab1-section">
-                    <i class="fa-solid fa-flask-vial"></i> Lab 1 Practice
-                </button>
-                <button class="nav-item" data-target="module2-section">
-                    <i class="fa-solid fa-arrows-spin"></i> Module 2: Recursion
-                </button>
-
-                <div class="nav-section-title">Complexity & OOP</div>
-                <button class="nav-item" data-target="module3-section">
-                    <i class="fa-solid fa-chart-line"></i> Module 3: Big-O & timeit
-                </button>
-                <button class="nav-item" data-target="module4-section">
-                    <i class="fa-solid fa-cubes"></i> Module 4: Object-Oriented
-                </button>
-
-                <div class="nav-section-title">Evaluation</div>
-                <button class="nav-item" data-target="quiz-section">
-                    <i class="fa-solid fa-clipboard-question"></i> Transition Quiz
-                </button>
-            </nav>
-
-            <div class="sidebar-footer">
-                <div class="interpreter-status">
-                    <span class="status-dot loading" id="status-dot"></span>
-                    <span class="status-text" id="status-text">Python Loading...</span>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Main Content Area -->
-        <main class="main-content">
-            <!-- Header -->
-            <header class="main-header">
-                <div class="header-left">
-                    <span class="breadcrumb">C to Python Transition Guide</span>
-                    <h2 id="current-section-title">Course Introduction</h2>
-                </div>
-                <div class="header-right" style="display: flex; gap: 12px;">
-                    <button class="btn btn-secondary" id="theme-toggle-btn" title="Toggle Light/Dark Mode">
-                        <i class="fa-solid fa-sun"></i> <span id="theme-text">Light Mode</span>
-                    </button>
-                    <button class="btn btn-secondary toggle-console-btn" id="toggle-console-btn">
-                        <i class="fa-solid fa-terminal"></i> Terminal Console
-                    </button>
-                </div>
-            </header>
-
-            <!-- Scrollable Content Frame -->
-            <div class="content-body">
-
-                <!-- 1. WELCOME SECTION -->
-                <section id="welcome-section" class="content-section active">
-                    
-
-                    <div class="grid-2col">
-                        <div class="card glass">
-                            <div class="card-header">
-                                <span class="card-icon"><i class="fa-solid fa-bridge"></i></span>
-                                <h3>Why Python for Data Structures & Algorithms?</h3>
-                            </div>
-                            <div class="card-body">
-                                <ul>
-                                    <li><strong>Focus on Logic:</strong> Python allows you to write abstract algorithms
-                                        without worrying about raw memory address management, segmentation faults, and
-                                        manual buffer reallocations.</li>
-                                    <li><strong>Rich Built-in Types:</strong> Python lists, tuples, and dictionaries are
-                                        powerful natively-implemented data structures.</li>
-                                    <li><strong>Readability & Speed:</strong> Python code reads like pseudo-code. It
-                                        will enable you to prototype, test, and implement advanced algorithms faster.
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="card glass">
-                            <div class="card-header">
-                                <span class="card-icon"><i class="fa-solid fa-network-wired"></i></span>
-                                <h3>Core Structural Contrast</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-container">
-                                    <table class="comparison-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Feature</th>
-                                                <th>C Language</th>
-                                                <th>Python Language</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><strong>Typing</strong></td>
-                                                <td class="c-theme">Static (Explicitly declared)</td>
-                                                <td class="py-theme">Dynamic (Inferred at runtime)</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Memory</strong></td>
-                                                <td class="c-theme">Manual (malloc / free)</td>
-                                                <td class="py-theme">Automatic Garbage Collection</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Braces</strong></td>
-                                                <td class="c-theme">Curly braces {} & semicolons ;</td>
-                                                <td class="py-theme">Whitespace & Indentation</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Arrays</strong></td>
-                                                <td class="c-theme">Fixed size, contiguous memory</td>
-                                                <td class="py-theme">Dynamic size list, polymorphic</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>OOP</strong></td>
-                                                <td class="c-theme">Not native (structs only)</td>
-                                                <td class="py-theme">Native Class & Objects</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </section>
-
-                <!-- 2. MODULE 1: BASIC PYTHON -->
-                <section id="module1-section" class="content-section">
-                    <div class="module-header-block">
-                        <h2>Module 1: Python Basics for C Programmers</h2>
-                        <p>Learn how basic programming concepts map from C syntax to Python semantics.</p>
-                    </div>
-
-                    <div class="accordion-group">
-                        <!-- Accordion 1 -->
-                        <div class="accordion-item glass">
-                            <button class="accordion-trigger">
-                                <span><i class="fa-solid fa-cube"></i> Variable Declarations & Dynamic Typing</span>
-                                <span class="accordion-arrow"><i class="fa-solid fa-chevron-down"></i></span>
-                            </button>
-                            <div class="accordion-content">
-                                <p>In <strong>C</strong>, variables are bound to a type at compile-time (static typing).
-                                    Memory size is fixed.</p>
-                                <p>In <strong>Python</strong>, variables are names pointing to dynamic objects. You do
-                                    not declare types, and a variable can reference different types of objects during
-                                    execution.</p>
-
-                                <div class="code-compare-grid">
-                                    <div class="code-compare-block c-block">
-                                        <div class="block-title">C Code</div>
-                                        <pre><code>int age = 20;
-double gpa = 3.85;
-char grade = 'A';
-// Types cannot be changed!
-age = "twenty"; // COMPILE ERROR!</code></pre>
-                                    </div>
-                                    <div class="code-compare-block py-block">
-                                        <div class="block-title">Python Code</div>
-                                        <pre><code>age = 20         # Inferred as int
-gpa = 3.85       # Inferred as float
-grade = 'A'      # Inferred as str
-# Re-binding is perfectly legal
-age = "twenty"   # Now refers to a string</code></pre>
-                                    </div>
-                                </div>
-                                <div class="info-alert">
-                                    <i class="fa-solid fa-circle-info"></i>
-                                    <span><strong>Pro-Tip:</strong> In Python, everything is an object. Numbers,
-                                        strings, and functions are all objects. The variable name is just a
-                                        pointer!</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Accordion 2 -->
-                        <div class="accordion-item glass">
-                            <button class="accordion-trigger">
-                                <span><i class="fa-solid fa-list-ol"></i> Core Collections: Strings, Tuples, Lists, &
-                                    Dicts</span>
-                                <span class="accordion-arrow"><i class="fa-solid fa-chevron-down"></i></span>
-                            </button>
-                            <div class="accordion-content">
-                                <p>This is the most critical shift. In C, you used raw contiguous arrays. Python
-                                    introduces rich native collections:</p>
-
-                                <div class="table-container">
-                                    <table class="data-type-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Type</th>
-                                                <th>C Equivalent</th>
-                                                <th>Syntax Example</th>
-                                                <th>Key Characteristics</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><strong>String (str)</strong></td>
-                                                <td>char[] (Null-terminated)</td>
-                                                <td>s = "Hello DSA"</td>
-                                                <td><strong>Immutable</strong> (cannot modify elements directly). Rich
-                                                    string methods.</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>List (list)</strong></td>
-                                                <td>int* with manual realloc</td>
-                                                <td>fruits = ["apple", 123]</td>
-                                                <td><strong>Mutable</strong> dynamic array. Can hold elements of
-                                                    different types.</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Tuple (tuple)</strong></td>
-                                                <td>Read-only Struct or Array</td>
-                                                <td>point = (10, 20)</td>
-                                                <td><strong>Immutable</strong> sequence. Used for fixed records or
-                                                    multiple return values.</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Dictionary (dict)</strong></td>
-                                                <td>Custom Hash Map implementation</td>
-                                                <td>grades = {"Anna": A, "Ben": B}</td>
-                                                <td><strong>Mutable</strong> key-value mapping. Near O(1) lookups.</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <h4>Interactive Code Sandbox for Collections</h4>
-                                <p>Run this code to inspect Python types and operations:</p>
-                                <div class="embedded-editor-container" data-editor-id="collections-editor">
-                                    <textarea class="editor-textarea"># Let's explore Python structures
-point = (3, 4) # Tuple
-names = ["Alice", "Bob", "Charlie"] # List
-grades = {"Alice": "A", "Bob": "B"} # Dictionary
-
-# Try modifying names list
-names.append("David")
-print("Names:", names)
-
-# Try reading from grades dictionary
-print("Alice's Grade:", grades["Alice"])
-
-# Try list unpacking with tuple!
-x, y = point
-print(f"Coordinates: x={x}, y={y}")
-</textarea>
-                                    <div class="editor-actions">
-                                        <button class="btn btn-success run-editor-btn"><i class="fa-solid fa-play"></i>
-                                            Run Code</button>
-                                    </div>
-                                    <div class="editor-output-header">Output:</div>
-                                    <pre class="editor-output">Click Run Code to see output...</pre>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Accordion 3 -->
-                        <div class="accordion-item glass">
-                            <button class="accordion-trigger">
-                                <span><i class="fa-solid fa-repeat"></i> Control Flow & Indentation: Loops &
-                                    Conditionals</span>
-                                <span class="accordion-arrow"><i class="fa-solid fa-chevron-down"></i></span>
-                            </button>
-                            <div class="accordion-content">
-                                <p>In C, code blocks are delimited by curly braces {}. In Python, blocks are defined
-                                    strictly by indentation (typically 4 spaces) and preceded by a colon :.</p>
-
-                                <div class="code-compare-grid">
-                                    <div class="code-compare-block c-block">
-                                        <div class="block-title">C Code</div>
-                                        <pre><code>if (gpa >= 3.50) {
-    printf("Honor Roll\n");
-} else if (gpa >= 2.00) {
-    printf("Pass\n");
-} else {
-    printf("Fail\n");
-}
-
-for (int i = 0; i < 5; i++) {
-    printf("%d\n", i);
-}</code></pre>
-                                    </div>
-                                    <div class="code-compare-block py-block">
-                                        <div class="block-title">Python Code</div>
-                                        <pre><code>if gpa >= 3.50:
-    print("Honor Roll")
-elif gpa >= 2.00:  # Note 'elif' instead of 'else if'
-    print("Pass")
-else:
-    print("Fail")
-
-# Range loops
-for i in range(5): # range(5) yields 0, 1, 2, 3, 4
-    print(i)</code></pre>
-                                    </div>
-                                </div>
-
-                                <h4>Looping through collections: C vs Python</h4>
-                                <div class="code-compare-grid">
-                                    <div class="code-compare-block c-block">
-                                        <div class="block-title">C: Looping by index</div>
-                                        <pre><code>int arr[] = {10, 20, 30};
-int n = sizeof(arr)/sizeof(arr[0]);
-for (int i = 0; i < n; i++) {
-    printf("Val: %d\n", arr[i]);
-}</code></pre>
-                                    </div>
-                                    <div class="code-compare-block py-block">
-                                        <div class="block-title">Python: Looping directly over collection</div>
-                                        <pre><code>arr = [10, 20, 30]
-# Directly fetch elements!
-for val in arr:
-    print(f"Val: {val}")
-
-# Need indexes? Use enumerate()
-for index, val in enumerate(arr):
-    print(f"Index {index} has value {val}")</code></pre>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Accordion 4 -->
-                        <div class="accordion-item glass">
-                            <button class="accordion-trigger">
-                                <span><i class="fa-solid fa-triangle-exclamation"></i> Exception Handling:
-                                    Try-Except</span>
-                                <span class="accordion-arrow"><i class="fa-solid fa-chevron-down"></i></span>
-                            </button>
-                            <div class="accordion-content">
-                                <p>C does not have try-catch blocks. Standard error handling involves checking return
-                                    codes (e.g., if a pointer returned by malloc is NULL, or if fopen returns
-                                    NULL).</p>
-                                <p>Python employs structural Exception Handling via try-except-finally. This keeps
-                                    critical algorithms clean of constant nested checks.</p>
-
-                                <div class="code-compare-grid">
-                                    <div class="code-compare-block c-block">
-                                        <div class="block-title">C Error Checking</div>
-                                        <pre><code>FILE *f = fopen("data.txt", "r");
-if (f == NULL) {
-    perror("Error opening file");
-    return -1;
-}
-// Read code...
-fclose(f);</code></pre>
-                                    </div>
-                                    <div class="code-compare-block py-block">
-                                        <div class="block-title">Python Exception Handling</div>
-                                        <pre><code>try:
-    with open("data.txt", "r") as f:
-        content = f.read()
-except FileNotFoundError:
-    print("Error: The file does not exist!")
-except IOError:
-    print("Error: General reading error!")</code></pre>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="module-action-block">
-                        <button class="btn btn-primary" onclick="navigateToSection('lab1-section')">
-                            Go to Lab Exercises <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </section>
-
-                <!-- 3. LAB 1 PRACTICE SECTION -->
-                <section id="lab1-section" class="content-section">
-                    <div class="module-header-block">
-                        <h2>Lab 1: Basic Python Coding Exercises</h2>
-                        <p>Write your own code directly in the browser to solve actual lab assignments. Click "Verify
-                            Solution" to grade your code automatically.</p>
-                    </div>
-
-                    <!-- Lab Selector Tabs -->
-                    <div class="lab-tabs">
-                        <button class="lab-tab active" onclick="switchLabTab('lab-1-1')">Lab 1-1: Multiple
-                            Check</button>
-                        <button class="lab-tab" onclick="switchLabTab('lab-1-2')">Lab 1-2: Even Without Modulo</button>
-                        <button class="lab-tab" onclick="switchLabTab('lab-1-3')">Lab 1-3: MinMax Loop</button>
-                        <button class="lab-tab" onclick="switchLabTab('lab-1-4')">Challenge 1-1: Vowels Counter</button>
-                        <button class="lab-tab" onclick="switchLabTab('lab-1-5')">Challenge 1-2: List
-                            Comprehension</button>
-                    </div>
-
-                    <!-- Lab Contents -->
-                    <div class="lab-content-container">
-                        <!-- LAB 1-1 -->
-                        <div id="lab-1-1" class="lab-tab-content active">
-                            <div class="problem-desc">
-                                <h3>Lab 1-1: is_multiple(n, m)</h3>
-                                <p>Write a function <code>is_multiple(n, m)</code> that accepts two integers
-                                    <code>n</code> and <code>m</code> and returns <code>True</code> if <code>n</code> is
-                                    a multiple of <code>m</code> (that is, n = m \times i for some integer i), and
-                                    <code>False</code> otherwise.
-                                </p>
-                                <strong>Inputs:</strong> Two integers. <br>
-                                <strong>Output:</strong> Boolean (<code>True</code> or <code>False</code>).
-                            </div>
-                            <div class="embedded-editor-container" data-editor-id="lab1-1-editor">
-                                <textarea class="editor-textarea">def is_multiple(n: int, m: int):
-    # Write your solution here
-    return False
-</textarea>
-                                <div class="editor-actions">
-                                    <button class="btn btn-secondary run-editor-btn"><i class="fa-solid fa-play"></i>
-                                        Run Code</button>
-                                    <button class="btn btn-primary verify-editor-btn" data-lab="lab1_1"><i
-                                            class="fa-solid fa-circle-check"></i> Verify Solution</button>
-                                </div>
-                                <div class="verification-status" id="lab1_1-status"></div>
-                                <div class="editor-output-header">Output Console:</div>
-                                <pre class="editor-output">Press Verify to run unit tests...</pre>
-                            </div>
-                        </div>
-
-                        <!-- LAB 1-2 -->
-                        <div id="lab-1-2" class="lab-tab-content">
-                            <div class="problem-desc">
-                                <h3>Lab 1-2: is_even(k) Without Arithmetic Operators</h3>
-                                <p>Write a function <code>is_even(k)</code> that accepts an integer <code>k</code> and
-                                    returns <code>True</code> if <code>k</code> is even, and <code>False</code>
-                                    otherwise.</p>
-                                <div class="warning-alert">
-                                    <i class="fa-solid fa-triangle-exclamation"></i>
-                                    <span><strong>Constraint:</strong> You cannot use multiplication (<code>*</code>),
-                                        division (<code>/</code>, <code>//</code>), or modulo (<code>%</code>) operators
-                                        in your solution.</span>
-                                </div>
-                                <p><em>Hint: Think about how binary representations work. What characterizes an even
-                                        number in binary? Or think of bitwise operator <code>&</code> (AND).</em></p>
-                            </div>
-                            <div class="embedded-editor-container" data-editor-id="lab1-2-editor">
-                                <textarea class="editor-textarea">def is_even(k: int):
-    # Write your solution here. Do not use *, /, //, %
-    pass
-</textarea>
-                                <div class="editor-actions">
-                                    <button class="btn btn-secondary run-editor-btn"><i class="fa-solid fa-play"></i>
-                                        Run Code</button>
-                                    <button class="btn btn-primary verify-editor-btn" data-lab="lab1_2"><i
-                                            class="fa-solid fa-circle-check"></i> Verify Solution</button>
-                                </div>
-                                <div class="verification-status" id="lab1_2-status"></div>
-                                <div class="editor-output-header">Output Console:</div>
-                                <pre class="editor-output">Press Verify to run unit tests...</pre>
-                            </div>
-                        </div>
-
-                        <!-- LAB 1-3 -->
-                        <div id="lab-1-3" class="lab-tab-content">
-                            <div class="problem-desc">
-                                <h3>Lab 1-3: Iterative MinMax</h3>
-                                <p>Write a function <code>minmax_iter(data)</code> that takes a list of one or more
-                                    numbers and returns a tuple of length two <code>(smallest, largest)</code>
-                                    containing the minimum and maximum values in the list.</p>
-                                <div class="warning-alert">
-                                    <i class="fa-solid fa-triangle-exclamation"></i>
-                                    <span><strong>Constraint:</strong> You must use iteration (a loop). You cannot use
-                                        built-in functions <code>min()</code>, <code>max()</code>,
-                                        <code>sorted()</code>, or the list method <code>.sort()</code>.</span>
-                                </div>
-                            </div>
-                            <div class="embedded-editor-container" data-editor-id="lab1-3-editor">
-                                <textarea class="editor-textarea">def minmax_iter(data):
-    if not data:
-        raise ValueError("Input sequence must contain at least one number.")
-    
-    smallest = data[0]
-    largest = data[0]
-    
-    # Write your iteration logic here to update smallest and largest
-    
-    return (smallest, largest)
-</textarea>
-                                <div class="editor-actions">
-                                    <button class="btn btn-secondary run-editor-btn"><i class="fa-solid fa-play"></i>
-                                        Run Code</button>
-                                    <button class="btn btn-primary verify-editor-btn" data-lab="lab1_3"><i
-                                            class="fa-solid fa-circle-check"></i> Verify Solution</button>
-                                </div>
-                                <div class="verification-status" id="lab1_3-status"></div>
-                                <div class="editor-output-header">Output Console:</div>
-                                <pre class="editor-output">Press Verify to run unit tests...</pre>
-                            </div>
-                        </div>
-
-                        <!-- CHALLENGE 1-1 -->
-                        <div id="lab-1-4" class="lab-tab-content">
-                            <div class="problem-desc">
-                                <h3>Challenge 1-1: Vowels Dictionary Counter</h3>
-                                <p>Write a function <code>count_vowels(word)</code> that counts the number of
-                                    occurrences of each vowel (a, e, i, o, u) in a given string. Your function should
-                                    return a dictionary with vowel characters as keys and their counts as values
-                                    (regardless of capitalization, though input is typically lowercase).</p>
-                                <p><strong>Example output for <code>"tissue"</code>:</strong>
-                                    <code>{'a': 0, 'e': 1, 'i': 1, 'o': 0, 'u': 1}</code>
-                                </p>
-                            </div>
-                            <div class="embedded-editor-container" data-editor-id="lab1-4-editor">
-                                <textarea class="editor-textarea">def count_vowels(word):
-    vowels = 'aeiou'
-    # Initialize the dictionary and count occurrences in 'word'
-    result = {v: 0 for v in vowels}
-    
-    # Write your loop here
-    
-    return result
-</textarea>
-                                <div class="editor-actions">
-                                    <button class="btn btn-secondary run-editor-btn"><i class="fa-solid fa-play"></i>
-                                        Run Code</button>
-                                    <button class="btn btn-primary verify-editor-btn" data-lab="lab1_4"><i
-                                            class="fa-solid fa-circle-check"></i> Verify Solution</button>
-                                </div>
-                                <div class="verification-status" id="lab1_4-status"></div>
-                                <div class="editor-output-header">Output Console:</div>
-                                <pre class="editor-output">Press Verify to run unit tests...</pre>
-                            </div>
-                        </div>
-
-                        <!-- CHALLENGE 1-2 -->
-                        <div id="lab-1-5" class="lab-tab-content">
-                            <div class="problem-desc">
-                                <h3>Challenge 1-2: List Comprehension</h3>
-                                <p>Use Python's compact List Comprehension syntax to produce the exact sequence of
-                                    numbers: <br>
-                                    <code>[0, 2, 6, 12, 20, 30, 42, 56, 72, 90]</code>
-                                </p>
-                                <p><em>Hint: Analyze the relationship between elements. Look at their indexes: <br>
-                                        Idx\ 0 \rightarrow 0 \times 1 = 0 <br>
-                                        Idx\ 1 \rightarrow 1 \times 2 = 2 <br>
-                                        Idx\ 2 \rightarrow 2 \times 3 = 6 <br>
-                                        ... <br>
-                                        Idx\ i \rightarrow i \times (i + 1) for i \in [0, 9].</em></p>
-                            </div>
-                            <div class="embedded-editor-container" data-editor-id="lab1-5-editor">
-                                <textarea class="editor-textarea"># Replace the expression below with list comprehension syntax
-result = [] # Replace this
-</textarea>
-                                <div class="editor-actions">
-                                    <button class="btn btn-secondary run-editor-btn"><i class="fa-solid fa-play"></i>
-                                        Run Code</button>
-                                    <button class="btn btn-primary verify-editor-btn" data-lab="lab1_5"><i
-                                            class="fa-solid fa-circle-check"></i> Verify Solution</button>
-                                </div>
-                                <div class="verification-status" id="lab1_5-status"></div>
-                                <div class="editor-output-header">Output Console:</div>
-                                <pre class="editor-output">Press Verify to run unit tests...</pre>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 4. MODULE 2: RECURSION -->
-                <section id="module2-section" class="content-section">
-                    <div class="module-header-block">
-                        <h2>Module 2: Recursion & Memory Call Stack</h2>
-                        <p>How functions call themselves, and how memory manages recursive frames.</p>
-                    </div>
-
-                    <div class="grid-2col">
-                        <div class="card glass">
-                            <div class="card-header">
-                                <span class="card-icon"><i class="fa-solid fa-gears"></i></span>
-                                <h3>Understanding Recursion</h3>
-                            </div>
-                            <div class="card-body">
-                                <p>A recursive function is simply a function that calls itself. In DSA, recursion is
-                                    critical for traversing non-linear structures like Trees and Graphs.</p>
-                                <p>Every correct recursive function needs two components:</p>
-                                <ol>
-                                    <li><strong>Base Case(s):</strong> The simplest input configuration where the result
-                                        is computed immediately, ending the recursive chain. Without this, you get an
-                                        infinite loop resulting in a <strong>Stack Overflow</strong> (in Python, a
-                                        <code>RecursionError</code>).
-                                    </li>
-                                    <li><strong>Recursive Step:</strong> Reducing the current problem parameters so they
-                                        move closer to the base case, and calling the function again with those reduced
-                                        parameters.</li>
-                                </ol>
-                                <p>In Python, the default recursion limit is 1000 frames (to prevent system memory
-                                    crash). In C, the limit is based on your OS stack frame memory size.</p>
-                            </div>
-                        </div>
-
-                        <div class="card glass">
-                            <div class="card-header">
-                                <span class="card-icon"><i class="fa-solid fa-arrows-left-right"></i></span>
-                                <h3>C vs Python Recursion Syntax</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="code-compare-grid">
-                                    <div class="code-compare-block c-block">
-                                        <div class="block-title">C: Factorial</div>
-                                        <pre><code>int factorial(int n) {
-    if (n <= 1) { // Base Case
-        return 1;
-    }
-    // Recursive Step
-    return n * factorial(n - 1);
-}</code></pre>
-                                    </div>
-                                    <div class="code-compare-block py-block">
-                                        <div class="block-title">Python: Factorial</div>
-                                        <pre><code>def factorial(n):
-    if n <= 1: # Base Case
-        return 1
-    # Recursive Step
-    return n * factorial(n - 1)</code></pre>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Interactive Recursion Visualizer -->
-                    <div class="card glass visualizer-card">
-                        <div class="card-header">
-                            <span class="card-icon"><i class="fa-solid fa-computer"></i></span>
-                            <h3>Interactive Call Stack Visualizer</h3>
-                        </div>
-                        <div class="card-body">
-                            <p>Select a recursive function, choose an input size, and step through the execution. Watch
-                                how memory stack frames are pushed when calling, and popped when returning values!</p>
-
-                            <div class="visualizer-controls">
-                                <div class="control-group">
-                                    <label for="rec-algorithm">Algorithm:</label>
-                                    <select id="rec-algorithm" class="form-control">
-                                        <option value="factorial">Factorial (n!)</option>
-                                        <option value="fibonacci">Fibonacci (Double recursion recursion-tree)</option>
-                                        <option value="sum">Recursive Sum (1 + 2 + ... + n)</option>
-                                    </select>
-                                </div>
-                                <div class="control-group">
-                                    <label for="rec-input">Input N:</label>
-                                    <input type="number" id="rec-input" class="form-control" min="1" max="5" value="4">
-                                </div>
-                                <div class="btn-group">
-                                    <button class="btn btn-secondary" id="rec-start-btn"><i
-                                            class="fa-solid fa-play"></i> Initialize</button>
-                                    <button class="btn btn-primary" id="rec-step-btn" disabled><i
-                                            class="fa-solid fa-angles-right"></i> Next Step</button>
-                                    <button class="btn btn-danger" id="rec-reset-btn"><i
-                                            class="fa-solid fa-rotate-left"></i> Reset</button>
-                                </div>
-                            </div>
-
-                            <div class="visualizer-display">
-                                <div class="visualizer-code-panel">
-                                    <div class="panel-title">Active Code Execution:</div>
-                                    <pre
-                                        id="visualizer-code-display">Select an algorithm and click Initialize to begin...</pre>
-                                </div>
-                                <div class="visualizer-stack-panel">
-                                    <div class="panel-title">Memory Call Stack:</div>
-                                    <div class="stack-container" id="stack-container">
-                                        <div class="empty-stack-msg">Stack is empty. Click Initialize.</div>
-                                    </div>
-                                </div>
-                                <div class="visualizer-log-panel">
-                                    <div class="panel-title">Trace Log:</div>
-                                    <div class="trace-log" id="trace-log">
-                                        Initializing visual logs...
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 5. MODULE 3: COMPLEXITY & TIMEIT -->
-                <section id="module3-section" class="content-section">
-                    <div class="module-header-block">
-                        <h2>Module 3: Complexity Analysis & timeit Module</h2>
-                        <p>Evaluate code performance theoretically using Big-O, and empirically using Python's timing
-                            tools.</p>
-                    </div>
-
-                    <div class="grid-2col">
-                        <div class="card glass">
-                            <div class="card-header">
-                                <span class="card-icon"><i class="fa-solid fa-calculator"></i></span>
-                                <h3>Theoretical Complexity: Big-O</h3>
-                            </div>
-                            <div class="card-body">
-                                <p>Big-O notation describes how execution time or space requirement scales relative to
-                                    the input size N in the worst-case scenario.</p>
-                                <p>In Python, collections have highly optimized underlying implementations that dictate
-                                    different operations' efficiency:</p>
-                                <ul>
-                                    <li><strong>List index access (lst[i]):</strong> O(1) - contiguous array lookups.
-                                    </li>
-                                    <li><strong>List append (lst.append(x)):</strong> Amortized O(1) - over-allocates
-                                        space.</li>
-                                    <li><strong>List search (x in lst):</strong> O(N) - linear scan.</li>
-                                    <li><strong>Dict lookup (dict[key]):</strong> Average O(1) - hash table buckets.
-                                    </li>
-                                    <li><strong>Dict insertion (dict[key] = val):</strong> Average O(1).</li>
-                                </ul>
-                                <div class="info-alert">
-                                    <i class="fa-solid fa-circle-info"></i>
-                                    <span>Because dict search is O(1) while list search is O(N), selecting the right
-                                        data structure dramatically improves algorithm performance!</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Big-O Growth Curves -->
-                        <div class="card glass">
-                            <div class="card-header">
-                                <span class="card-icon"><i class="fa-solid fa-chart-area"></i></span>
-                                <h3>Big-O Growth Curve Reference</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="bigo-chart-container">
-                                    <svg viewBox="0 0 400 250" class="bigo-svg" id="bigo-svg">
-                                        <!-- Axis -->
-                                        <line x1="40" y1="210" x2="380" y2="210" stroke="#475569" stroke-width="2" />
-                                        <line x1="40" y1="20" x2="40" y2="210" stroke="#475569" stroke-width="2" />
-
-                                        <!-- Axis Labels -->
-                                        <text x="370" y="230" fill="#94a3b8" font-size="10">N</text>
-                                        <text x="15" y="30" fill="#94a3b8" font-size="10"
-                                            transform="rotate(-90 15 30)">Time</text>
-
-                                        <!-- Curves (Placeholder paths, updated by JS) -->
-                                        <path id="curve-constant" d="" stroke="#10b981" stroke-width="2" fill="none" />
-                                        <path id="curve-log" d="" stroke="#06b6d4" stroke-width="2" fill="none" />
-                                        <path id="curve-linear" d="" stroke="#3b82f6" stroke-width="2" fill="none" />
-                                        <path id="curve-nlogn" d="" stroke="#a855f7" stroke-width="2" fill="none" />
-                                        <path id="curve-quadratic" d="" stroke="#f43f5e" stroke-width="2" fill="none" />
-
-                                        <!-- Legend -->
-                                        <text x="50" y="35" fill="#f43f5e" font-size="9">O(N²)</text>
-                                        <text x="180" y="65" fill="#a855f7" font-size="9">O(N log N)</text>
-                                        <text x="250" y="115" fill="#3b82f6" font-size="9">O(N)</text>
-                                        <text x="310" y="180" fill="#06b6d4" font-size="9">O(log N)</text>
-                                        <text x="320" y="200" fill="#10b981" font-size="9">O(1)</text>
-                                    </svg>
-                                </div>
-                                <div class="slider-group">
-                                    <label for="n-slider">Drag to increase N: <span id="n-val">20</span></label>
-                                    <input type="range" id="n-slider" min="5" max="100" value="20">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Live Timing Benchmark -->
-                    <div class="card glass benchmark-card">
-                        <div class="card-header">
-                            <span class="card-icon"><i class="fa-solid fa-stopwatch"></i></span>
-                            <h3>Empirical Timing: Live Python timeit Benchmark</h3>
-                        </div>
-                        <div class="card-body">
-                            <p>In Python, the <code>timeit</code> module measures the execution time of small code
-                                snippets by repeating them thousands of times. Here, we run actual searches and sorts
-                                directly inside the Pyodide environment on lists of size N and plot the result live.</p>
-
-                            <div class="benchmark-config">
-                                <div class="control-group">
-                                    <label for="benchmark-type">Compare Algorithms:</label>
-                                    <select id="benchmark-type" class="form-control">
-                                        <option value="search">Linear Search O(N) vs. Binary Search O(log N)</option>
-                                        <option value="sort">Bubble Sort O(N²) vs. Built-in List Sort O(N log N)
-                                        </option>
-                                    </select>
-                                </div>
-                                <button class="btn btn-success" id="run-benchmark-btn"><i class="fa-solid fa-gauge"></i>
-                                    Run Benchmarks</button>
-                            </div>
-
-                            <div class="grid-2col">
-                                <div class="terminal-box">
-                                    <div class="panel-title">Benchmark Log Terminal:</div>
-                                    <pre id="benchmark-terminal"
-                                        class="terminal-body">Select algorithms and click Run Benchmarks...</pre>
-                                </div>
-                                <div class="chart-box">
-                                    <div class="panel-title">Live Empirical Timing Curve:</div>
-                                    <div class="empirical-chart-container">
-                                        <svg viewBox="0 -30 400 240" class="empirical-svg" id="empirical-svg">
-                                            <!-- Axis -->
-                                            <line x1="40" y1="180" x2="380" y2="180" stroke="#475569"
-                                                stroke-width="2" />
-                                            <line x1="40" y1="20" x2="40" y2="180" stroke="#475569" stroke-width="2" />
-                                            <text x="370" y="195" fill="#94a3b8" font-size="10">N</text>
-                                            <text x="15" y="30" fill="#94a3b8" font-size="10"
-                                                transform="rotate(-90 15 30)">Time (ms)</text>
-
-                                            <!-- Paths plotting empirical data -->
-                                            <path id="emp-path-1" d="" stroke="#f43f5e" stroke-width="2.5"
-                                                fill="none" />
-                                            <path id="emp-path-2" d="" stroke="#10b981" stroke-width="2.5"
-                                                fill="none" />
-
-                                            <!-- Legend -->
-                                            <g id="emp-legend" transform="translate(50, 30)">
-                                                <rect x="0" y="0" width="10" height="10" fill="#f43f5e" />
-                                                <text x="15" y="9" fill="#e2e8f0" font-size="9"
-                                                    id="emp-legend-lbl1">Algorithm A</text>
-                                                <rect x="0" y="15" width="10" height="10" fill="#10b981" />
-                                                <text x="15" y="24" fill="#e2e8f0" font-size="9"
-                                                    id="emp-legend-lbl2">Algorithm B</text>
-                                            </g>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 6. MODULE 4: OBJECT-ORIENTED PROGRAMMING -->
-                <section id="module4-section" class="content-section">
-                    <div class="module-header-block">
-                        <h2>Module 4: Transition to Object-Oriented Programming (OOP)</h2>
-                        <p>Re-organize data structures from C Structs to Python Classes, understanding the mechanics of
-                            <code>self</code>.
-                        </p>
-                    </div>
-
-                    <div class="grid-2col">
-                        <div class="card glass">
-                            <div class="card-header">
-                                <span class="card-icon"><i class="fa-solid fa-shapes"></i></span>
-                                <h3>From Structs to Classes</h3>
-                            </div>
-                            <div class="card-body">
-                                <p>In C, code and data are separate. You define a <code>struct</code> containing only
-                                    variables (fields), and write standard functions that accept pointers to that struct
-                                    to modify them.</p>
-                                <p>In Python OOP, a <strong>Class</strong> bundles data (attributes) and behavior
-                                    (methods) together into a single blueprint.</p>
-                                <p><strong>Demystifying <code>self</code>:</strong><br>
-                                    In Python class methods, the first parameter is always <code>self</code>. What is
-                                    it? <br>
-                                    It is simply the pointer/reference to the active object instance. In C, you
-                                    explicitly write <code>print_student(&s)</code>. In Python, you write
-                                    <code>s.print_student()</code>. Under the hood, Python passes the address of
-                                    <code>s</code> as the first argument, bound to the keyword <code>self</code>!
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="card glass">
-                            <div class="card-header">
-                                <span class="card-icon"><i class="fa-solid fa-code-compare"></i></span>
-                                <h3>C Struct vs. Python Class Syntax</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="code-compare-grid">
-                                    <div class="code-compare-block c-block">
-                                        <div class="block-title">C Struct & Function</div>
-                                        <pre><code>struct Point {
-    int x;
-    int y;
-};
-
-void move(struct Point *p, int dx, int dy) {
-    p->x += dx;
-    p->y += dy;
-}
-
-// Usage
-struct Point pt = {10, 20};
-move(&pt, 5, -5);</code></pre>
-                                    </div>
-                                    <div class="code-compare-block py-block">
-                                        <div class="block-title">Python Class & Method</div>
-                                        <pre><code>class Point:
-    def __init__(self, x, y):
-        self.x = x # Attributes
-        self.y = y
-
-    def move(self, dx, dy): # self acts as ptr
-        self.x += dx
-        self.y += dy
-
-# Usage
-pt = Point(10, 20)
-pt.move(5, -5)</code></pre>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- OOP Sandbox & inheritance explanation -->
-                    <div class="card glass">
-                        <div class="card-header">
-                            <span class="card-icon"><i class="fa-solid fa-diagram-project"></i></span>
-                            <h3>OOP Mechanics Sandbox: Try Inheritance & Encapsulation</h3>
-                        </div>
-                        <div class="card-body">
-                            <p>Run the code below to see inheritance in Python. Notice how <code>Dog</code> inherits
-                                attributes and methods from <code>Animal</code>, and uses
-                                <code>super().__init__()</code> to initialize base attributes.
-                            </p>
-                            <div class="embedded-editor-container" data-editor-id="oop-editor">
-                                <textarea class="editor-textarea">class Animal:
-    def __init__(self, name):
-        self.name = name
-    
-    def speak(self):
-        return "Some sound"
-
-class Dog(Animal): # Dog inherits from Animal
-    def __init__(self, name, breed):
-        super().__init__(name) # Call parent constructor
-        self.breed = breed
-    
-    def speak(self): # Method Overriding
-        return "Woof! Woof!"
-
-# Create instance
-my_dog = Dog("Buddy", "Golden Retriever")
-print(f"Name: {my_dog.name}")
-print(f"Breed: {my_dog.breed}")
-print(f"Sound: {my_dog.speak()}")
-</textarea>
-                                <div class="editor-actions">
-                                    <button class="btn btn-success run-editor-btn"><i class="fa-solid fa-play"></i> Run
-                                        Code</button>
-                                </div>
-                                <div class="editor-output-header">Output Console:</div>
-                                <pre class="editor-output">Click Run Code to see output...</pre>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 7. QUIZ SECTION -->
-                <section id="quiz-section" class="content-section">
-                    <div class="module-header-block">
-                        <h2>C to Python Transition Quiz</h2>
-                        <p>Assess your structural understanding of how programming paradigms transition from low-level C
-                            code to Python abstractions.</p>
-                    </div>
-
-                    <div class="quiz-container" id="quiz-container">
-                        <!-- Questions will be dynamically loaded by JS -->
-                    </div>
-
-                    <div class="quiz-summary-card glass" id="quiz-summary-card" style="display:none;">
-                        <h3>Quiz Results</h3>
-                        <div class="score-display">
-                            <span class="score-num" id="quiz-score-num">0</span> / <span class="score-total"
-                                id="quiz-score-total">5</span>
-                        </div>
-                        <p id="quiz-feedback-text">Nice try! Review the feedback below each question to master the
-                            transition concepts.</p>
-                        <button class="btn btn-primary" onclick="resetQuiz()"><i class="fa-solid fa-rotate-left"></i>
-                            Retake Quiz</button>
-                    </div>
-                </section>
-
-            </div>
-        </main>
-    </div>
-
-    <!-- Collapsible Interactive Console Drawer -->
-    <div class="console-drawer" id="console-drawer">
-        <div class="console-header">
-            <div class="console-title">
-                <i class="fa-solid fa-terminal"></i> Global Python Interpreter Playground
-            </div>
-            <div class="console-actions">
-                <button class="console-btn" id="clear-console-btn" title="Clear Console"><i
-                        class="fa-solid fa-trash-can"></i></button>
-                <button class="console-btn" id="minimize-console-btn" title="Toggle Console"><i
-                        class="fa-solid fa-chevron-down"></i></button>
-            </div>
         </div>
-        <div class="console-content">
-            <div class="console-workspace">
-                <div class="console-editor-section">
-                    <div class="panel-subtitle">Write Python Code:</div>
-                    <textarea id="global-console-textarea" class="console-textarea"># Type any Python code here and run it!
-nums = [i for i in range(10) if i % 2 == 0]
-print("Even numbers generated:", nums)
-print("Square values:", [x*x for x in nums])
-</textarea>
-                    <button class="btn btn-success" id="run-global-console-btn"><i class="fa-solid fa-play"></i> Execute
-                        Code</button>
-                </div>
-                <div class="console-terminal-section">
-                    <div class="panel-subtitle">Standard Output (stdout):</div>
-                    <pre class="terminal-body" id="global-console-terminal">Python Environment is preparing...</pre>
+    </header>
+
+    <!-- Main Content Workspace -->
+    <main>
+
+
+        <!-- Dynamic Outline Dashboard Control -->
+        <section class="controls-card">
+            <div class="controls-header">
+                <div class="controls-title">
+                    <h2>Course outline</h2>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <script src="app.js"></script>
+            <!-- Topic Filters -->
+            <div class="filter-container">
+                <button class="filter-btn active" data-filter="all">All Materials</button>
+                <button class="filter-btn" data-filter="basics">Basics & Recursion</button>
+                <button class="filter-btn" data-filter="complexity">Complexity & Sorting</button>
+                <button class="filter-btn" data-filter="lists">Linked Lists, Stacks & Queues</button>
+                <button class="filter-btn" data-filter="trees">Trees & Graphs</button>
+            </div>
+        </section>
+
+        <!-- Weeks Interactive Grid -->
+        <section class="weeks-grid" id="weeks-grid">
+            
+            <!-- Week 1 -->
+            <div class="week-card" data-category="basics" data-tags="basics">
+                <div class="week-card-header">
+                    <span class="week-badge">Week 01</span>
+                </div>
+                <h3 class="card-title">Introduction & Basic Python</h3>
+                <p class="card-desc">Transitioning from C language concepts to Python programming syntax, dynamic structures, and interpreter engines.</p>
+                <div class="materials-container">
+                    <a href="week1.html" class="material-link" target="_blank"><i class="fa-solid fa-laptop-code"></i> Python Interactive Guide</a>
+                    <a href="Week1/DSA_Week1.pdf" class="material-link" target="_blank"><i class="fa-regular fa-file-pdf"></i> Week 1 Intro Slides (PDF)</a>
+                    <a href="Week1/DSA-Colab-Tutorial.pdf" class="material-link" target="_blank"><i class="fa-regular fa-file-pdf"></i> Colab Tutorial Sheet (PDF)</a>
+                    <a href="Week1/Getting-Started-with-VS-Code.pdf" class="material-link" target="_blank"><i class="fa-regular fa-file-pdf"></i> VS Code Guide (PDF)</a>
+                    <a href="Week1/DSA_Python_Crash_Course_stu.pdf" class="material-link" target="_blank"><i class="fa-regular fa-file-pdf"></i> Python Crash Course (PDF)</a>
+                    <a href="Week1/DSA_Lab_1_student.ipynb" class="material-link" download><i class="fa-solid fa-book-open"></i> Lab 1 Student (Notebook)</a>
+                    <a href="Week1/DSA_Lab_1_Challenge.ipynb" class="material-link" download><i class="fa-solid fa-book-open"></i> Lab 1 Challenge (Notebook)</a>
+                </div>
+            </div>
+
+            <!-- Week 2 -->
+            <div class="week-card" data-category="basics" data-tags="basics">
+                <div class="week-card-header">
+                    <span class="week-badge">Week 02</span>
+                </div>
+                <h3 class="card-title">Recursion & Memory Call Stack</h3>
+                <p class="card-desc">Core components of recursive operations, base cases, recursion limits, and stack frames trace.</p>
+                <div class="materials-container">
+                    <a href="Week2/Recursion_Interactive_Guide.html" class="material-link" target="_blank"><i class="fa-solid fa-laptop-code"></i> Recursion Interactive Guide</a>
+                    <a href="Week2/Tutorial_Week2_student.ipynb" class="material-link" download><i class="fa-solid fa-book-open"></i> Timeit & Globals Tutorial (Notebook)</a>
+                    <a href="Week2/DSA_HW-1.ipynb" class="material-link" download><i class="fa-solid fa-book-open"></i> Homework 1 (Notebook)</a>
+                </div>
+            </div>
+
+            <!-- Week 3 -->
+            <div class="week-card" data-category="complexity" data-tags="complexity">
+                <div class="week-card-header">
+                    <span class="week-badge">Week 03</span>
+                </div>
+                <h3 class="card-title">Algorithm Analysis & Big-O</h3>
+                <p class="card-desc">Theoretical analysis of runtimes, growth rates of functions, and evaluating operations via Big-O curves.</p>
+                <div class="materials-container">
+                    <a href="Week3/DSA_Week3.pdf" class="material-link" target="_blank"><i class="fa-regular fa-file-pdf"></i> Algorithm Analysis Slides (PDF)</a>
+                    <a href="Week3/Big-O_Interactive_Guide.html" class="material-link" target="_blank"><i class="fa-solid fa-laptop-code"></i> Big-O Interactive Guide</a>
+                    <a href="Week3/DSA_Lab_2_student.ipynb" class="material-link" download><i class="fa-solid fa-book-open"></i> Lab 2 Student (Notebook)</a>
+                </div>
+            </div>
+
+            <!-- Week 4 -->
+            <div class="week-card" data-category="complexity" data-tags="complexity">
+                <div class="week-card-header">
+                    <span class="week-badge">Week 04</span>
+                </div>
+                <h3 class="card-title">Arrays & Object-Oriented Basics</h3>
+                <p class="card-desc">Contiguous memory representation, Python list implementation details, and basic OOP namespaces.</p>
+                <div class="materials-container">
+                    <a href="Week4/DSA_Week4.pdf" class="material-link" target="_blank"><i class="fa-regular fa-file-pdf"></i> Arrays & Python List Slides (PDF)</a>
+                    <a href="Week4/Array_Interactive_Guide.html" class="material-link" target="_blank"><i class="fa-solid fa-laptop-code"></i> Array Insertion Interactive Guide</a>
+                    <a href="Week4/Tutorial_Week4_student.ipynb" class="material-link" download><i class="fa-solid fa-book-open"></i> OOP Tutorial (Notebook)</a>
+                    <a href="Week4/DSA_Lab_3_student.ipynb" class="material-link" download><i class="fa-solid fa-book-open"></i> Lab 3 Student (Notebook)</a>
+                </div>
+            </div>
+
+            <!-- Week 5 -->
+            <div class="week-card" data-category="complexity" data-tags="complexity">
+                <div class="week-card-header">
+                    <span class="week-badge">Week 05</span>
+                </div>
+                <h3 class="card-title">Searching Algorithms</h3>
+                <p class="card-desc">Linear search, binary search, and the complexity bounds of lookup algorithms in ordered arrays.</p>
+                <div class="materials-container">
+                    <a href="Week5/DSA_Week5.pdf" class="material-link" target="_blank"><i class="fa-regular fa-file-pdf"></i> Searching Slides (PDF)</a>
+                    <a href="Week5/DSA_Lab_4_student.ipynb" class="material-link" download><i class="fa-solid fa-book-open"></i> Lab 4 Student (Notebook)</a>
+                    <a href="Week5/DSA_Lab_4_challenge.ipynb" class="material-link" download><i class="fa-solid fa-book-open"></i> Lab 4 Challenge (Notebook)</a>
+                </div>
+            </div>
+
+            <!-- Week 6 (Holiday) -->
+            <div class="week-card special-card" data-category="basics" data-tags="basics" data-special="holiday">
+                <div class="week-card-header">
+                    <span class="week-badge">Week 06</span>
+                </div>
+                <h3 class="card-title">New Year Holiday</h3>
+                <div class="special-placeholder" data-icon="holiday">
+                    <i class="fa-solid fa-umbrella-beach"></i>
+                    <span>No Class - Holiday & Self-Study Period</span>
+                </div>
+            </div>
+
+            <!-- Week 7 -->
+            <div class="week-card" data-category="complexity" data-tags="complexity">
+                <div class="week-card-header">
+                    <span class="week-badge">Week 07</span>
+                </div>
+                <h3 class="card-title">Sorting Algorithms</h3>
+                <p class="card-desc">Bubble sort, selection sort, insertion sort, and comparative benchmarks of quadratic processes.</p>
+                <div class="materials-container">
+                    <a href="https://github.com/noswolf/DSA_BIT/blob/DSA_24_Term2/Week10/DSA_Week10.pdf" class="material-link" target="_blank"><i class="fa-regular fa-file-pdf"></i> Sorting Slides (GitHub PDF)</a>
+                    <a href="Week7/Sorting_Interactive_Guide.html" class="material-link" target="_blank"><i class="fa-solid fa-laptop-code"></i> Sorting Interactive Guide</a>
+                    <a href="Week7/DSA_Lab_5_student.ipynb" class="material-link" download><i class="fa-solid fa-book-open"></i> Lab 5 Student (Notebook)</a>
+                    <a href="Week7/DSA_Lab_5_challenge.ipynb" class="material-link" download><i class="fa-solid fa-book-open"></i> Lab 5 Challenge (Notebook)</a>
+                </div>
+            </div>
+
+            <!-- Week 8 (Commencement Ceremony) -->
+            <div class="week-card special-card" data-category="basics" data-tags="basics" data-special="holiday">
+                <div class="week-card-header">
+                    <span class="week-badge">Week 08</span>
+                </div>
+                <h3 class="card-title">Commencement Holiday</h3>
+                <div class="special-placeholder" data-icon="holiday">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>No Class - Graduation Commencement Ceremony</span>
+                </div>
+            </div>
+
+            <!-- Midterm Exam -->
+            <div class="week-card special-card" data-category="basics" data-tags="basics" data-special="midterm">
+                <div class="week-card-header">
+                    <span class="week-badge">Mid-Term</span>
+                </div>
+                <h3 class="card-title">Midterm Examination</h3>
+                <div class="special-placeholder" data-icon="midterm">
+                    <i class="fa-solid fa-file-signature"></i>
+                    <span>Midterm Exam Week (Weeks 1-7 Syllabus)</span>
+                </div>
+            </div>
+
+            <!-- Week 9 -->
+            <div class="week-card" data-category="lists" data-tags="lists">
+                <div class="week-card-header">
+                    <span class="week-badge">Week 09</span>
+                </div>
+                <h3 class="card-title">Singly Linked Lists</h3>
+                <p class="card-desc">Singly linked structures, node dereferencing, head/tail insertion, traversal loops, and deletion logic.</p>
+                <div class="materials-container">
+                    <a href="Week9/DSA_Week9.pdf" class="material-link" target="_blank"><i class="fa-regular fa-file-pdf"></i> Singly Linked List Slides (PDF)</a>
+                    <a href="Week9/Linked_list_guide.html" class="material-link" target="_blank"><i class="fa-solid fa-laptop-code"></i> Linked List Interactive Guide</a>
+                    <a href="Week9/DSA_Lab_6_student.ipynb" class="material-link" download><i class="fa-solid fa-book-open"></i> Lab 6 Student (Notebook)</a>
+                </div>
+            </div>
+
+            <!-- Week 10 -->
+            <div class="week-card" data-category="lists" data-tags="lists">
+                <div class="week-card-header">
+                    <span class="week-badge">Week 10</span>
+                </div>
+                <h3 class="card-title">Doubly Linked Lists, Stacks & Queues</h3>
+                <p class="card-desc">Double linking nodes, sentinel values, LIFO Stack structures, and FIFO linear Queue pipelines.</p>
+                <div class="materials-container">
+                    <a href="Week10/Doubly_LL_guide.html" class="material-link" target="_blank"><i class="fa-solid fa-laptop-code"></i> Doubly Linked List Guide</a>
+                    <a href="Week10/stack_queue_guide.html" class="material-link" target="_blank"><i class="fa-solid fa-laptop-code"></i> Stack & Queue Interactive Guide</a>
+                    <a href="Week10/DSA_Lab_7_student.ipynb" class="material-link" download><i class="fa-solid fa-book-open"></i> Lab 7 Student (Notebook)</a>
+                </div>
+            </div>
+
+            <!-- Week 11 -->
+            <div class="week-card" data-category="trees" data-tags="trees">
+                <div class="week-card-header">
+                    <span class="week-badge">Week 11</span>
+                </div>
+                <h3 class="card-title">Trees & Traversals</h3>
+                <p class="card-desc">Hierarchical data structures, root node, height limits, preorder, inorder, and postorder recursive traversals.</p>
+                <div class="materials-container">
+                    <a href="Week11/DSA_Week11.pdf" class="material-link" target="_blank"><i class="fa-regular fa-file-pdf"></i> Tree Structures Slides (PDF)</a>
+                    <a href="Week11/Tree_traversals.html" class="material-link" target="_blank"><i class="fa-solid fa-laptop-code"></i> Tree Traversals Interactive Guide</a>
+                    <a href="Week11/DSA_Lab_8_student.ipynb" class="material-link" download><i class="fa-solid fa-book-open"></i> Lab 8 Student (Notebook)</a>
+                </div>
+            </div>
+
+            <!-- Week 12 -->
+            <div class="week-card" data-category="trees" data-tags="trees">
+                <div class="week-card-header">
+                    <span class="week-badge">Week 12</span>
+                </div>
+                <h3 class="card-title">Binary Search Trees (BST)</h3>
+                <p class="card-desc">BST property constraints, near-optimal lookup logic, dynamic leaf insertion, and node deletion cases.</p>
+                <div class="materials-container">
+                    <a href="Week12/DSA_Week12.pdf" class="material-link" target="_blank"><i class="fa-regular fa-file-pdf"></i> BST Operations Slides (PDF)</a>
+                    <a href="Week12/BST_operations.html" class="material-link" target="_blank"><i class="fa-solid fa-laptop-code"></i> BST Interactive Guide</a>
+                    <a href="Week12/DSA_Lab_9_student.ipynb" class="material-link" download><i class="fa-solid fa-book-open"></i> Lab 9 Student (Notebook)</a>
+                </div>
+            </div>
+
+            <!-- Week 13 -->
+            <div class="week-card" data-category="trees" data-tags="trees">
+                <div class="week-card-header">
+                    <span class="week-badge">Week 13</span>
+                </div>
+                <h3 class="card-title">Graphs & Graph Algorithms</h3>
+                <p class="card-desc">Adjacency matrices, adjacency lists, depth-first search (DFS) recursion, and breadth-first search (BFS).</p>
+                <div class="materials-container">
+                    <a href="Week13/DSA_Week13.pdf" class="material-link" target="_blank"><i class="fa-regular fa-file-pdf"></i> Graph Algorithms Slides (PDF)</a>
+                    <a href="Week13/DSA_DFS_recursive.pdf" class="material-link" target="_blank"><i class="fa-regular fa-file-pdf"></i> Recursive DFS Slides (PDF)</a>
+                    <a href="Week13/Graph_Algorithms.html" class="material-link" target="_blank"><i class="fa-solid fa-laptop-code"></i> Graph Algorithms Guide</a>
+                    <a href="Week13/DSA_Lab_10_student.ipynb" class="material-link" download><i class="fa-solid fa-book-open"></i> Lab 10 Student (Notebook)</a>
+                </div>
+            </div>
+
+            <!-- Week 14 (Bridge Holiday) -->
+            <div class="week-card special-card" data-category="trees" data-tags="trees" data-special="holiday">
+                <div class="week-card-header">
+                    <span class="week-badge">Week 14</span>
+                </div>
+                <h3 class="card-title">Bridge Holiday</h3>
+                <div class="special-placeholder" data-icon="holiday">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    <span>No Class - Unofficial Bridge Holiday</span>
+                </div>
+            </div>
+
+            <!-- Week 15 (No Class) -->
+            <div class="week-card special-card" data-category="trees" data-tags="trees" data-special="holiday">
+                <div class="week-card-header">
+                    <span class="week-badge">Week 15</span>
+                </div>
+                <h3 class="card-title">Preparation Week</h3>
+                <div class="special-placeholder" data-icon="holiday">
+                    <i class="fa-solid fa-book-reader"></i>
+                    <span>No Class - Revision & Study Period</span>
+                </div>
+            </div>
+
+            <!-- Final Exam -->
+            <div class="week-card special-card" data-category="trees" data-tags="trees" data-special="final">
+                <div class="week-card-header">
+                    <span class="week-badge">Finals</span>
+                </div>
+                <h3 class="card-title">Final Examination</h3>
+                <div class="special-placeholder" data-icon="final">
+                    <i class="fa-solid fa-award"></i>
+                    <span>Final Exam Week (Comprehensive Syllabus)</span>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        &copy; Data Structures and Algorithms · Dr. Sirasit Lochanachit
+    </footer>
+
+    <!-- Interactive Logic (Theme, Filter, Search) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Theme toggle setup
+            const body = document.body;
+            const themeBtn = document.getElementById("theme-toggle-btn");
+            const themeText = document.getElementById("theme-text");
+            
+            // Check stored preference
+            const savedTheme = localStorage.getItem("dsa-home-theme") || "light";
+            if (savedTheme === "light") {
+                body.classList.add("light-mode");
+                themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i> <span id="theme-text">Dark Mode</span>';
+            } else {
+                body.classList.remove("light-mode");
+                themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i> <span id="theme-text">Light Mode</span>';
+            }
+
+            themeBtn.addEventListener("click", () => {
+                body.classList.toggle("light-mode");
+                if (body.classList.contains("light-mode")) {
+                    localStorage.setItem("dsa-home-theme", "light");
+                    themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i> <span id="theme-text">Dark Mode</span>';
+                } else {
+                    localStorage.setItem("dsa-home-theme", "dark");
+                    themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i> <span id="theme-text">Light Mode</span>';
+                }
+            });
+
+            // Filter Logic
+            const filterBtns = document.querySelectorAll(".filter-btn");
+            const weekCards = document.querySelectorAll(".week-card");
+
+            const updateDashboard = () => {
+                const activeFilter = document.querySelector(".filter-btn.active").getAttribute("data-filter");
+
+                weekCards.forEach(card => {
+                    const tags = card.getAttribute("data-tags").split(" ");
+                    const matchesFilter = activeFilter === "all" || tags.includes(activeFilter);
+
+                    if (matchesFilter) {
+                        card.classList.remove("hidden");
+                    } else {
+                        card.classList.add("hidden");
+                    }
+                });
+            };
+
+            // Setup listeners
+            filterBtns.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    filterBtns.forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+                    updateDashboard();
+                });
+            });
+        });
+    </script>
 </body>
-
 </html>
