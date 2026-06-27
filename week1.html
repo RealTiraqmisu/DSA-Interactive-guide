@@ -100,37 +100,46 @@
 
                 <!-- 1. WELCOME SECTION -->
                 <section id="welcome-section" class="content-section active">
-                    <div class="module-header-block">
-                        <h2>Why Python for Data Structures & Algorithms?</h2>
+                    <div class="header-block">
+                        <div class="module-header-block welcome-header-block">
+                            <div class="mod-header-icon-wrap">
+                                <i class="fa-solid fa-door-open mod-glow-icon"></i>
+                            </div>
+                            <div class="mod-header-text">
+                                <h2>Why Python for Data Structures & Algorithms?</h2>
+                                <p>Discover how Python's design philosophy empowers clean algorithm design by abstracting memory management.</p>
+                            </div>
+                        </div>
+                        <div class="why-horizontal-tabs">
+                            <button class="why-tab-btn active" data-tab="logic">
+                                <i class="fa-solid fa-brain"></i>
+                                <div class="tab-btn-text">
+                                    <span class="tab-btn-title">Focus on Logic</span>
+                                    <span class="tab-btn-desc">Memory Resizing</span>
+                            </div>
+                        </button>
+                        <button class="why-tab-btn" data-tab="types">
+                            <i class="fa-solid fa-database"></i>
+                            <div class="tab-btn-text">
+                                <span class="tab-btn-title">Rich Built-in Types</span>
+                                <span class="tab-btn-desc">Hash Map Lookup</span>
+                            </div>
+                        </button>
+                        <button class="why-tab-btn" data-tab="readability">
+                            <i class="fa-solid fa-bolt"></i>
+                            <div class="tab-btn-text">
+                                <span class="tab-btn-title">Readability & Speed</span>
+                                <span class="tab-btn-desc">Clean & Fast Operations</span>
+                            </div>
+                        </button>
                     </div>
+                </div>
 
                     <div class="grid-2col">
                         <!-- <div class="card glass interactive-why-python"> -->
                             <!-- <div class="card-body stacked-body"> -->
                                 <!-- Top: Horizontal Interactive Tab Buttons -->
-                                <div class="why-horizontal-tabs">
-                                    <button class="why-tab-btn active" data-tab="logic">
-                                        <i class="fa-solid fa-brain"></i>
-                                        <div class="tab-btn-text">
-                                            <span class="tab-btn-title">Focus on Logic</span>
-                                            <span class="tab-btn-desc">Memory Resizing</span>
-                                        </div>
-                                    </button>
-                                    <button class="why-tab-btn" data-tab="types">
-                                        <i class="fa-solid fa-database"></i>
-                                        <div class="tab-btn-text">
-                                            <span class="tab-btn-title">Rich Built-in Types</span>
-                                            <span class="tab-btn-desc">Hash Map Lookup</span>
-                                        </div>
-                                    </button>
-                                    <button class="why-tab-btn" data-tab="readability">
-                                        <i class="fa-solid fa-bolt"></i>
-                                        <div class="tab-btn-text">
-                                            <span class="tab-btn-title">Readability & Speed</span>
-                                            <span class="tab-btn-desc">Clean & Fast Operations</span>
-                                        </div>
-                                    </button>
-                                </div>
+                                
 
                                 <!-- Bottom: Tab Content Display -->
                                 <div class="why-content-panel">
@@ -552,9 +561,14 @@ print("Sliced Array:", slice_arr)</textarea>
 
                 <!-- 2. MODULE 1: BASIC PYTHON -->
                 <section id="module1-section" class="content-section">
-                    <div class="module-header-block">
-                        <h2>Module 1: Python Basics</h2>
-                        <p>Learn how basic programming concepts map from C syntax to Python semantics.</p>
+                    <div class="module-header-block mod1-header-block">
+                        <div class="mod-header-icon-wrap">
+                            <i class="fa-solid fa-code mod-glow-icon"></i>
+                        </div>
+                        <div class="mod-header-text">
+                            <h2>Module 1: Python Basics</h2>
+                            <p>Learn how basic programming concepts map from static C syntax to dynamic Python semantics.</p>
+                        </div>
                     </div>
 
                     <div class="accordion-group">
@@ -745,23 +759,22 @@ age = "twenty"   # Now refers to a string</code></pre>
                                         <h5 class="sim-title" style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
                                             <i class="fa-solid fa-layer-group" style="color: var(--accent-purple);"></i> Python Collections Interactive Explorer
                                         </h5>
-                                        <div style="display: flex; gap: 10px; align-items: center;">
-                                            <!-- Mini Tabs for selection -->
-                                            <div class="explorer-tabs" style="display: flex; gap: 4px; background: var(--bg-primary); padding: 3px; border-radius: 8px; border: 1px solid var(--border-color);">
-                                                <button class="explorer-tab-btn active" data-type="list" style="background: none; border: 1px solid transparent; padding: 4px 10px; font-size: 11px; font-weight: 600; color: var(--text-secondary); border-radius: 6px; cursor: pointer; transition: var(--transition-fast);">List</button>
-                                                <button class="explorer-tab-btn" data-type="tuple" style="background: none; border: 1px solid transparent; padding: 4px 10px; font-size: 11px; font-weight: 600; color: var(--text-secondary); border-radius: 6px; cursor: pointer; transition: var(--transition-fast);">Tuple</button>
-                                                <button class="explorer-tab-btn" data-type="dict" style="background: none; border: 1px solid transparent; padding: 4px 10px; font-size: 11px; font-weight: 600; color: var(--text-secondary); border-radius: 6px; cursor: pointer; transition: var(--transition-fast);">Dict</button>
-                                                <button class="explorer-tab-btn" data-type="str" style="background: none; border: 1px solid transparent; padding: 4px 10px; font-size: 11px; font-weight: 600; color: var(--text-secondary); border-radius: 6px; cursor: pointer; transition: var(--transition-fast);">String</button>
-                                            </div>
-                                            <!-- Reset Button -->
-                                            <button class="btn btn-secondary" id="explorer-reset-btn" style="padding: 4px 10px; font-size: 11px; height: 26px;" title="Reset State"><i class="fa-solid fa-rotate-left"></i> Reset</button>
-                                        </div>
                                     </div>
                                     <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 1rem 0; line-height: 1.4;">
                                         Select a collection type and click actions to see how variables access and modify data structures, and how Python handles <strong>mutability vs immutability</strong>.
                                     </p>
-                                    
-                                    <div class="explorer-grid" style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 1.5rem; min-height: 260px;">
+                                    <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 24px; justify-content: space-between;">
+                                            <!-- Mini Tabs for selection -->
+                                            <div class="explorer-tabs" style="display: flex; gap: 4px; background: var(--bg-primary); padding: 3px; border-radius: 30px; border: 1px solid var(--border-color);">
+                                                <button class="explorer-tab-btn active" data-type="list">List</button>
+                                                <button class="explorer-tab-btn" data-type="tuple">Tuple</button>
+                                                <button class="explorer-tab-btn" data-type="dict">Dict</button>
+                                                <button class="explorer-tab-btn" data-type="str">String</button>
+                                            </div>
+                                            <!-- Reset Button -->
+                                            <button class="btn btn-secondary" id="explorer-reset-btn" style="padding: 4px 10px; font-size: 11px; height: 38px; border-radius: 20px;" title="Reset State"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+                                        </div>
+                                    <div class="explorer-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; min-height: 260px;">
                                         <!-- Control Column -->
                                         <div class="explorer-control-panel" style="background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between;">
                                             <div>
@@ -786,7 +799,7 @@ age = "twenty"   # Now refers to a string</code></pre>
                                                     <span id="explorer-mutability-tag" class="tag" style="background: rgba(16,185,129,0.1); color: var(--accent-green);">MUTABLE</span>
                                                 </div>
                                                 
-                                                <div id="explorer-memory-visual" style="min-height: 100px; display: flex; align-items: center; justify-content: center; width: 100%; padding: 10px 0;">
+                                                <div id="explorer-memory-visual">
                                                     <!-- Filled dynamically by JS -->
                                                 </div>
                                             </div>
@@ -913,10 +926,10 @@ for index, val in enumerate(arr):
                                     <div class="minigame-body">
                                         <!-- Tabs selectors -->
                                         <div class="flow-tabs" style="display: flex; gap: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; margin-bottom: 1rem;">
-                                            <button class="explorer-tab-btn active" id="flow-tab-cond" onclick="switchFlowTab('cond')" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all var(--transition-fast);">
+                                            <button class="explorer-tab-btn active" id="flow-tab-cond" onclick="switchFlowTab('cond')">
                                                 <i class="fa-solid fa-filter"></i> Conditionals (if-elif-else)
                                             </button>
-                                            <button class="explorer-tab-btn" id="flow-tab-loop" onclick="switchFlowTab('loop')" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all var(--transition-fast);">
+                                            <button class="explorer-tab-btn" id="flow-tab-loop" onclick="switchFlowTab('loop')">
                                                 <i class="fa-solid fa-rotate"></i> Loops (for & while)
                                             </button>
                                         </div>
@@ -1042,16 +1055,16 @@ except IOError:
                                     <div class="minigame-body">
                                         <!-- Tabs selectors -->
                                         <div class="exception-tabs flow-tabs" style="display: flex; gap: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap;">
-                                            <button class="explorer-tab-btn active" id="exc-tab-ZeroDivisionError" onclick="switchExceptionScenario('ZeroDivisionError')" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all var(--transition-fast);">
+                                            <button class="explorer-tab-btn active" id="exc-tab-ZeroDivisionError" onclick="switchExceptionScenario('ZeroDivisionError')">
                                                 ZeroDivisionError
                                             </button>
-                                            <button class="explorer-tab-btn" id="exc-tab-ValueError" onclick="switchExceptionScenario('ValueError')" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all var(--transition-fast);">
+                                            <button class="explorer-tab-btn" id="exc-tab-ValueError" onclick="switchExceptionScenario('ValueError')">
                                                 ValueError
                                             </button>
-                                            <button class="explorer-tab-btn" id="exc-tab-IndexError" onclick="switchExceptionScenario('IndexError')" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all var(--transition-fast);">
+                                            <button class="explorer-tab-btn" id="exc-tab-IndexError" onclick="switchExceptionScenario('IndexError')">
                                                 IndexError
                                             </button>
-                                            <button class="explorer-tab-btn" id="exc-tab-KeyError" onclick="switchExceptionScenario('KeyError')" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all var(--transition-fast);">
+                                            <button class="explorer-tab-btn" id="exc-tab-KeyError" onclick="switchExceptionScenario('KeyError')">
                                                 KeyError
                                             </button>
                                         </div>
@@ -1124,149 +1137,295 @@ except IOError:
                             </div>
                         </div>
                     </div>
-
-                    <div class="module-action-block">
-                        <button class="btn btn-primary" onclick="navigateToSection('module2-section')">
-                            Go to Module 2: Recursion <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
                 </section>
 
                 <!-- 4. MODULE 2: RECURSION -->
                 <section id="module2-section" class="content-section">
-                    <div class="module-header-block">
-                        <h2>Module 2: Recursion & Memory Call Stack</h2>
-                        <p>How functions call themselves, and how memory manages recursive frames.</p>
+                    <div class="module-header-block rec-header-block">
+                        <div class="rec-header-icon-wrap">
+                            <i class="fa-solid fa-arrows-spin rec-glow-icon"></i>
+                        </div>
+                        <div class="rec-header-text">
+                            <h2>Module 2: Recursion & Memory Call Stack</h2>
+                            <p>Master how functions call themselves, trace recursive execution trees, and visualize the call stack memory.</p>
+                        </div>
                     </div>
 
-                    <div class="grid-2col">
-                        <div class="card glass">
-                            <div class="card-header">
-                                <span class="card-icon"><i class="fa-solid fa-gears"></i></span>
-                                <h3>Understanding Recursion</h3>
-                            </div>
-                            <div class="card-body">
-                                <p>A recursive function is simply a function that calls itself. In DSA, recursion is
-                                    critical for traversing non-linear structures like Trees and Graphs.</p>
-                                <p>Every correct recursive function needs two components:</p>
-                                <ol>
-                                    <li><strong>Base Case(s):</strong> The simplest input configuration where the result
-                                        is computed immediately, ending the recursive chain. Without this, you get an
-                                        infinite loop resulting in a <strong>Stack Overflow</strong> (in Python, a
-                                        <code>RecursionError</code>).
-                                    </li>
-                                    <li><strong>Recursive Step:</strong> Reducing the current problem parameters so they
-                                        move closer to the base case, and calling the function again with those reduced
-                                        parameters.</li>
-                                </ol>
-                                <p>In Python, the default recursion limit is 1000 frames (to prevent system memory
-                                    crash). In C, the limit is based on your OS stack frame memory size.</p>
-                            </div>
-                        </div>
+                    <!-- Module 2 Sub-Navigation Tabs -->
+                    <div class="flow-tabs" style="margin-bottom: 20px;">
+                        <button class="explorer-tab-btn active" id="rec-tab-viz" onclick="switchRecursionTab('viz')">
+                            <i class="fa-solid fa-circle-play" style="color: var(--accent-cyan); margin-right: 6px;"></i> Understanding & Visualizing Recursion
+                        </button>
+                        <button class="explorer-tab-btn" id="rec-tab-vs" onclick="switchRecursionTab('vs')">
+                            <i class="fa-solid fa-code-compare" style="color: var(--accent-purple); margin-right: 6px;"></i> Recursion vs. Loops (Iteration)
+                        </button>
+                    </div>
 
-                        <div class="card glass">
-                            <div class="card-header">
-                                <span class="card-icon"><i class="fa-solid fa-arrows-left-right"></i></span>
-                                <h3>C vs Python Recursion Syntax</h3>
+                    <!-- Tab 1: Understanding & Visualizing Recursion -->
+                    <div id="rec-content-viz" class="recursion-tab-content">
+                        <div class="grid-2col">
+                            
+                            <!-- Card 1: Understanding Recursion -->
+                            <div class="card glass rec-card-theory rec-card-cyan">
+                                <div class="card-header">
+                                    <span class="card-icon"><i class="fa-solid fa-brain"></i></span>
+                                    <h3>Understanding Recursion</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p class="rec-intro-text">A recursive function is an elegant programming technique where a function <strong>calls itself</strong> to solve a smaller sub-problem. In Data Structures & Algorithms, recursion is the foundation for traversing trees and graphs.</p>
+                                    
+                                    <div class="rec-requirements">
+                                        <div class="rec-req-item base-case">
+                                            <div class="req-icon-wrap">
+                                                <i class="fa-solid fa-flag-checkered"></i>
+                                            </div>
+                                            <div class="req-details">
+                                                <h4>1. Base Case(s)</h4>
+                                                <p>The simplest input configuration where the result is computed immediately. Without this, recursion runs infinitely, leading to a <strong>Stack Overflow</strong> (in Python, a <code>RecursionError</code>).</p>
+                                            </div>
+                                        </div>
+                                        <div class="rec-req-item recursive-step">
+                                            <div class="req-icon-wrap">
+                                                <i class="fa-solid fa-arrow-right-long animate-flow-horizontal"></i>
+                                            </div>
+                                            <div class="req-details">
+                                                <h4>2. Recursive Step</h4>
+                                                <p>Reducing the problem size to move closer to the base case, and invoking the function recursively with the new parameters.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="rec-note-box">
+                                        <i class="fa-solid fa-circle-info"></i>
+                                        <span><strong>System Limit:</strong> Python restricts the recursion depth to 1,000 frames to prevent core stack memory crashes. C limits are determined by operating system stack allocation.</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <div class="code-compare-grid">
-                                    <div class="code-compare-block c-block">
-                                        <div class="block-title">C: Factorial</div>
-                                        <pre><code>int factorial(int n) {
+
+                            <!-- Card 2: Syntax Contrast -->
+                            <div class="card glass rec-card-theory rec-card-purple">
+                                <div class="card-header">
+                                    <span class="card-icon"><i class="fa-solid fa-code-compare"></i></span>
+                                    <h3>C vs Python Recursion Syntax</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p class="rec-intro-text">Notice how Python eliminates curly braces <code>{}</code> and semicolons <code>;</code>, relying purely on indentation to represent recursive blocks.</p>
+                                    <div class="code-compare-grid">
+                                        <div class="code-compare-block c-block">
+                                            <div class="block-title c-title"><i class="fa-solid fa-copyright"></i> C Code (Factorial)</div>
+                                            <pre><code>int factorial(int n) {
     if (n <= 1) { // Base Case
         return 1;
     }
     // Recursive Step
     return n * factorial(n - 1);
 }</code></pre>
-                                    </div>
-                                    <div class="code-compare-block py-block">
-                                        <div class="block-title">Python: Factorial</div>
-                                        <pre><code>def factorial(n):
+                                        </div>
+                                        <div class="code-compare-block py-block">
+                                            <div class="block-title py-title"><i class="fa-brands fa-python"></i> Python Code (Factorial)</div>
+                                            <pre><code>def factorial(n):
     if n <= 1: # Base Case
         return 1
     # Recursive Step
     return n * factorial(n - 1)</code></pre>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div> <!-- closes grid-2col -->
+
+                        <!-- Interactive Recursion Visualizer -->
+                        <div class="card glass visualizer-card rec-card-visualizer" style="margin-top: 24px;">
+                            <div class="card-header">
+                                <span class="card-icon"><i class="fa-solid fa-cubes-stacked"></i></span>
+                                <h3>Interactive Recursion Tree & Call Stack Visualizer</h3>
+                            </div>
+                            <div class="card-body">
+                                <p class="rec-intro-text">Select a recursive algorithm and N value below. Click <strong>Initialize</strong>, then step through the execution to visualize the recursive call tree, stack frames, and propagation of return values.</p>
+
+                                <div class="rec-visualizer-header">
+                                    <div class="visualizer-controls-panel">
+                                        <div class="control-group">
+                                            <label for="rec-algorithm">Algorithm</label>
+                                            <div class="select-wrapper">
+                                                <select id="rec-algorithm" class="form-control premium-select">
+                                                    <option value="factorial">Factorial (n!)</option>
+                                                    <option value="fibonacci">Fibonacci (Double branching recursion-tree)</option>
+                                                    <option value="sum">Recursive Sum (1 + 2 + ... + n)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label for="rec-input">Input N</label>
+                                            <input type="number" id="rec-input" class="form-control premium-input" min="1" max="5" value="4">
+                                        </div>
+                                        <div class="btn-group-visualizer">
+                                            <button class="btn btn-premium-init" id="rec-start-btn"><i class="fa-solid fa-play"></i> Initialize</button>
+                                            <button class="btn btn-premium-step" id="rec-step-btn" disabled><i class="fa-solid fa-angles-right"></i> Next Step</button>
+                                            <button class="btn btn-premium-reset" id="rec-reset-btn"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Dynamic Explainer Box -->
+                                    <div class="algo-explanation-box rec-explainer" id="rec-algo-explainer">
+                                        <!-- Populated dynamically by JS -->
+                                    </div>
+                                </div>
+
+                                <div class="visualizer-display-container">
+                                    <!-- Panel 1: Code Trace -->
+                                    <div class="visualizer-panel code-trace-panel">
+                                        <div class="panel-header">
+                                            <div class="window-dots">
+                                                <span class="dot red"></span>
+                                                <span class="dot yellow"></span>
+                                                <span class="dot green"></span>
+                                            </div>
+                                            <span class="panel-tab-title"><i class="fa-brands fa-python"></i> call_stack_trace.py</span>
+                                        </div>
+                                        <div class="panel-content">
+                                            <pre id="visualizer-code-display">Select an algorithm and click Initialize to begin...</pre>
+                                        </div>
+                                    </div>
+
+                                    <!-- Panel 2: Recursion Tree Canvas -->
+                                    <div class="visualizer-panel tree-canvas-panel">
+                                        <div class="panel-header">
+                                            <span class="panel-tab-title"><i class="fa-solid fa-network-wired"></i> Recursion Execution Tree</span>
+                                            <div class="tree-zoom-controls">
+                                                <button class="btn-zoom" onclick="zoomTree(0.15)" title="Zoom In"><i class="fa-solid fa-plus"></i></button>
+                                                <button class="btn-zoom" onclick="zoomTree(-0.15)" title="Zoom Out"><i class="fa-solid fa-minus"></i></button>
+                                                <button class="btn-zoom" onclick="resetTreeZoom()" title="Reset Zoom"><i class="fa-solid fa-arrows-rotate"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="panel-content canvas-bg-grid" id="stack-container">
+                                            <div class="empty-stack-msg" id="empty-tree-msg">
+                                                <i class="fa-solid fa-network-wired placeholder-icon"></i>
+                                                <span>Tree Canvas Empty. Click Initialize.</span>
+                                            </div>
+                                        </div>
+                                        <div class="tree-legend">
+                                            <span class="legend-item"><span class="legend-color color-active"></span> Active Call</span>
+                                            <span class="legend-item"><span class="legend-color color-waiting"></span> Stack Waiting</span>
+                                            <span class="legend-item"><span class="legend-color color-returned"></span> Returned Val</span>
+                                            <span class="legend-item text-bold accent-green"><i class="fa-solid fa-star"></i> Base Case</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Panel 3: Console Logger -->
+                                    <div class="visualizer-panel trace-console-panel">
+                                        <div class="panel-header">
+                                            <span class="panel-tab-title"><i class="fa-solid fa-terminal"></i> Terminal Debug Logger</span>
+                                        </div>
+                                        <div class="panel-content log-terminal" id="trace-log">
+                                            &gt; Initializing visual logs...
+                                        </div>
+                                    </div>
+                                </div> <!-- closes visualizer-display-container -->
+                            </div> <!-- closes card-body of Card 3 -->
+                        </div> <!-- closes card glass of Card 3 -->
+                    </div> <!-- closes rec-content-viz -->
+            
+            <!-- Tab 2: Recursion vs. Loops -->
+            <div id="rec-content-vs" class="recursion-tab-content" style="display: none;">
+                <!-- Side-by-Side: Recursion vs. Loops Comparison -->
+                <div class="card glass rec-card-theory rec-card-vs" style="margin-top: 0; width: 100%;">
+                    <div class="card-header">
+                        <span class="card-icon"><i class="fa-solid fa-code-compare text-accent-purple"></i></span>
+                        <h3>Recursion vs. Loops (Iteration)</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="rec-intro-text">Almost any problem that can be solved recursively can also be solved iteratively using a loop (like <code>for</code> or <code>while</code>). Let's compare the two approaches side-by-side:</p>
+                        
+                        <div class="code-compare-grid" style="margin-bottom: 24px;">
+                            <div class="code-compare-block py-block rec-compare-item-recursive">
+                                <div class="block-title rec-compare-title-recursive">
+                                    <i class="fa-brands fa-python"></i> Recursive Factorial
+                                </div>
+                                <pre><code>def factorial_recursive(n):
+    if n <= 1: # Base Case
+        return 1
+    # Recursive Step
+    return n * factorial_recursive(n - 1)</code></pre>
+                            </div>
+                            <div class="code-compare-block py-block rec-compare-item-iterative">
+                                <div class="block-title rec-compare-title-iterative">
+                                    <i class="fa-brands fa-python"></i> Iterative Factorial (Loop)
+                                </div>
+                                <pre><code>def factorial_iterative(n):
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="table-container premium-comparison-container">
+                            <table class="comparison-table premium-comparison-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 25%">Aspect</th>
+                                        <th style="width: 37.5%">Recursion</th>
+                                        <th style="width: 37.5%">Iteration / Loops</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="premium-row">
+                                        <td class="aspect-cell">
+                                            <strong>1. Readability & Writing</strong><br>
+                                        </td>
+                                        <td class="rec-highlight">
+                                            <span class="tag-status status-pro">Highly Elegant</span> 
+                                            Closer to the mathematical definition. Code is often shorter and cleaner, especially for complex structures like binary trees, graphs, or sorting algorithms (QuickSort/MergeSort).
+                                        </td>
+                                        <td class="iter-highlight">
+                                            <span class="tag-status status-neutral">Straightforward</span> 
+                                            Follows a clear, sequential step-by-step logic. Often easier to trace line-by-line for beginners since it doesn't involve hidden function states.
+                                        </td>
+                                    </tr>
+                                    <tr class="premium-row">
+                                        <td class="aspect-cell">
+                                            <strong>2. Performance & Speed</strong><br>
+                                        </td>
+                                        <td class="rec-highlight">
+                                            <span class="tag-status status-con">Slower & More Memory</span> 
+                                            Every call creates a new **stack frame** in memory (stores variables and return address). Python has a high overhead for function calls, making recursion slower and heavier.
+                                        </td>
+                                        <td class="iter-highlight">
+                                            <span class="tag-status status-pro">Faster & Leaner</span> 
+                                            Keeps execution inside a single stack frame. Variables are updated directly in-place. Highly efficient in CPU cycles and memory.
+                                        </td>
+                                    </tr>
+                                    <tr class="premium-row">
+                                        <td class="aspect-cell">
+                                            <strong>3. Key Risks</strong><br>
+                                        </td>
+                                        <td class="rec-highlight">
+                                            <span class="tag-status status-con">Stack Overflow (Crash)</span> 
+                                            If the base case is missing or incorrect, it calls itself infinitely until it crashes with a <code>RecursionError</code>. Max limit is usually 1000 frames.
+                                        </td>
+                                        <td class="iter-highlight">
+                                            <span class="tag-status status-neutral">Infinite Loop (Freeze)</span> 
+                                            If the loop condition is never satisfied, the program hangs (freezes), but it does not consume stack memory rapidly or crash immediately.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
-                    <!-- Interactive Recursion Visualizer -->
-                    <div class="card glass visualizer-card">
-                        <div class="card-header">
-                            <span class="card-icon"><i class="fa-solid fa-computer"></i></span>
-                            <h3>Interactive Recursion Tree Visualizer</h3>
-                        </div>
-                        <div class="card-body">
-                            <p>Select a recursive function, choose an input size, and step through the execution. Watch
-                                how the recursion tree dynamically grows as child calls are made, and propagates values back up as they return!</p>
-
-                            <div class="visualizer-controls">
-                                <div class="control-group">
-                                    <label for="rec-algorithm">Algorithm:</label>
-                                    <select id="rec-algorithm" class="form-control">
-                                        <option value="factorial">Factorial (n!)</option>
-                                        <option value="fibonacci">Fibonacci (Double recursion recursion-tree)</option>
-                                        <option value="sum">Recursive Sum (1 + 2 + ... + n)</option>
-                                    </select>
-                                </div>
-                                <div class="control-group">
-                                    <label for="rec-input">Input N:</label>
-                                    <input type="number" id="rec-input" class="form-control" min="1" max="5" value="4">
-                                </div>
-                                <div class="btn-group">
-                                    <button class="btn btn-secondary" id="rec-start-btn"><i
-                                            class="fa-solid fa-play"></i> Initialize</button>
-                                    <button class="btn btn-primary" id="rec-step-btn" disabled><i
-                                            class="fa-solid fa-angles-right"></i> Next Step</button>
-                                    <button class="btn btn-danger" id="rec-reset-btn"><i
-                                            class="fa-solid fa-rotate-left"></i> Reset</button>
-                                </div>
-                            </div>
-                            
-                            <!-- Dynamic Explainer Box -->
-                            <div class="algo-explanation-box" id="rec-algo-explainer">
-                                <!-- Populated dynamically by JS -->
-                            </div>
-
-                            <div class="visualizer-display">
-                                <div class="visualizer-code-panel">
-                                    <div class="panel-title">Active Code Execution:</div>
-                                    <pre
-                                        id="visualizer-code-display">Select an algorithm and click Initialize to begin...</pre>
-                                </div>
-                                <div class="visualizer-stack-panel">
-                                    <div class="panel-title">Recursion Tree:</div>
-                                    <div class="stack-container" id="stack-container">
-                                        <div class="empty-stack-msg" id="empty-tree-msg">Tree is empty. Click Initialize.</div>
-                                    </div>
-                                    <div class="tree-legend">
-                                        <span style="display: flex; align-items: center; gap: 4px; color: var(--text-secondary);"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 2px; background: rgba(6, 182, 212, 0.2); border: 1px solid var(--accent-cyan);"></span> Active</span>
-                                        <span style="display: flex; align-items: center; gap: 4px; color: var(--text-secondary);"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 2px; background: rgba(168, 85, 247, 0.2); border: 1px solid var(--accent-purple);"></span> Waiting</span>
-                                        <span style="display: flex; align-items: center; gap: 4px; color: var(--text-secondary);"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 2px; background: rgba(16, 185, 129, 0.2); border: 1px solid var(--accent-green);"></span> Returned</span>
-                                        <span style="display: flex; align-items: center; gap: 4px; color: var(--accent-green); font-weight: bold;"><i class="fa-solid fa-star"></i> Base Case</span>
-                                    </div>
-                                </div>
-                                <div class="visualizer-log-panel">
-                                    <div class="panel-title">Trace Log:</div>
-                                    <div class="trace-log" id="trace-log">
-                                        Initializing visual logs...
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                </div>
+            </div>
+        </section>
 
                 <!-- 5. MODULE 3: COMPLEXITY & TIMEIT -->
                 <section id="module3-section" class="content-section">
-                    <div class="module-header-block">
-                        <h2>Module 3: Complexity Analysis & timeit Module</h2>
-                        <p>Evaluate code performance theoretically using Big-O, and empirically using Python's timing
-                            tools.</p>
+                    <div class="module-header-block mod3-header-block">
+                        <div class="mod-header-icon-wrap">
+                            <i class="fa-solid fa-chart-line mod-glow-icon"></i>
+                        </div>
+                        <div class="mod-header-text">
+                            <h2>Module 3: Complexity Analysis & timeit Module</h2>
+                            <p>Evaluate code performance theoretically using Big-O, and empirically using Python's timeit benchmark suite.</p>
+                        </div>
                     </div>
 
                     <div class="grid-2col">
@@ -1406,11 +1565,14 @@ except IOError:
 
                 <!-- 6. MODULE 4: OBJECT-ORIENTED PROGRAMMING -->
                 <section id="module4-section" class="content-section">
-                    <div class="module-header-block">
-                        <h2>Module 4: Transition to Object-Oriented Programming (OOP)</h2>
-                        <p>Re-organize data structures from C Structs to Python Classes, understanding the mechanics of
-                            <code>self</code>.
-                        </p>
+                    <div class="module-header-block mod4-header-block">
+                        <div class="mod-header-icon-wrap">
+                            <i class="fa-solid fa-cubes mod-glow-icon"></i>
+                        </div>
+                        <div class="mod-header-text">
+                            <h2>Module 4: Transition to Object-Oriented Programming (OOP)</h2>
+                            <p>Re-organize data structures from static C Structs to native Python Classes and master the mechanics of self.</p>
+                        </div>
                     </div>
 
                     <div class="grid-2col">
@@ -1525,10 +1687,14 @@ print(f"Sound: {my_dog.speak()}")
 
                 <!-- 7. QUIZ SECTION -->
                 <section id="quiz-section" class="content-section">
-                    <div class="module-header-block">
-                        <h2>C to Python Transition Quiz</h2>
-                        <p>Assess your structural understanding of how programming paradigms transition from low-level C
-                            code to Python abstractions.</p>
+                    <div class="module-header-block quiz-header-block">
+                        <div class="mod-header-icon-wrap">
+                            <i class="fa-solid fa-clipboard-question mod-glow-icon"></i>
+                        </div>
+                        <div class="mod-header-text">
+                            <h2>C to Python Transition Quiz</h2>
+                            <p>Assess your structural understanding of how programming paradigms transition from low-level C code to Python abstractions.</p>
+                        </div>
                     </div>
 
                     <div class="quiz-container" id="quiz-container">

@@ -494,22 +494,73 @@ let recCodeTemplate = {
 
 const recAlgoExplanations = {
     factorial: `
-        <div style="margin-bottom: 6px;"><strong>📌 Mathematical Concept:</strong> Calculates factorial of n (n! = n × (n-1) × ... × 1).</div>
-        <div style="margin-bottom: 6px;"><strong>🌿 Recursion Type:</strong> <code>Linear Recursion</code> (Single recursive call per step).</div>
-        <div style="margin-bottom: 6px;"><strong>🎯 Learning Objective:</strong> Learn the simplest recursive structure where the calls form a straight vertical chain (pipeline).</div>
-        <div><strong>🔄 Execution Flow:</strong> Descends straight down to <code>fact(1)</code> (Base Case), then multiplies the numbers as they return back up (1 → 2 → 6 → 24).</div>
+        <div class="rec-explainer-grid">
+            <div class="rec-explainer-card">
+                <div class="card-title">📌 Concept</div>
+                <div class="card-value">Calculates factorial of n<br>(n! = n × (n-1) × ... × 1)</div>
+            </div>
+            <div class="rec-explainer-card">
+                <div class="card-title">🌿 Recursion Type</div>
+                <div class="card-value">
+                    <span style="display: inline-block; background: rgba(6,182,212,0.12); color: var(--accent-cyan); border: 1px solid rgba(6,182,212,0.2); padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 600;">Linear Recursion</span>
+                    <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Single call per step</div>
+                </div>
+            </div>
+            <div class="rec-explainer-card">
+                <div class="card-title">🎯 Learning Objective</div>
+                <div class="card-value">Learn the simplest recursive form. The calls form a straight vertical pipeline.</div>
+            </div>
+            <div class="rec-explainer-card">
+                <div class="card-title">🔄 Execution Flow</div>
+                <div class="card-value">Descends to <code>fact(1)</code> (Base Case), then multiplies numbers as they return back up (1 → 2 → 6 → 24).</div>
+            </div>
+        </div>
     `,
     fibonacci: `
-        <div style="margin-bottom: 6px;"><strong>📌 Mathematical Concept:</strong> Finds n-th Fibonacci term (F(n) = F(n-1) + F(n-2)).</div>
-        <div style="margin-bottom: 6px;"><strong>🌿 Recursion Type:</strong> <code>Double Recursion</code> (Two recursive calls per step).</div>
-        <div style="margin-bottom: 6px;"><strong>🎯 Learning Objective:</strong> Understand how a single call branches into a tree. This is the foundation of divide-and-conquer algorithms.</div>
-        <div><strong>🔄 Execution Flow:</strong> Splits left and right. Each branch descends independently until hitting base cases (n ≤ 1), then the returned values are summed up.</div>
+        <div class="rec-explainer-grid">
+            <div class="rec-explainer-card">
+                <div class="card-title">📌 Concept</div>
+                <div class="card-value">Finds n-th Fibonacci term<br>(F(n) = F(n-1) + F(n-2))</div>
+            </div>
+            <div class="rec-explainer-card">
+                <div class="card-title">🌿 Recursion Type</div>
+                <div class="card-value">
+                    <span style="display: inline-block; background: rgba(168,85,247,0.12); color: var(--accent-purple); border: 1px solid rgba(168,85,247,0.2); padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 600;">Double Recursion</span>
+                    <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Two branching calls</div>
+                </div>
+            </div>
+            <div class="rec-explainer-card">
+                <div class="card-title">🎯 Learning Objective</div>
+                <div class="card-value">Understand how calls branch into a tree. Foundation for divide-and-conquer.</div>
+            </div>
+            <div class="rec-explainer-card">
+                <div class="card-title">🔄 Execution Flow</div>
+                <div class="card-value">Splits left/right. Branches descend to base cases (n ≤ 1), then returned values are summed.</div>
+            </div>
+        </div>
     `,
     sum: `
-        <div style="margin-bottom: 6px;"><strong>📌 Mathematical Concept:</strong> Sum of integers from 1 to n (1 + 2 + ... + n).</div>
-        <div style="margin-bottom: 6px;"><strong>🌿 Recursion Type:</strong> <code>Linear Reduction</code> (Equivalent to a simple loop).</div>
-        <div style="margin-bottom: 6px;"><strong>🎯 Learning Objective:</strong> See how standard loop iterations can be refactored into recursive state transitions.</div>
-        <div><strong>🔄 Execution Flow:</strong> Decrements n by 1 until it hits n = 0 (Base Case), then accumulates the sum as returned values bubble back up.</div>
+        <div class="rec-explainer-grid">
+            <div class="rec-explainer-card">
+                <div class="card-title">📌 Concept</div>
+                <div class="card-value">Sum of integers from 1 to n<br>(1 + 2 + ... + n)</div>
+            </div>
+            <div class="rec-explainer-card">
+                <div class="card-title">🌿 Recursion Type</div>
+                <div class="card-value">
+                    <span style="display: inline-block; background: rgba(16,185,129,0.12); color: var(--accent-green); border: 1px solid rgba(16,185,129,0.2); padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 600;">Linear Reduction</span>
+                    <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Refactored loop iteration</div>
+                </div>
+            </div>
+            <div class="rec-explainer-card">
+                <div class="card-title">🎯 Learning Objective</div>
+                <div class="card-value">See how standard loop iterations can be written as recursive state transitions.</div>
+            </div>
+            <div class="rec-explainer-card">
+                <div class="card-title">🔄 Execution Flow</div>
+                <div class="card-value">Decrements n by 1 until n = 0 (Base Case), then accumulates sum as returned values bubble up.</div>
+            </div>
+        </div>
     `
 };
 
@@ -549,6 +600,9 @@ function setupRecursionVisualizer() {
     resetBtn.addEventListener("click", () => {
         resetRecursionVisualizer();
     });
+    
+    // Setup Drag-to-Pan support
+    setupTreePan();
 }
 
 function updateRecCodeDisplay() {
@@ -568,6 +622,7 @@ function resetRecursionVisualizer() {
     currentRecStepIdx = -1;
     treeNodes = [];
     updateRecCodeDisplay();
+    resetTreeZoom();
 }
 
 function initializeRecursionTrace() {
@@ -579,8 +634,10 @@ function initializeRecursionTrace() {
         return;
     }
     
+    resetTreeZoom();
+    
     const stackContainer = document.getElementById("stack-container");
-    stackContainer.innerHTML = '<svg id="rec-tree-svg" style="width: 100%; height: 100%; min-width: 380px; min-height: 280px;"></svg>';
+    stackContainer.innerHTML = '<svg id="rec-tree-svg" viewBox="0 0 540 240" preserveAspectRatio="xMidYMin meet" style="width: 100%; height: 100%;"></svg>';
     
     recursionSteps = [];
     treeNodes = [];
@@ -823,24 +880,24 @@ function renderRecursionStep() {
     if (step.type === "call") {
         // Calculate tree positioning
         let depth = 0;
-        let x = 145; // default center
-        let y = 30;
+        let x = 270; // Center of 540px canvas
+        let y = 20;
         
         // Find parent
         if (step.parentFrameId !== null) {
             const parentNode = treeNodes.find(n => n.id === step.parentFrameId);
             if (parentNode) {
                 depth = parentNode.depth + 1;
-                y = parentNode.y + 55;
+                y = parentNode.y + 38; // depth step
                 
                 const algo = document.getElementById("rec-algorithm").value;
                 if (algo === "fibonacci") {
                     // Binary tree horizontal offsets
-                    let widthOffset = 80;
-                    if (depth === 1) widthOffset = 80;
-                    else if (depth === 2) widthOffset = 40;
-                    else if (depth === 3) widthOffset = 20;
-                    else if (depth === 4) widthOffset = 10;
+                    let widthOffset = 110;
+                    if (depth === 1) widthOffset = 110;
+                    else if (depth === 2) widthOffset = 55;
+                    else if (depth === 3) widthOffset = 28;
+                    else if (depth === 4) widthOffset = 14;
                     
                     const siblings = treeNodes.filter(n => n.parentId === parentNode.id);
                     if (siblings.length === 0) {
@@ -913,7 +970,7 @@ function drawRecursionTree() {
     
     // Get container size dynamically
     const container = document.getElementById("stack-container");
-    const width = container.clientWidth || 300;
+    const width = 540; // Fixed width for viewBox
     
     // Auto adjust root node x to center of container
     if (treeNodes.length > 0 && treeNodes[0].parentId === null && Math.abs(treeNodes[0].x - width / 2) > 5) {
@@ -931,8 +988,6 @@ function drawRecursionTree() {
                 line.setAttribute("y1", parent.y);
                 line.setAttribute("x2", node.x);
                 line.setAttribute("y2", node.y);
-                line.setAttribute("stroke", "var(--border-color)");
-                line.setAttribute("stroke-width", "1.5");
                 svg.appendChild(line);
             }
         }
@@ -943,8 +998,8 @@ function drawRecursionTree() {
         const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
         
         // Node dimensions
-        const rectW = 48;
-        const rectH = 20;
+        const rectW = 26;
+        const rectH = 13;
         const rx = node.x - rectW / 2;
         const ry = node.y - rectH / 2;
         
@@ -954,8 +1009,8 @@ function drawRecursionTree() {
         rect.setAttribute("y", ry);
         rect.setAttribute("width", rectW);
         rect.setAttribute("height", rectH);
-        rect.setAttribute("rx", "6");
-        rect.setAttribute("ry", "6");
+        rect.setAttribute("rx", "3");
+        rect.setAttribute("ry", "3");
         
         // Select colors based on node state
         let fill = "rgba(148, 163, 184, 0.1)"; // default waiting/inactive
@@ -985,10 +1040,10 @@ function drawRecursionTree() {
         // Text inside node
         const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
         text.setAttribute("x", node.x);
-        text.setAttribute("y", node.y + 3.5);
+        text.setAttribute("y", node.y + 2.5);
         text.setAttribute("text-anchor", "middle");
         text.setAttribute("fill", "var(--text-primary)");
-        text.setAttribute("font-size", "9px");
+        text.setAttribute("font-size", "7px");
         text.setAttribute("font-family", "monospace");
         text.setAttribute("font-weight", "600");
         
@@ -998,6 +1053,8 @@ function drawRecursionTree() {
             displayName = displayName.replace("factorial", "fact");
         } else if (displayName.startsWith("sum_n")) {
             displayName = displayName.replace("sum_n", "sum");
+        } else if (displayName.startsWith("fibonacci")) {
+            displayName = displayName.replace("fibonacci", "fib");
         }
         
         text.textContent = displayName;
@@ -1007,13 +1064,13 @@ function drawRecursionTree() {
         if (node.isBase) {
             const baseText = document.createElementNS("http://www.w3.org/2000/svg", "text");
             baseText.setAttribute("x", node.x);
-            baseText.setAttribute("y", node.y + 22);
+            baseText.setAttribute("y", node.y + 14);
             baseText.setAttribute("text-anchor", "middle");
             baseText.setAttribute("fill", "var(--accent-green)");
-            baseText.setAttribute("font-size", "7.5px");
+            baseText.setAttribute("font-size", "6px");
             baseText.setAttribute("font-family", "sans-serif");
             baseText.setAttribute("font-weight", "bold");
-            baseText.textContent = "★ Base Case";
+            baseText.textContent = "★ Base";
             group.appendChild(baseText);
         }
         
@@ -1021,24 +1078,24 @@ function drawRecursionTree() {
         if (node.state === "returned" && node.retVal !== null) {
             const badgeGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
             
-            const badgeX = node.x + rectW / 2 - 2;
-            const badgeY = node.y - rectH / 2 + 2;
+            const badgeX = node.x + rectW / 2 - 1;
+            const badgeY = node.y - rectH / 2 + 1;
             
             // Badge background circle
             const badgeCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
             badgeCircle.setAttribute("cx", badgeX);
             badgeCircle.setAttribute("cy", badgeY);
-            badgeCircle.setAttribute("r", "8");
+            badgeCircle.setAttribute("r", "5");
             badgeCircle.setAttribute("fill", "var(--accent-green)");
             badgeGroup.appendChild(badgeCircle);
             
             // Badge text value
             const badgeText = document.createElementNS("http://www.w3.org/2000/svg", "text");
             badgeText.setAttribute("x", badgeX);
-            badgeText.setAttribute("y", badgeY + 3);
+            badgeText.setAttribute("y", badgeY + 1.8);
             badgeText.setAttribute("text-anchor", "middle");
             badgeText.setAttribute("fill", "#ffffff");
-            badgeText.setAttribute("font-size", "8px");
+            badgeText.setAttribute("font-size", "6px");
             badgeText.setAttribute("font-family", "sans-serif");
             badgeText.setAttribute("font-weight", "bold");
             badgeText.textContent = node.retVal;
@@ -1049,6 +1106,8 @@ function drawRecursionTree() {
         
         svg.appendChild(group);
     });
+    
+
 }
 
 function highlightCodeLine(lineIdx) {
@@ -1408,27 +1467,27 @@ const quizQuestions = [
     },
     {
         num: 2,
-        question: "When writing classes in Python, what does the 'self' parameter represents inside class methods?",
+        question: "In Python, strings are immutable. What happens if you run the statements `s = 'Hello'` and then attempt to modify its first character using `s[0] = 'h'`?",
         options: [
-            "A reserved keyword equivalent to static in C++",
-            "An implicit reference to the active class object instance, analogous to passing a struct pointer to functions in C",
-            "A pointer to the parent class for resolving inheritance",
-            "A local dictionary referencing global variables"
+            "It raises a `TypeError` because string objects do not support element assignment",
+            "It successfully modifies `s` to `'hello'` in-place",
+            "It creates a completely new string in-place with no error",
+            "It automatically converts `s` into a mutable List object"
         ],
-        answer: 1, // implicit reference
-        explanation: "Bingo! Python's 'self' operates exactly like explicitly passing a pointer of a struct (e.g. print_student(&s)) in C. When you write s.print_student(), Python automatically parses 's' as the first parameter 'self' inside the method declaration."
+        answer: 0,
+        explanation: "Correct! Python strings are immutable sequences. You cannot modify their elements directly. Attempting to assign a new value to an index (e.g. `s[0] = 'h'`) throws a `TypeError` (as demonstrated in the Collections Explorer). To change characters, you must construct a new string."
     },
     {
         num: 3,
-        question: "If you want to perform rapid membership check ('x in collection') with O(1) average lookup complexity, which data structure should you select?",
+        question: "How does the Python range loop `for i in range(5):` behave compared to C's `for(int i = 0; i < 5; i++)`?",
         options: [
-            "A List (e.g., [1, 2, 3])",
-            "A Dictionary (e.g., {'name': 'Alice'}) or Set",
-            "A Tuple (e.g., (1, 2, 3))",
-            "A String character array"
+            "It loops `i` from `0` to `4` (performing exactly 5 iterations)",
+            "It loops `i` from `0` to `5` (performing 6 iterations)",
+            "It loops `i` from `1` to `5` (performing 5 iterations)",
+            "It requires declaring the variable type of `i` before execution"
         ],
-        answer: 1, // Dictionary
-        explanation: "Python dictionaries (and sets) are implemented using hash tables with average lookup complexity of O(1). Lists and tuples, on the other hand, are indexed arrays requiring an O(N) linear search traversal to locate elements in the worst case."
+        answer: 0,
+        explanation: "Bingo! In Python, `range(5)` yields integers from `0` up to (but not including) `5` (i.e. `0, 1, 2, 3, 4`). This performs exactly 5 iterations, matching the standard counting loop behavior from C."
     },
     {
         num: 4,
@@ -1469,19 +1528,42 @@ function loadQuizQuestion() {
     }
     
     const q = quizQuestions[currentQuizIdx];
+    const prevAnswer = userAnswers[currentQuizIdx];
+    const isAnswered = (prevAnswer !== null);
     
     container.innerHTML = `
         <div class="quiz-question-card glass">
             <div class="quiz-q-num">Question ${q.num} of ${quizQuestions.length}</div>
             <div class="quiz-q-text">${q.question}</div>
             <div class="quiz-options">
-                ${q.options.map((opt, i) => `
-                    <button class="quiz-option" onclick="selectQuizOption(${i})">${opt}</button>
-                `).join('')}
+                ${q.options.map((opt, i) => {
+                    let extraClass = "";
+                    if (isAnswered) {
+                        if (i === q.answer) {
+                            extraClass = " correct";
+                        } else if (i === prevAnswer) {
+                            extraClass = " incorrect";
+                        }
+                    }
+                    return `<button class="quiz-option${extraClass}" ${isAnswered ? 'disabled' : ''} onclick="selectQuizOption(${i})">${opt}</button>`;
+                }).join('')}
             </div>
-            <div class="quiz-explanation" id="quiz-explanation-box" style="display:none;"></div>
-            <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
-                <button class="btn btn-primary" id="quiz-next-btn" style="display:none;" onclick="nextQuizQuestion()">Next Question <i class="fa-solid fa-chevron-right"></i></button>
+            <div class="quiz-explanation ${isAnswered ? (prevAnswer === q.answer ? 'correct-explain' : 'incorrect-explain') : ''}" id="quiz-explanation-box" style="display: ${isAnswered ? 'block' : 'none'};">
+                ${isAnswered ? `
+                    <h5 class="${prevAnswer === q.answer ? 'correct-title' : 'incorrect-title'}">
+                        <i class="fa-solid ${prevAnswer === q.answer ? 'fa-circle-check' : 'fa-circle-xmark'}"></i> 
+                        ${prevAnswer === q.answer ? 'Correct!' : 'Incorrect'}
+                    </h5>
+                    <p>${q.explanation}</p>
+                ` : ''}
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 16px; align-items: center; width: 100%;">
+                <div>
+                    ${currentQuizIdx > 0 ? `<button class="btn btn-secondary" id="quiz-prev-btn" onclick="prevQuizQuestion()"><i class="fa-solid fa-chevron-left"></i> Back</button>` : ''}
+                </div>
+                <div>
+                    <button class="btn btn-primary" id="quiz-next-btn" style="display: ${isAnswered ? 'inline-flex' : 'none'};" onclick="nextQuizQuestion()">Next Question <i class="fa-solid fa-chevron-right"></i></button>
+                </div>
             </div>
         </div>
     `;
@@ -1533,6 +1615,18 @@ function nextQuizQuestion() {
     currentQuizIdx++;
     loadQuizQuestion();
 }
+
+function prevQuizQuestion() {
+    if (currentQuizIdx > 0) {
+        currentQuizIdx--;
+        loadQuizQuestion();
+    }
+}
+
+window.prevQuizQuestion = prevQuizQuestion;
+window.selectQuizOption = selectQuizOption;
+window.nextQuizQuestion = nextQuizQuestion;
+window.resetQuiz = resetQuiz;
 
 function showQuizResults() {
     const container = document.getElementById("quiz-container");
@@ -2287,6 +2381,8 @@ function renderCollectionMemory(highlightIdx = null, unpackActive = false, conca
         container.style.display = "flex";
         container.style.gap = "10px";
         container.style.flexWrap = "wrap";
+        container.style.justifyContent = "center";
+        container.style.alignItems = "center";
         
         colListState.forEach((val, idx) => {
             const box = document.createElement("div");
@@ -2419,6 +2515,7 @@ function renderCollectionMemory(highlightIdx = null, unpackActive = false, conca
             concatDiv.style.display = "flex";
             concatDiv.style.gap = "6px";
             concatDiv.style.alignItems = "center";
+            concatDiv.style.flexWrap = "wrap";
             concatDiv.innerHTML = `<span style="font-size: 11px; width: 80px; color: var(--accent-purple); font-weight:700;">New Object:</span>`;
             [...concatStrVal].forEach((char, idx) => {
                 const isNew = (idx >= colStrState.length);
@@ -2466,6 +2563,10 @@ function executeCollectionAction(action) {
     
     if (colActiveTab === "list") {
         if (action.type === "append") {
+            if (colListState.length >= 4) {
+                explanationBox.innerHTML = `<strong>Error:</strong> List size is capped at 4 for this simulation. Pop or Reset to append again!`;
+                return;
+            }
             colListState.push("date");
             renderCollectionMemory(colListState.length - 1);
             explanationBox.innerHTML = `<strong>list.append(x) executes in O(1) time:</strong> Appends the element to the end of the array. Because lists are <strong>mutable</strong>, this operation alters the array directly in place.`;
@@ -3212,14 +3313,8 @@ function switchExceptionScenario(scenarioKey) {
         if (tabBtn) {
             if (key === scenarioKey) {
                 tabBtn.classList.add("active");
-                tabBtn.style.backgroundColor = "var(--accent-purple-glow)";
-                tabBtn.style.borderColor = "var(--border-accent)";
-                tabBtn.style.color = "#ffffff";
             } else {
                 tabBtn.classList.remove("active");
-                tabBtn.style.backgroundColor = "rgba(255, 255, 255, 0.03)";
-                tabBtn.style.borderColor = "var(--border-color)";
-                tabBtn.style.color = "var(--text-secondary)";
             }
         }
     });
@@ -3369,3 +3464,122 @@ window.resetLoopSimulation = resetLoopSimulation;
 window.switchExceptionScenario = switchExceptionScenario;
 window.setExceptionShieldState = setExceptionShieldState;
 window.runExceptionSimulation = runExceptionSimulation;
+
+// Recursion Tree Zoom and Pan Handlers (Figma/Google Maps style viewBox zoom-and-pan)
+let viewBoxState = {
+    minX: 0,
+    minY: 0,
+    width: 540,
+    height: 240
+};
+let isPanning = false;
+let startPanMouseX = 0;
+let startPanMouseY = 0;
+let startPanMinX = 0;
+let startPanMinY = 0;
+
+function applyViewBox() {
+    const svg = document.getElementById("rec-tree-svg");
+    if (!svg) return;
+    svg.setAttribute("viewBox", `${viewBoxState.minX} ${viewBoxState.minY} ${viewBoxState.width} ${viewBoxState.height}`);
+}
+
+function zoomTree(delta) {
+    const zoomFactor = delta > 0 ? 0.8 : 1.25;
+    
+    // Limits viewBox width between 150 (max zoom) and 1000 (min zoom)
+    const newWidth = Math.max(150, Math.min(1000, viewBoxState.width * zoomFactor));
+    const newHeight = newWidth * (240 / 540); // Keep aspect ratio
+    
+    // Zoom in relative to current center
+    const centerX = viewBoxState.minX + viewBoxState.width / 2;
+    const centerY = viewBoxState.minY + viewBoxState.height / 2;
+    
+    viewBoxState.minX = centerX - newWidth / 2;
+    viewBoxState.minY = centerY - newHeight / 2;
+    viewBoxState.width = newWidth;
+    viewBoxState.height = newHeight;
+    
+    applyViewBox();
+}
+
+function resetTreeZoom() {
+    viewBoxState = {
+        minX: 0,
+        minY: 0,
+        width: 540,
+        height: 240
+    };
+    applyViewBox();
+}
+
+function setupTreePan() {
+    const container = document.getElementById("stack-container");
+    if (!container) return;
+    
+    container.addEventListener("mousedown", (e) => {
+        const svg = document.getElementById("rec-tree-svg");
+        if (!svg) return;
+        
+        isPanning = true;
+        container.style.cursor = "grabbing";
+        startPanMouseX = e.clientX;
+        startPanMouseY = e.clientY;
+        startPanMinX = viewBoxState.minX;
+        startPanMinY = viewBoxState.minY;
+    });
+    
+    window.addEventListener("mousemove", (e) => {
+        if (!isPanning) return;
+        
+        const svg = document.getElementById("rec-tree-svg");
+        if (!svg) return;
+        
+        const deltaMouseX = e.clientX - startPanMouseX;
+        const deltaMouseY = e.clientY - startPanMouseY;
+        
+        const svgClientWidth = svg.clientWidth || 300;
+        const svgClientHeight = svg.clientHeight || 200;
+        const scaleX = viewBoxState.width / svgClientWidth;
+        const scaleY = viewBoxState.height / svgClientHeight;
+        
+        viewBoxState.minX = startPanMinX - deltaMouseX * scaleX;
+        viewBoxState.minY = startPanMinY - deltaMouseY * scaleY;
+        
+        applyViewBox();
+    });
+    
+    window.addEventListener("mouseup", () => {
+        if (isPanning) {
+            isPanning = false;
+            const container = document.getElementById("stack-container");
+            if (container) container.style.cursor = "grab";
+        }
+    });
+}
+
+window.zoomTree = zoomTree;
+window.resetTreeZoom = resetTreeZoom;
+
+// Tab switcher for Module 2: Recursion
+function switchRecursionTab(tabName) {
+    const vizTab = document.getElementById("rec-tab-viz");
+    const vsTab = document.getElementById("rec-tab-vs");
+    const vizContent = document.getElementById("rec-content-viz");
+    const vsContent = document.getElementById("rec-content-vs");
+    
+    if (!vizTab || !vsTab || !vizContent || !vsContent) return;
+    
+    if (tabName === "viz") {
+        vizTab.classList.add("active");
+        vsTab.classList.remove("active");
+        vizContent.style.display = "block";
+        vsContent.style.display = "none";
+    } else {
+        vsTab.classList.add("active");
+        vizTab.classList.remove("active");
+        vsContent.style.display = "block";
+        vizContent.style.display = "none";
+    }
+}
+window.switchRecursionTab = switchRecursionTab;
