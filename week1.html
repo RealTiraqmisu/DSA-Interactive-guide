@@ -774,7 +774,7 @@ age = "twenty"   # Now refers to a string</code></pre>
                                             <!-- Code Syntax box -->
                                             <div class="explorer-syntax-box" style="margin-top: 1rem;">
                                                 <div style="font-size: 0.7rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">Python Statement:</div>
-                                                <pre style="background: #02040a; border: 1px solid var(--border-color); border-radius: 6px; padding: 8px 12px; margin: 0;"><code id="explorer-statement-code" class="language-python" style="font-family: 'Fira Code', monospace; font-size: 12px; color: #a855f7;"># Click an action to execute</code></pre>
+                                                <pre><code id="explorer-statement-code" class="language-python" style="font-family: 'Fira Code', monospace; font-size: 12px; color: #a855f7;"># Click an action to execute</code></pre>
                                             </div>
                                         </div>
                                         
@@ -846,7 +846,7 @@ print(f"Coordinates: x={x}, y={y}")
                             </button>
                             <div class="accordion-content">
                                 <p>In C, code blocks are delimited by curly braces {}. In Python, blocks are defined
-                                    strictly by indentation (typically 4 spaces) and preceded by a colon :.</p>
+                                    strictly by indentation and preceded by a colon (:).</p>
 
                                 <div class="code-compare-grid">
                                     <div class="code-compare-block c-block">
@@ -922,24 +922,24 @@ for index, val in enumerate(arr):
                                         </div>
 
                                         <!-- Simulator Workspace -->
-                                        <div class="flow-workspace" style="display: grid; grid-template-columns: 1.2fr 1.2fr; gap: 1.25rem;">
+                                        <div class="flow-workspace">
                                             <!-- Panel Left: Interactive Code Display -->
-                                            <div class="flow-code-panel" style="border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; background-color: #0b0f19; font-family: 'Fira Code', monospace; font-size: 12px; display: flex; flex-direction: column;">
-                                                <div class="window-titlebar" style="background-color: rgba(255, 255, 255, 0.02); padding: 6px 12px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
+                                            <div class="flow-code-panel">
+                                                <div class="window-titlebar">
                                                     <span style="display: flex; gap: 4px;">
-                                                        <span class="dot-red" style="width:8px; height:8px; border-radius:50%; background-color:#ef4444; display:inline-block;"></span>
-                                                        <span class="dot-yellow" style="width:8px; height:8px; border-radius:50%; background-color:#f59e0b; display:inline-block;"></span>
-                                                        <span class="dot-green" style="width:8px; height:8px; border-radius:50%; background-color:#10b981; display:inline-block;"></span>
+                                                        <span class="dot-red"></span>
+                                                        <span class="dot-yellow"></span>
+                                                        <span class="dot-green"></span>
                                                     </span>
-                                                    <span class="window-title-text" id="flow-code-title" style="font-size: 10px; color: var(--text-muted); font-family: monospace;">conditional_test.py</span>
+                                                    <span class="window-title-text" id="flow-code-title">conditional_test.py</span>
                                                 </div>
-                                                <div class="code-container" id="flow-code-display" style="padding: 1rem; color: #f8fafc; line-height: 1.65; white-space: pre; overflow-x: auto; flex-grow: 1;">
+                                                <div class="code-container" id="flow-code-display">
                                                     <!-- Dynamic Code with lines will be injected here -->
                                                 </div>
                                             </div>
 
                                             <!-- Panel Right: Controls & Output -->
-                                            <div class="flow-control-panel" style="display: flex; flex-direction: column; justify-content: space-between; border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem; background-color: rgba(0, 0, 0, 0.15);">
+                                            <div class="flow-control-panel">
                                                 
                                                 <!-- Dynamic Section: Conditionals Controls -->
                                                 <div id="flow-controls-cond">
@@ -949,7 +949,7 @@ for index, val in enumerate(arr):
                                                         <span id="flow-gpa-val" style="font-size: 14px; font-weight: 700; color: var(--accent-cyan); width: 35px; text-align: right;">2.5</span>
                                                     </div>
                                                     
-                                                    <div class="flow-explanation-box" id="flow-cond-explanation" style="font-size: 12px; color: var(--text-secondary); margin-bottom: 1rem; padding: 8px 12px; background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent-cyan); border-radius: 4px; line-height: 1.45;">
+                                                    <div class="flow-explanation-box" id="flow-cond-explanation">
                                                         GPA is 2.50. Evaluates True for `gpa >= 2.00` check.
                                                     </div>
                                                 </div>
@@ -976,12 +976,12 @@ for index, val in enumerate(arr):
                                                 </div>
 
                                                 <!-- Console Mock Output (Shared) -->
-                                                <div class="console-output-box" style="display: flex; flex-direction: column; flex-grow: 1; min-height: 90px; background-color: #05070c; border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden; font-family: 'Fira Code', monospace; font-size: 11.5px;">
-                                                    <div style="background-color: rgba(255,255,255,0.02); padding: 4px 8px; font-size: 9px; color: var(--text-muted); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between;">
+                                                <div class="console-output-box">
+                                                    <div class="console-header">
                                                         <span>Output Console</span>
-                                                        <span id="loop-vars-tracker">Active vars: (none)</span>
+                                                        <span id="loop-vars-tracker" style="color: var(--accent-cyan); font-weight: 500;">Active vars: (none)</span>
                                                     </div>
-                                                    <div id="flow-console-text" style="padding: 8px; color: #a3e635; white-space: pre-line; flex-grow: 1; line-height: 1.45; overflow-y: auto;">
+                                                    <div id="flow-console-text">
                                                         Console cleared.
                                                     </div>
                                                 </div>
@@ -1030,68 +1030,95 @@ except IOError:
                                     </div>
                                 </div>
 
-                                <!-- Exception Shield Game -->
-                                <div class="minigame-card" id="exception-game-card">
+                                <!-- Interactive Exception Explorer -->
+                                <div class="minigame-card" id="exception-explorer-card">
                                     <div class="minigame-header">
                                         <div class="minigame-title">
-                                            <i class="fa-solid fa-shield-halved text-accent"></i>
-                                            <span>Minigame: Exception Shield</span>
+                                            <i class="fa-solid fa-shield-halved text-accent" style="color: var(--accent-purple) !important;"></i>
+                                            <span>Interactive Exception Explorer</span>
                                         </div>
-                                        <div class="minigame-subtitle">Deploy the correct Exception Shield to catch the runtime crash!</div>
+                                        <div class="minigame-subtitle">Select a common Python exception, toggle the try-except shield, and simulate the execution flow.</div>
                                     </div>
                                     <div class="minigame-body">
-                                        <div class="exception-instructions">
-                                            In Python, standard runtime errors crash the program. By wrapping vulnerable code in a <code>try-except</code> block, you can "catch" these exceptions. Select the correct exception class to shield your program from crashing.
-                                        </div>
-                                        <div class="exception-progress">
-                                            <div class="progress-label">Progress: Level <span id="exception-level-num">1</span> of 4</div>
-                                            <div class="progress-dots">
-                                                <span class="dot active" id="exc-dot-1"></span>
-                                                <span class="dot" id="exc-dot-2"></span>
-                                                <span class="dot" id="exc-dot-3"></span>
-                                                <span class="dot" id="exc-dot-4"></span>
-                                            </div>
+                                        <!-- Tabs selectors -->
+                                        <div class="exception-tabs flow-tabs" style="display: flex; gap: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                                            <button class="explorer-tab-btn active" id="exc-tab-ZeroDivisionError" onclick="switchExceptionScenario('ZeroDivisionError')" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all var(--transition-fast);">
+                                                ZeroDivisionError
+                                            </button>
+                                            <button class="explorer-tab-btn" id="exc-tab-ValueError" onclick="switchExceptionScenario('ValueError')" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all var(--transition-fast);">
+                                                ValueError
+                                            </button>
+                                            <button class="explorer-tab-btn" id="exc-tab-IndexError" onclick="switchExceptionScenario('IndexError')" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all var(--transition-fast);">
+                                                IndexError
+                                            </button>
+                                            <button class="explorer-tab-btn" id="exc-tab-KeyError" onclick="switchExceptionScenario('KeyError')" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all var(--transition-fast);">
+                                                KeyError
+                                            </button>
                                         </div>
 
-                                        <!-- Simulator Window -->
+                                        <!-- Simulator Workspace -->
                                         <div class="exception-workspace">
-                                            <div class="exception-code-window">
+                                            <!-- Panel Left: Code Window -->
+                                            <div class="exception-code-panel flow-code-panel">
                                                 <div class="window-titlebar">
-                                                    <span class="dot-red"></span>
-                                                    <span class="dot-yellow"></span>
-                                                    <span class="dot-green"></span>
-                                                    <span class="window-title-text">vulnerable_program.py</span>
+                                                    <span style="display: flex; gap: 4px;">
+                                                        <span class="dot-red"></span>
+                                                        <span class="dot-yellow"></span>
+                                                        <span class="dot-green"></span>
+                                                    </span>
+                                                    <span class="window-title-text" id="exc-filename">division_by_zero.py</span>
                                                 </div>
-                                                <div class="code-content" id="exception-code-display">
-                                                    <!-- Dynamic Level Code Goes Here -->
+                                                
+                                                <!-- Shield Toggler Header -->
+                                                <div class="shield-toggler-bar" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background-color: rgba(255,255,255,0.01); border-bottom: 1px solid var(--border-color);">
+                                                    <span style="font-size: 11px; font-weight: 600; color: var(--text-secondary);">try-except Shield:</span>
+                                                    <div>
+                                                        <button class="toggle-shield-btn active" id="shield-off-btn" onclick="setExceptionShieldState(false)">
+                                                            <i class="fa-solid fa-skull text-danger" style="margin-right: 4px; color: #ef4444;"></i> Off (Crashes)
+                                                        </button>
+                                                        <button class="toggle-shield-btn" id="shield-on-btn" onclick="setExceptionShieldState(true)">
+                                                            <i class="fa-solid fa-shield-halved text-success" style="margin-right: 4px; color: #10b981;"></i> On (Safe)
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="code-container" id="exc-code-display">
+                                                    <!-- Injected Code -->
                                                 </div>
                                             </div>
-                                            
-                                            <!-- Shields Selection -->
-                                            <div class="shield-selection-container">
-                                                <div class="shield-header-text">Select Exception Shield:</div>
-                                                <div class="shield-buttons-grid">
-                                                    <button class="shield-btn" onclick="selectExceptionShield('ZeroDivisionError')">
-                                                        <i class="fa-solid fa-shield-halved"></i> ZeroDivisionError
-                                                    </button>
-                                                    <button class="shield-btn" onclick="selectExceptionShield('ValueError')">
-                                                        <i class="fa-solid fa-shield-halved"></i> ValueError
-                                                    </button>
-                                                    <button class="shield-btn" onclick="selectExceptionShield('IndexError')">
-                                                        <i class="fa-solid fa-shield-halved"></i> IndexError
-                                                    </button>
-                                                    <button class="shield-btn" onclick="selectExceptionShield('KeyError')">
-                                                        <i class="fa-solid fa-shield-halved"></i> KeyError
-                                                    </button>
+
+                                            <!-- Panel Right: Controls & Terminal -->
+                                            <div class="exception-control-panel flow-control-panel">
+                                                <div>
+                                                    <h5 id="exc-type-header" style="margin: 0 0 0.25rem 0; font-family: 'Outfit', sans-serif; color: var(--text-primary); font-size: 14px; font-weight: 700;">ZeroDivisionError</h5>
+                                                    <p id="exc-description" style="font-size: 11.5px; color: var(--text-secondary); margin: 0 0 1rem 0; line-height: 1.45;">
+                                                        Occurs when dividing by zero.
+                                                    </p>
+                                                    
+                                                    <div style="margin-bottom: 1rem;">
+                                                        <button class="btn btn-primary btn-sm" id="exc-simulate-btn" onclick="runExceptionSimulation()" style="width: 100%; font-size: 11.5px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                                                            <i class="fa-solid fa-play"></i> Run Code Simulation
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Console Mock Output -->
+                                                <div class="console-output-box" id="exc-console-box">
+                                                    <div class="console-header">
+                                                        <span>Terminal output</span>
+                                                        <span id="exc-console-status" style="color: var(--text-muted); font-size: 8.5px;">Idle</span>
+                                                    </div>
+                                                    <div id="exc-console-text">
+                                                        Click "Run Code Simulation" to execute the script.
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         
-                                        <div class="minigame-feedback" id="exception-feedback" style="display: none;"></div>
-                                    </div>
-                                    <div class="minigame-actions">
-                                        <button class="btn btn-secondary btn-sm" onclick="resetExceptionGame()"><i class="fa-solid fa-arrow-rotate-left"></i> Restart Game</button>
-                                        <button class="btn btn-primary btn-sm" id="next-level-btn" onclick="advanceExceptionLevel()" style="display: none;">Next Level <i class="fa-solid fa-arrow-right"></i></button>
+                                        <!-- Explanation block at bottom -->
+                                        <div class="flow-explanation-box" id="exc-explanation-card" style="margin-top: 1rem; display: none;">
+                                            <!-- Explanation text will go here -->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1171,11 +1198,11 @@ except IOError:
                     <div class="card glass visualizer-card">
                         <div class="card-header">
                             <span class="card-icon"><i class="fa-solid fa-computer"></i></span>
-                            <h3>Interactive Call Stack Visualizer</h3>
+                            <h3>Interactive Recursion Tree Visualizer</h3>
                         </div>
                         <div class="card-body">
                             <p>Select a recursive function, choose an input size, and step through the execution. Watch
-                                how memory stack frames are pushed when calling, and popped when returning values!</p>
+                                how the recursion tree dynamically grows as child calls are made, and propagates values back up as they return!</p>
 
                             <div class="visualizer-controls">
                                 <div class="control-group">
@@ -1199,6 +1226,11 @@ except IOError:
                                             class="fa-solid fa-rotate-left"></i> Reset</button>
                                 </div>
                             </div>
+                            
+                            <!-- Dynamic Explainer Box -->
+                            <div class="algo-explanation-box" id="rec-algo-explainer">
+                                <!-- Populated dynamically by JS -->
+                            </div>
 
                             <div class="visualizer-display">
                                 <div class="visualizer-code-panel">
@@ -1207,9 +1239,15 @@ except IOError:
                                         id="visualizer-code-display">Select an algorithm and click Initialize to begin...</pre>
                                 </div>
                                 <div class="visualizer-stack-panel">
-                                    <div class="panel-title">Memory Call Stack:</div>
+                                    <div class="panel-title">Recursion Tree:</div>
                                     <div class="stack-container" id="stack-container">
-                                        <div class="empty-stack-msg">Stack is empty. Click Initialize.</div>
+                                        <div class="empty-stack-msg" id="empty-tree-msg">Tree is empty. Click Initialize.</div>
+                                    </div>
+                                    <div class="tree-legend">
+                                        <span style="display: flex; align-items: center; gap: 4px; color: var(--text-secondary);"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 2px; background: rgba(6, 182, 212, 0.2); border: 1px solid var(--accent-cyan);"></span> Active</span>
+                                        <span style="display: flex; align-items: center; gap: 4px; color: var(--text-secondary);"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 2px; background: rgba(168, 85, 247, 0.2); border: 1px solid var(--accent-purple);"></span> Waiting</span>
+                                        <span style="display: flex; align-items: center; gap: 4px; color: var(--text-secondary);"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 2px; background: rgba(16, 185, 129, 0.2); border: 1px solid var(--accent-green);"></span> Returned</span>
+                                        <span style="display: flex; align-items: center; gap: 4px; color: var(--accent-green); font-weight: bold;"><i class="fa-solid fa-star"></i> Base Case</span>
                                     </div>
                                 </div>
                                 <div class="visualizer-log-panel">

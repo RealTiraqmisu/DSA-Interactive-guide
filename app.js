@@ -212,14 +212,14 @@ document.addEventListener("DOMContentLoaded", () => {
     setupWhyPythonSimulators();
     setupDynamicTypingVisualizer();
     setupCollectionsExplorer();
-    if (typeof loadExceptionLevel === "function") {
-        loadExceptionLevel(0);
+    if (typeof switchExceptionScenario === "function") {
+        switchExceptionScenario('ZeroDivisionError');
     }
-    if (typeof updateGpaBranches === "function") {
-        updateGpaBranches(2.5);
+    if (typeof switchFlowTab === "function") {
+        switchFlowTab('cond');
     }
-    if (typeof selectLoopType === "function") {
-        selectLoopType('range');
+    if (typeof highlightAllStaticCode === "function") {
+        highlightAllStaticCode();
     }
 
     // Enable Tab indentation for all code editors
@@ -451,6 +451,7 @@ function setupEditors() {
 // -------------------------------------------------------------
 let recursionSteps = [];
 let currentRecStepIdx = -1;
+let treeNodes = [];
 let recCodeTemplate = {
     factorial: {
         code: `def factorial(n):
@@ -491,6 +492,35 @@ let recCodeTemplate = {
     }
 };
 
+const recAlgoExplanations = {
+    factorial: `
+        <div style="margin-bottom: 6px;"><strong>📌 Mathematical Concept:</strong> Calculates factorial of n (n! = n × (n-1) × ... × 1).</div>
+        <div style="margin-bottom: 6px;"><strong>🌿 Recursion Type:</strong> <code>Linear Recursion</code> (Single recursive call per step).</div>
+        <div style="margin-bottom: 6px;"><strong>🎯 Learning Objective:</strong> Learn the simplest recursive structure where the calls form a straight vertical chain (pipeline).</div>
+        <div><strong>🔄 Execution Flow:</strong> Descends straight down to <code>fact(1)</code> (Base Case), then multiplies the numbers as they return back up (1 → 2 → 6 → 24).</div>
+    `,
+    fibonacci: `
+        <div style="margin-bottom: 6px;"><strong>📌 Mathematical Concept:</strong> Finds n-th Fibonacci term (F(n) = F(n-1) + F(n-2)).</div>
+        <div style="margin-bottom: 6px;"><strong>🌿 Recursion Type:</strong> <code>Double Recursion</code> (Two recursive calls per step).</div>
+        <div style="margin-bottom: 6px;"><strong>🎯 Learning Objective:</strong> Understand how a single call branches into a tree. This is the foundation of divide-and-conquer algorithms.</div>
+        <div><strong>🔄 Execution Flow:</strong> Splits left and right. Each branch descends independently until hitting base cases (n ≤ 1), then the returned values are summed up.</div>
+    `,
+    sum: `
+        <div style="margin-bottom: 6px;"><strong>📌 Mathematical Concept:</strong> Sum of integers from 1 to n (1 + 2 + ... + n).</div>
+        <div style="margin-bottom: 6px;"><strong>🌿 Recursion Type:</strong> <code>Linear Reduction</code> (Equivalent to a simple loop).</div>
+        <div style="margin-bottom: 6px;"><strong>🎯 Learning Objective:</strong> See how standard loop iterations can be refactored into recursive state transitions.</div>
+        <div><strong>🔄 Execution Flow:</strong> Decrements n by 1 until it hits n = 0 (Base Case), then accumulates the sum as returned values bubble back up.</div>
+    `
+};
+
+function updateRecExplanation() {
+    const algo = document.getElementById("rec-algorithm").value;
+    const explainer = document.getElementById("rec-algo-explainer");
+    if (explainer && recAlgoExplanations[algo]) {
+        explainer.innerHTML = recAlgoExplanations[algo];
+    }
+}
+
 function setupRecursionVisualizer() {
     const algorithmSelect = document.getElementById("rec-algorithm");
     const inputField = document.getElementById("rec-input");
@@ -498,11 +528,13 @@ function setupRecursionVisualizer() {
     const stepBtn = document.getElementById("rec-step-btn");
     const resetBtn = document.getElementById("rec-reset-btn");
     
-    // Set initial template code
+    // Set initial template code and explanation
     updateRecCodeDisplay();
+    updateRecExplanation();
     
     algorithmSelect.addEventListener("change", () => {
         updateRecCodeDisplay();
+        updateRecExplanation();
         resetRecursionVisualizer();
     });
     
@@ -520,9 +552,7 @@ function setupRecursionVisualizer() {
 }
 
 function updateRecCodeDisplay() {
-    const algo = document.getElementById("rec-algorithm").value;
-    const codeDisplay = document.getElementById("visualizer-code-display");
-    codeDisplay.textContent = recCodeTemplate[algo].code;
+    highlightCodeLine(-1);
 }
 
 function resetRecursionVisualizer() {
@@ -530,12 +560,13 @@ function resetRecursionVisualizer() {
     const traceLog = document.getElementById("trace-log");
     const stepBtn = document.getElementById("rec-step-btn");
     
-    stackContainer.innerHTML = '<div class="empty-stack-msg">Stack is empty. Click Initialize.</div>';
+    stackContainer.innerHTML = '<div class="empty-stack-msg" id="empty-tree-msg">Tree is empty. Click Initialize.</div>';
     traceLog.innerHTML = 'Initializing visual logs...';
     
     stepBtn.disabled = true;
     recursionSteps = [];
     currentRecStepIdx = -1;
+    treeNodes = [];
     updateRecCodeDisplay();
 }
 
@@ -548,7 +579,11 @@ function initializeRecursionTrace() {
         return;
     }
     
+    const stackContainer = document.getElementById("stack-container");
+    stackContainer.innerHTML = '<svg id="rec-tree-svg" style="width: 100%; height: 100%; min-width: 380px; min-height: 280px;"></svg>';
+    
     recursionSteps = [];
+    treeNodes = [];
     
     if (algo === "factorial") {
         generateFactorialSteps(n);
@@ -768,74 +803,252 @@ function stepRecursionTrace() {
 
 function renderRecursionStep() {
     const step = recursionSteps[currentRecStepIdx];
-    const stackContainer = document.getElementById("stack-container");
     const traceLog = document.getElementById("trace-log");
-    
-    // Clear initial empty msg
-    if (currentRecStepIdx === 0) {
-        stackContainer.innerHTML = "";
-    }
     
     // Update logs
     let logClass = "info";
-    if (step.type === "return" || step.type === "base") logClass = "pop";
-    if (currentRecStepIdx === recursionSteps.length - 1 && step.type === "return") logClass = "success";
+    if (step.type === "call") logClass = "call";
+    else if (step.type === "descent" || step.type === "descent-right") logClass = "descent";
+    else if (step.type === "base") logClass = "base";
+    else if (step.type === "return") logClass = "return";
+    
+    if (currentRecStepIdx === recursionSteps.length - 1 && step.type === "return") {
+        logClass = "success";
+    }
     
     traceLog.innerHTML += `<div class="log-entry ${logClass}">[Step ${currentRecStepIdx + 1}] ${step.desc}</div>`;
     traceLog.scrollTop = traceLog.scrollHeight;
     
-    // Update visual Stack frames
+    // Update Tree nodes data structure
     if (step.type === "call") {
-        // Push a new frame
-        const frameDiv = document.createElement("div");
-        frameDiv.className = "stack-frame active";
-        frameDiv.id = `frame-${step.frameId}`;
-        frameDiv.innerHTML = `
-            <span class="frame-title">${step.name}</span>
-            <span class="frame-vars">local: n = ${step.params.n}</span>
-        `;
+        // Calculate tree positioning
+        let depth = 0;
+        let x = 145; // default center
+        let y = 30;
         
-        // Deactivate previous active frame visually
-        const activeFrames = stackContainer.querySelectorAll(".stack-frame.active");
-        activeFrames.forEach(f => f.classList.remove("active"));
+        // Find parent
+        if (step.parentFrameId !== null) {
+            const parentNode = treeNodes.find(n => n.id === step.parentFrameId);
+            if (parentNode) {
+                depth = parentNode.depth + 1;
+                y = parentNode.y + 55;
+                
+                const algo = document.getElementById("rec-algorithm").value;
+                if (algo === "fibonacci") {
+                    // Binary tree horizontal offsets
+                    let widthOffset = 80;
+                    if (depth === 1) widthOffset = 80;
+                    else if (depth === 2) widthOffset = 40;
+                    else if (depth === 3) widthOffset = 20;
+                    else if (depth === 4) widthOffset = 10;
+                    
+                    const siblings = treeNodes.filter(n => n.parentId === parentNode.id);
+                    if (siblings.length === 0) {
+                        x = parentNode.x - widthOffset; // Left branch
+                    } else {
+                        x = parentNode.x + widthOffset; // Right branch
+                    }
+                } else {
+                    // Linear recursion tree
+                    x = parentNode.x;
+                }
+            }
+        }
         
-        stackContainer.appendChild(frameDiv);
-    } 
+        // Set other active nodes to waiting
+        treeNodes.forEach(n => {
+            if (n.state === "active") n.state = "waiting";
+        });
+        
+        // Push new node
+        treeNodes.push({
+            id: step.frameId,
+            parentId: step.parentFrameId,
+            name: step.name,
+            x: x,
+            y: y,
+            depth: depth,
+            state: "active",
+            retVal: null
+        });
+    }
     else if (step.type === "descent" || step.type === "descent-right") {
-        // Keep active, maybe adjust variables shown
-        const frameDiv = document.getElementById(`frame-${step.frameId}`);
-        if (frameDiv) {
-            frameDiv.classList.remove("active");
-            if (step.params.leftVal !== undefined) {
-                frameDiv.querySelector(".frame-vars").innerHTML = `local: n = ${step.params.n}, left = ${step.params.leftVal}`;
+        const node = treeNodes.find(n => n.id === step.frameId);
+        if (node) {
+            node.state = "waiting";
+        }
+    }
+    else if (step.type === "base" || step.type === "return") {
+        const node = treeNodes.find(n => n.id === step.frameId);
+        if (node) {
+            node.state = "returned";
+            node.retVal = step.retVal;
+            if (step.type === "base") {
+                node.isBase = true;
+            }
+        }
+        
+        // Reactivate parent node
+        if (step.parentFrameId !== null) {
+            const parentNode = treeNodes.find(n => n.id === step.parentFrameId);
+            if (parentNode && parentNode.state !== "returned") {
+                parentNode.state = "active";
             }
         }
     }
-    else if (step.type === "base") {
-        const frameDiv = document.getElementById(`frame-${step.frameId}`);
-        if (frameDiv) {
-            frameDiv.className = "stack-frame active";
-            frameDiv.innerHTML += `<span class="frame-return">returns ${step.retVal}</span>`;
-        }
-    }
-    else if (step.type === "return") {
-        // Popping a frame
-        const frameDiv = document.getElementById(`frame-${step.frameId}`);
-        if (frameDiv) {
-            frameDiv.className = "stack-frame popping";
-            setTimeout(() => {
-                frameDiv.remove();
-                // Set the parent frame as active again
-                if (step.parentFrameId) {
-                    const parentDiv = document.getElementById(`frame-${step.parentFrameId}`);
-                    if (parentDiv) parentDiv.classList.add("active");
-                }
-            }, 300);
-        }
-    }
+    
+    // Draw the tree
+    drawRecursionTree();
     
     // Highlight code line
     highlightCodeLine(step.line);
+}
+
+function drawRecursionTree() {
+    const svg = document.getElementById("rec-tree-svg");
+    if (!svg) return;
+    
+    // Clear SVG
+    svg.innerHTML = "";
+    
+    // Get container size dynamically
+    const container = document.getElementById("stack-container");
+    const width = container.clientWidth || 300;
+    
+    // Auto adjust root node x to center of container
+    if (treeNodes.length > 0 && treeNodes[0].parentId === null && Math.abs(treeNodes[0].x - width / 2) > 5) {
+        const deltaX = width / 2 - treeNodes[0].x;
+        treeNodes.forEach(n => n.x += deltaX);
+    }
+    
+    // 1. Draw lines (edges)
+    treeNodes.forEach(node => {
+        if (node.parentId !== null) {
+            const parent = treeNodes.find(n => n.id === node.parentId);
+            if (parent) {
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", parent.x);
+                line.setAttribute("y1", parent.y);
+                line.setAttribute("x2", node.x);
+                line.setAttribute("y2", node.y);
+                line.setAttribute("stroke", "var(--border-color)");
+                line.setAttribute("stroke-width", "1.5");
+                svg.appendChild(line);
+            }
+        }
+    });
+    
+    // 2. Draw nodes (rounded rects)
+    treeNodes.forEach(node => {
+        const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        
+        // Node dimensions
+        const rectW = 48;
+        const rectH = 20;
+        const rx = node.x - rectW / 2;
+        const ry = node.y - rectH / 2;
+        
+        // Rect element
+        const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        rect.setAttribute("x", rx);
+        rect.setAttribute("y", ry);
+        rect.setAttribute("width", rectW);
+        rect.setAttribute("height", rectH);
+        rect.setAttribute("rx", "6");
+        rect.setAttribute("ry", "6");
+        
+        // Select colors based on node state
+        let fill = "rgba(148, 163, 184, 0.1)"; // default waiting/inactive
+        let stroke = "var(--border-color)";
+        let glow = "none";
+        
+        if (node.state === "active") {
+            fill = "rgba(6, 182, 212, 0.15)"; // Cyan active
+            stroke = "var(--accent-cyan)";
+            glow = "0 0 8px var(--accent-cyan)";
+        } else if (node.state === "waiting") {
+            fill = "rgba(168, 85, 247, 0.1)"; // Purple descent
+            stroke = "var(--accent-purple)";
+        } else if (node.state === "returned") {
+            fill = "rgba(16, 185, 129, 0.15)"; // Green returned
+            stroke = "var(--accent-green)";
+        }
+        
+        rect.setAttribute("fill", fill);
+        rect.setAttribute("stroke", stroke);
+        rect.setAttribute("stroke-width", "1.5");
+        if (glow !== "none") {
+            rect.setAttribute("style", `filter: drop-shadow(${glow});`);
+        }
+        group.appendChild(rect);
+        
+        // Text inside node
+        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text.setAttribute("x", node.x);
+        text.setAttribute("y", node.y + 3.5);
+        text.setAttribute("text-anchor", "middle");
+        text.setAttribute("fill", "var(--text-primary)");
+        text.setAttribute("font-size", "9px");
+        text.setAttribute("font-family", "monospace");
+        text.setAttribute("font-weight", "600");
+        
+        // Shorten name if needed, e.g. factorial(4) -> fact(4)
+        let displayName = node.name;
+        if (displayName.startsWith("factorial")) {
+            displayName = displayName.replace("factorial", "fact");
+        } else if (displayName.startsWith("sum_n")) {
+            displayName = displayName.replace("sum_n", "sum");
+        }
+        
+        text.textContent = displayName;
+        group.appendChild(text);
+        
+        // Draw Base Case label under the node
+        if (node.isBase) {
+            const baseText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            baseText.setAttribute("x", node.x);
+            baseText.setAttribute("y", node.y + 22);
+            baseText.setAttribute("text-anchor", "middle");
+            baseText.setAttribute("fill", "var(--accent-green)");
+            baseText.setAttribute("font-size", "7.5px");
+            baseText.setAttribute("font-family", "sans-serif");
+            baseText.setAttribute("font-weight", "bold");
+            baseText.textContent = "★ Base Case";
+            group.appendChild(baseText);
+        }
+        
+        // If node has returned a value, draw a small value badge on top right corner
+        if (node.state === "returned" && node.retVal !== null) {
+            const badgeGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            
+            const badgeX = node.x + rectW / 2 - 2;
+            const badgeY = node.y - rectH / 2 + 2;
+            
+            // Badge background circle
+            const badgeCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            badgeCircle.setAttribute("cx", badgeX);
+            badgeCircle.setAttribute("cy", badgeY);
+            badgeCircle.setAttribute("r", "8");
+            badgeCircle.setAttribute("fill", "var(--accent-green)");
+            badgeGroup.appendChild(badgeCircle);
+            
+            // Badge text value
+            const badgeText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            badgeText.setAttribute("x", badgeX);
+            badgeText.setAttribute("y", badgeY + 3);
+            badgeText.setAttribute("text-anchor", "middle");
+            badgeText.setAttribute("fill", "#ffffff");
+            badgeText.setAttribute("font-size", "8px");
+            badgeText.setAttribute("font-family", "sans-serif");
+            badgeText.setAttribute("font-weight", "bold");
+            badgeText.textContent = node.retVal;
+            badgeGroup.appendChild(badgeText);
+            
+            group.appendChild(badgeGroup);
+        }
+        
+        svg.appendChild(group);
+    });
 }
 
 function highlightCodeLine(lineIdx) {
@@ -846,7 +1059,7 @@ function highlightCodeLine(lineIdx) {
     container.innerHTML = "";
     rawLines.forEach((line, idx) => {
         const span = document.createElement("span");
-        span.textContent = line + "\n";
+        span.innerHTML = highlightPythonLine(line) + "\n";
         if (idx === lineIdx) {
             span.className = "code-highlight-line";
         }
@@ -2428,11 +2641,11 @@ function updateGpaBranches(gpaVal) {
         output = "Honor Roll";
         explanation = `GPA ${gpaFloat.toFixed(2)} >= 3.50 evaluates <strong>True</strong>. The first <code>if</code> branch triggers, outputting <code>"Honor Roll"</code>. Other branches are ignored.`;
     } else if (gpaFloat >= 2.00) {
-        activeLines.push(3, 5, 6);
+        activeLines.push(5, 6);
         output = "Pass";
         explanation = `GPA ${gpaFloat.toFixed(2)} is &lt; 3.50 (<code>if</code> evaluates <strong>False</strong>), but is >= 2.00 (<code>elif</code> evaluates <strong>True</strong>), outputting <code>"Pass"</code>.`;
     } else {
-        activeLines.push(3, 5, 7, 8);
+        activeLines.push(7, 8);
         output = "Fail";
         explanation = `GPA ${gpaFloat.toFixed(2)} is &lt; 2.00. Both <code>if</code> and <code>elif</code> check expressions evaluate <strong>False</strong>. The fallback <code>else</code> block is executed, outputting <code>"Fail"</code>.`;
     }
@@ -2602,6 +2815,204 @@ function updateVarsTracker(varsObj) {
     }
 }
 
+function escapeHtml(text) {
+    return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function highlightPythonLine(text) {
+    if (!text) return "";
+    
+    // Check if it is a whole comment line
+    if (text.trim().startsWith("#")) {
+        return `<span class="code-comment">${escapeHtml(text)}</span>`;
+    }
+    
+    let i = 0;
+    let result = "";
+    
+    const keywords = new Set(['if', 'elif', 'else', 'for', 'in', 'while', 'try', 'except', 'as', 'with', 'def', 'class', 'return', 'import', 'from', 'pass', 'and', 'or', 'not', 'is', 'lambda', 'None', 'True', 'False']);
+    const builtins = new Set(['print', 'int', 'float', 'str', 'range', 'len', 'enumerate', 'list', 'dict', 'tuple', 'assert']);
+    
+    while (i < text.length) {
+        const char = text[i];
+        
+        // 1. Comments
+        if (char === '#') {
+            result += `<span class="code-comment">${escapeHtml(text.substring(i))}</span>`;
+            break;
+        }
+        
+        // 2. String literals
+        if (char === '"' || char === "'") {
+            const quote = char;
+            let start = i;
+            i++; // skip quote
+            while (i < text.length && text[i] !== quote) {
+                if (text[i] === '\\' && i + 1 < text.length) {
+                    i += 2;
+                } else {
+                    i++;
+                }
+            }
+            if (i < text.length) i++; // consume closing quote
+            const strVal = text.substring(start, i);
+            result += `<span class="code-string">${escapeHtml(strVal)}</span>`;
+            continue;
+        }
+        
+        // 3. Numbers (integers or floats)
+        const numMatch = text.substring(i).match(/^(\d+(\.\d+)?)\b/);
+        if (numMatch) {
+            const numStr = numMatch[1];
+            result += `<span class="code-number">${escapeHtml(numStr)}</span>`;
+            i += numStr.length;
+            continue;
+        }
+        
+        // 4. Identifiers / Keywords / Builtins
+        const wordMatch = text.substring(i).match(/^([a-zA-Z_][a-zA-Z0-9_]*)/);
+        if (wordMatch) {
+            const word = wordMatch[1];
+            if (keywords.has(word)) {
+                result += `<span class="code-keyword">${escapeHtml(word)}</span>`;
+            } else if (builtins.has(word)) {
+                result += `<span class="code-builtin">${escapeHtml(word)}</span>`;
+            } else {
+                result += escapeHtml(word);
+            }
+            i += word.length;
+            continue;
+        }
+        
+        // 5. Normal characters
+        result += escapeHtml(char);
+        i++;
+    }
+    
+    return result;
+}
+
+function highlightCLine(text) {
+    if (!text) return "";
+    
+    if (text.trim().startsWith("//")) {
+        return `<span class="code-comment">${escapeHtml(text)}</span>`;
+    }
+    
+    let i = 0;
+    let result = "";
+    
+    const keywords = new Set(['if', 'else', 'for', 'while', 'do', 'switch', 'case', 'break', 'continue', 'return', 'struct', 'typedef', 'sizeof', 'int', 'char', 'float', 'double', 'long', 'short', 'unsigned', 'void', 'const', 'static', 'bool', 'true', 'false']);
+    const builtins = new Set(['printf', 'scanf', 'malloc', 'free', 'realloc', 'calloc', 'fopen', 'fclose', 'perror', 'exit', 'NULL']);
+    const preprocessors = new Set(['#include', '#define', '#ifdef', '#ifndef', '#endif', '#pragma']);
+    
+    while (i < text.length) {
+        const char = text[i];
+        
+        // 1. Comments
+        if (char === '/' && text[i+1] === '/') {
+            result += `<span class="code-comment">${escapeHtml(text.substring(i))}</span>`;
+            break;
+        }
+        if (char === '/' && text[i+1] === '*') {
+            const endIdx = text.indexOf("*/", i + 2);
+            if (endIdx !== -1) {
+                const comment = text.substring(i, endIdx + 2);
+                result += `<span class="code-comment">${escapeHtml(comment)}</span>`;
+                i += comment.length;
+                continue;
+            }
+        }
+        
+        // 2. Preprocessor directive
+        if (char === '#') {
+            const prepMatch = text.substring(i).match(/^(#[a-zA-Z_][a-zA-Z0-9_]*)/);
+            if (prepMatch) {
+                const prep = prepMatch[1];
+                result += `<span class="code-keyword">${escapeHtml(prep)}</span>`;
+                i += prep.length;
+                continue;
+            }
+        }
+        
+        // 3. String literals
+        if (char === '"' || char === "'") {
+            const quote = char;
+            let start = i;
+            i++; // skip quote
+            while (i < text.length && text[i] !== quote) {
+                if (text[i] === '\\' && i + 1 < text.length) {
+                    i += 2;
+                } else {
+                    i++;
+                }
+            }
+            if (i < text.length) i++; // consume closing quote
+            const strVal = text.substring(start, i);
+            result += `<span class="code-string">${escapeHtml(strVal)}</span>`;
+            continue;
+        }
+        
+        // 4. Numbers
+        const numMatch = text.substring(i).match(/^(\d+(\.\d+)?)\b/);
+        if (numMatch) {
+            const numStr = numMatch[1];
+            result += `<span class="code-number">${escapeHtml(numStr)}</span>`;
+            i += numStr.length;
+            continue;
+        }
+        
+        // 5. Identifiers / Keywords / Builtins
+        const wordMatch = text.substring(i).match(/^([a-zA-Z_][a-zA-Z0-9_]*)/);
+        if (wordMatch) {
+            const word = wordMatch[1];
+            if (keywords.has(word)) {
+                result += `<span class="code-keyword">${escapeHtml(word)}</span>`;
+            } else if (builtins.has(word)) {
+                result += `<span class="code-builtin">${escapeHtml(word)}</span>`;
+            } else {
+                result += escapeHtml(word);
+            }
+            i += word.length;
+            continue;
+        }
+        
+        result += escapeHtml(char);
+        i++;
+    }
+    
+    return result;
+}
+
+function highlightAllStaticCode() {
+    const codeBlocks = document.querySelectorAll("pre code");
+    codeBlocks.forEach(block => {
+        // Skip code panels of simulators that are dynamically highlighted
+        if (block.closest(".flow-code-panel") || block.closest(".exception-code-window") || block.id === "exc-code-display" || block.id === "flow-code-display") {
+            return;
+        }
+        
+        const isC = block.closest(".c-block") || block.classList.contains("language-c");
+        const isPython = block.closest(".py-block") || block.classList.contains("language-python") || block.closest(".python-block");
+        
+        const rawText = block.textContent;
+        // Split by newlines, highlight each line, and join
+        const lines = rawText.split("\n");
+        let highlightedHtml = "";
+        
+        if (isC) {
+            highlightedHtml = lines.map(line => highlightCLine(line)).join("\n");
+        } else if (isPython) {
+            highlightedHtml = lines.map(line => highlightPythonLine(line)).join("\n");
+        } else {
+            // Default to Python highlighter if unspecified
+            highlightedHtml = lines.map(line => highlightPythonLine(line)).join("\n");
+        }
+        
+        block.innerHTML = highlightedHtml;
+    });
+}
+
 function renderFlowCode(codeArr, activeLines, replacements = {}) {
     const container = document.getElementById("flow-code-display");
     if (!container) return;
@@ -2613,12 +3024,12 @@ function renderFlowCode(codeArr, activeLines, replacements = {}) {
             lineText = lineText.replace(key, replacements[key]);
         }
         
-        const escapedText = lineText.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const highlighted = highlightPythonLine(lineText);
         const isActive = activeLines.includes(lineObj.line);
         if (lineObj.isCode) {
-            html += `<span class="flow-code-line${isActive ? ' active' : ''}">${escapedText}</span>`;
+            html += `<span class="flow-code-line${isActive ? ' active' : ''}">${highlighted}</span>`;
         } else {
-            html += `<span class="flow-code-comment" style="color: var(--text-muted); padding: 3px 8px; opacity: 0.6; display: block;">${escapedText}</span>`;
+            html += `<span class="flow-code-comment" style="padding: 3px 8px; display: block;">${highlighted}</span>`;
         }
     });
     
@@ -2628,183 +3039,325 @@ function renderFlowCode(codeArr, activeLines, replacements = {}) {
 
 /* -------------------------------------------------------------
    Exception Shield Game Logic
-   ------------------------------------------------------------- */
-const exceptionLevels = [
-    {
-        level: 1,
-        title: "vulnerable_program.py (ZeroDivisionError)",
-        code: `# Level 1: division by zero\nx = 10\ny = 0\nresult = x / y\nprint(result)`,
-        correctAnswer: "ZeroDivisionError",
-        successText: "Excellent! You caught ZeroDivisionError. In Python, dividing any number by zero raises a ZeroDivisionError. Without a try-except block, your program crashes instantly.",
-        explanation: "ZeroDivisionError is raised when the second argument of a division or modulo operation is zero.",
-        codeWrapped: `try:\n    x = 10\n    y = 0\n    result = x / y\n    print(result)\nexcept ZeroDivisionError:\n    print("Caught division by zero!")`
-    },
-    {
-        level: 2,
-        title: "vulnerable_program.py (ValueError)",
-        code: `# Level 2: invalid type conversion\nuser_input = "forty-two"\nnumber = int(user_input)\nprint(number)`,
-        correctAnswer: "ValueError",
-        successText: "Awesome! You caught ValueError. The int() function throws a ValueError because 'forty-two' is not a valid representation of an integer numeric value.",
-        explanation: "ValueError is raised when an operation or function receives an argument that has the right type but an inappropriate value.",
-        codeWrapped: `try:\n    user_input = "forty-two"\n    number = int(user_input)\n    print(number)\nexcept ValueError:\n    print("Caught ValueError: invalid literal for int()!")`
-    },
-    {
-        level: 3,
-        title: "vulnerable_program.py (IndexError)",
-        code: `# Level 3: index out of range\nelements = [10, 20, 30]\nfifth_val = elements[5]\nprint(fifth_val)`,
-        correctAnswer: "IndexError",
-        successText: "Perfect! You caught IndexError. Python lists throw this exception when you try to access an index that is less than 0 or greater than or equal to the list size.",
-        explanation: "IndexError is raised when a sequence subscript is out of range.",
-        codeWrapped: `try:\n    elements = [10, 20, 30]\n    fifth_val = elements[5]\n    print(fifth_val)\nexcept IndexError:\n    print("Caught IndexError: list index out of range!")`
-    },
-    {
-        level: 4,
-        title: "vulnerable_program.py (KeyError)",
-        code: `# Level 4: dictionary key lookup\nstudent_records = {"id": "B680001", "name": "Somchai"}\ngpa_record = student_records["gpa"]\nprint(gpa_record)`,
-        correctAnswer: "KeyError",
-        successText: "Spectacular! You caught KeyError. Python dictionaries raise this when you attempt to retrieve a value using a key that does not exist in the dictionary map.",
-        explanation: "KeyError is raised when a mapping (dictionary) key is not found in the set of existing keys.",
-        codeWrapped: `try:\n    student_records = {"id": "B680001", "name": "Somchai"}\n    gpa_record = student_records["gpa"]\n    print(gpa_record)\nexcept KeyError:\n    print("Caught KeyError: 'gpa' not found!")`
-    }
-];
+   ------------------------------------------------------------- */const exceptionScenarios = {
+    ZeroDivisionError: {
+        title: "ZeroDivisionError",
+        filename: "division_by_zero.py",
+        desc: "Occurs when a division or modulo operation has zero as the divisor. In C, dividing by zero causes undefined behavior or immediate program termination (core dump). Python raises a ZeroDivisionError.",
+        codeRaw: [
+            { line: 1, text: "# Division by zero scenario", isCode: false },
+            { line: 2, text: "x = 10", isCode: true },
+            { line: 3, text: "y = 0", isCode: true },
+            { line: 4, text: "print(\"Dividing x by y...\")", isCode: true },
+            { line: 5, text: "result = x / y  # Raises ZeroDivisionError!", isCode: true, isCrash: true },
+            { line: 6, text: "print(f\"Result: {result}\") # NEVER runs!", isCode: true }
+        ],
+        codeShielded: [
+            { line: 1, text: "# Shielded division by zero", isCode: false },
+            { line: 2, text: "print(\"Dividing x by y...\")", isCode: true },
+            { line: 3, text: "try:", isCode: true },
+            { line: 4, text: "    x = 10", isCode: true },
+            { line: 5, text: "    y = 0", isCode: true },
+            { line: 6, text: "    result = x / y", isCode: true },
+            { line: 7, text: "    print(f\"Result: {result}\")", isCode: true },
+            { line: 8, text: "except ZeroDivisionError:", isCode: true },
+            { line: 9, text: "    print(\"Error: Cannot divide by zero!\")", isCode: true },
+            { line: 10, text: "", isCode: false },
+            { line: 11, text: "print(\"Program continues running successfully!\")", isCode: true }
+        ],
+        crashOutput: `>>> running division_by_zero.py...
+Dividing x by y...
+Traceback (most recent call last):
+  File "division_by_zero.py", line 5, in <module>
+    result = x / y
+ZeroDivisionError: division by zero
 
-let currentExceptionLevelIdx = 0;
-let hasSelectedShield = false;
+❌ CRASH! Program terminated prematurely.`,
+        shieldedOutput: `>>> running division_by_zero.py...
+Dividing x by y...
+Error: Cannot divide by zero!
+Program continues running successfully!
 
-function loadExceptionLevel(lvlIdx) {
-    currentExceptionLevelIdx = lvlIdx;
-    hasSelectedShield = false;
-    
-    const level = exceptionLevels[lvlIdx];
-    const levelNumEl = document.getElementById("exception-level-num");
-    const codeDisplayEl = document.getElementById("exception-code-display");
-    const titleTextEl = document.querySelector("#exception-game-card .window-title-text");
-    const feedbackEl = document.getElementById("exception-feedback");
-    const nextBtn = document.getElementById("next-level-btn");
-    
-    if (levelNumEl) levelNumEl.textContent = level.level;
-    if (codeDisplayEl) codeDisplayEl.textContent = level.code.replace(/\\n/g, '\n');
-    if (titleTextEl) titleTextEl.textContent = level.title;
-    
-    if (feedbackEl) {
-        feedbackEl.style.display = "none";
-        feedbackEl.className = "minigame-feedback";
+✅ SUCCESS! Exception caught safely.`,
+        explanation: "Since <code>y</code> is 0, line 5 raises a <code>ZeroDivisionError</code>. The <code>except ZeroDivisionError</code> block catches this immediately, runs the error-handling print on line 9, and the program happily continues executing the rest of the file instead of crashing."
+    },
+    ValueError: {
+        title: "ValueError",
+        filename: "invalid_conversion.py",
+        desc: "Raised when an operation or function receives an argument that has the right type but an inappropriate value. In C, calling `atoi(\"forty-two\")` returns 0 silently without telling you it failed. Python safely raises a ValueError.",
+        codeRaw: [
+            { line: 1, text: "# Invalid type conversion scenario", isCode: false },
+            { line: 2, text: "user_input = \"forty-two\"", isCode: true },
+            { line: 3, text: "print(\"Parsing user input...\")", isCode: true },
+            { line: 4, text: "number = int(user_input) # Raises ValueError!", isCode: true, isCrash: true },
+            { line: 5, text: "print(f\"Number: {number}\") # NEVER runs!", isCode: true }
+        ],
+        codeShielded: [
+            { line: 1, text: "# Shielded type conversion", isCode: false },
+            { line: 2, text: "user_input = \"forty-two\"", isCode: true },
+            { line: 3, text: "print(\"Parsing user input...\")", isCode: true },
+            { line: 4, text: "try:", isCode: true },
+            { line: 5, text: "    number = int(user_input)", isCode: true },
+            { line: 6, text: "    print(f\"Number: {number}\")", isCode: true },
+            { line: 7, text: "except ValueError:", isCode: true },
+            { line: 8, text: "    print(\"Error: Input is not a valid integer string!\")", isCode: true },
+            { line: 9, text: "", isCode: false },
+            { line: 10, text: "print(\"Program continues running successfully!\")", isCode: true }
+        ],
+        crashOutput: `>>> running invalid_conversion.py...
+Parsing user input...
+Traceback (most recent call last):
+  File "invalid_conversion.py", line 4, in <module>
+    number = int(user_input)
+ValueError: invalid literal for int() with base 10: 'forty-two'
+
+❌ CRASH! Program terminated prematurely.`,
+        shieldedOutput: `>>> running invalid_conversion.py...
+Parsing user input...
+Error: Input is not a valid integer string!
+Program continues running successfully!
+
+✅ SUCCESS! Exception caught safely.`,
+        explanation: "The string <code>\"forty-two\"</code> cannot be parsed into a numeric digit. Line 4 raises a <code>ValueError</code>, which is caught on line 7, triggering a warning instead of a crash."
+    },
+    IndexError: {
+        title: "IndexError",
+        filename: "array_out_of_bounds.py",
+        desc: "Raised when trying to access a list index that is out of range. In C, accessing `arr[5]` on an array of size 3 reads garbage data or causes a segmentation fault. Python raises an IndexError to guarantee memory safety.",
+        codeRaw: [
+            { line: 1, text: "# List index out of range scenario", isCode: false },
+            { line: 2, text: "arr = [10, 20, 30]", isCode: true },
+            { line: 3, text: "print(\"Accessing list element...\")", isCode: true },
+            { line: 4, text: "value = arr[5] # Raises IndexError!", isCode: true, isCrash: true },
+            { line: 5, text: "print(f\"Value: {value}\") # NEVER runs!", isCode: true }
+        ],
+        codeShielded: [
+            { line: 1, text: "# Shielded index access", isCode: false },
+            { line: 2, text: "arr = [10, 20, 30]", isCode: true },
+            { line: 3, text: "print(\"Accessing list element...\")", isCode: true },
+            { line: 4, text: "try:", isCode: true },
+            { line: 5, text: "    value = arr[5]", isCode: true },
+            { line: 6, text: "    print(f\"Value: {value}\")", isCode: true },
+            { line: 7, text: "except IndexError:", isCode: true },
+            { line: 8, text: "    print(\"Error: List index is out of bounds!\")", isCode: true },
+            { line: 9, text: "", isCode: false },
+            { line: 10, text: "print(\"Program continues running successfully!\")", isCode: true }
+        ],
+        crashOutput: `>>> running array_out_of_bounds.py...
+Accessing list element...
+Traceback (most recent call last):
+  File "array_out_of_bounds.py", line 4, in <module>
+    value = arr[5]
+IndexError: list index out of range
+
+❌ CRASH! Program terminated prematurely.`,
+        shieldedOutput: `>>> running array_out_of_bounds.py...
+Accessing list element...
+Error: List index is out of bounds!
+Program continues running successfully!
+
+✅ SUCCESS! Exception caught safely.`,
+        explanation: "The list has elements at index 0, 1, and 2. Index 5 is out of bounds, so line 4 raises an <code>IndexError</code>. The exception handler on line 7 catches it and recovers gracefully."
+    },
+    KeyError: {
+        title: "KeyError",
+        filename: "dictionary_lookup.py",
+        desc: "Raised when looking up a key that doesn't exist in a dictionary key set. Similar to an index check, but for hash maps.",
+        codeRaw: [
+            { line: 1, text: "# Dictionary key lookup scenario", isCode: false },
+            { line: 2, text: "student = {\"id\": \"B680001\", \"name\": \"Somchai\"}", isCode: true },
+            { line: 3, text: "print(\"Looking up student GPA...\")", isCode: true },
+            { line: 4, text: "gpa = student[\"gpa\"] # Raises KeyError!", isCode: true, isCrash: true },
+            { line: 5, text: "print(f\"GPA: {gpa}\") # NEVER runs!", isCode: true }
+        ],
+        codeShielded: [
+            { line: 1, text: "# Shielded dictionary lookup", isCode: false },
+            { line: 2, text: "student = {\"id\": \"B680001\", \"name\": \"Somchai\"}", isCode: true },
+            { line: 3, text: "print(\"Looking up student GPA...\")", isCode: true },
+            { line: 4, text: "try:", isCode: true },
+            { line: 5, text: "    gpa = student[\"gpa\"]", isCode: true },
+            { line: 6, text: "    print(f\"GPA: {gpa}\")", isCode: true },
+            { line: 7, text: "except KeyError:", isCode: true },
+            { line: 8, text: "    print(\"Error: Key 'gpa' not found in dictionary!\")", isCode: true },
+            { line: 9, text: "", isCode: false },
+            { line: 10, text: "print(\"Program continues running successfully!\")", isCode: true }
+        ],
+        crashOutput: `>>> running dictionary_lookup.py...
+Looking up student GPA...
+Traceback (most recent call last):
+  File "dictionary_lookup.py", line 4, in <module>
+    gpa = student["gpa"]
+KeyError: 'gpa'
+
+❌ CRASH! Program terminated prematurely.`,
+        shieldedOutput: `>>> running dictionary_lookup.py...
+Looking up student GPA...
+Error: Key 'gpa' not found in dictionary!
+Program continues running successfully!
+
+✅ SUCCESS! Exception caught safely.`,
+        explanation: "The dictionary has only keys <code>'id'</code> and <code>'name'</code>. Accessing <code>'gpa'</code> raises a <code>KeyError</code>, which is caught and handled on line 7."
     }
+};
+
+let currentExcScenario = 'ZeroDivisionError';
+let excShieldActive = false;
+
+function switchExceptionScenario(scenarioKey) {
+    currentExcScenario = scenarioKey;
     
-    if (nextBtn) {
-        nextBtn.style.display = "none";
-        nextBtn.innerHTML = lvlIdx === exceptionLevels.length - 1 ? 'Restart Game <i class="fa-solid fa-arrow-rotate-left"></i>' : 'Next Level <i class="fa-solid fa-arrow-right"></i>';
-    }
-    
-    // Reset buttons
-    const shieldButtons = document.querySelectorAll(".shield-btn");
-    shieldButtons.forEach(btn => {
-        btn.disabled = false;
-        btn.className = "shield-btn";
-    });
-    
-    // Update progress dots
-    for (let i = 1; i <= exceptionLevels.length; i++) {
-        const dot = document.getElementById("exc-dot-" + i);
-        if (dot) {
-            dot.className = "dot";
-            if (i < lvlIdx + 1) {
-                dot.classList.add("completed");
-            } else if (i === lvlIdx + 1) {
-                dot.classList.add("active");
+    // Toggle active tab buttons
+    ['ZeroDivisionError', 'ValueError', 'IndexError', 'KeyError'].forEach(key => {
+        const tabBtn = document.getElementById("exc-tab-" + key);
+        if (tabBtn) {
+            if (key === scenarioKey) {
+                tabBtn.classList.add("active");
+                tabBtn.style.backgroundColor = "var(--accent-purple-glow)";
+                tabBtn.style.borderColor = "var(--border-accent)";
+                tabBtn.style.color = "#ffffff";
+            } else {
+                tabBtn.classList.remove("active");
+                tabBtn.style.backgroundColor = "rgba(255, 255, 255, 0.03)";
+                tabBtn.style.borderColor = "var(--border-color)";
+                tabBtn.style.color = "var(--text-secondary)";
             }
         }
+    });
+    
+    const scenario = exceptionScenarios[scenarioKey];
+    if (!scenario) return;
+    
+    // Update labels
+    document.getElementById("exc-filename").textContent = scenario.filename;
+    document.getElementById("exc-type-header").textContent = scenario.title;
+    document.getElementById("exc-description").textContent = scenario.desc;
+    
+    // Hide explanation box and reset console
+    document.getElementById("exc-explanation-card").style.display = "none";
+    document.getElementById("exc-console-text").textContent = "Click \"Run Code Simulation\" to execute the script.";
+    document.getElementById("exc-console-status").textContent = "Idle";
+    document.getElementById("exc-console-status").style.color = "var(--text-muted)";
+    
+    // Reset console box styling
+    const consoleBox = document.getElementById("exc-console-box");
+    if (consoleBox) {
+        consoleBox.style.borderColor = "var(--border-color)";
     }
+    
+    renderExceptionCode();
 }
 
-function selectExceptionShield(selectedError) {
-    if (hasSelectedShield) return;
+function setExceptionShieldState(isActive) {
+    excShieldActive = isActive;
     
-    const level = exceptionLevels[currentExceptionLevelIdx];
-    const isCorrect = (selectedError === level.correctAnswer);
+    const offBtn = document.getElementById("shield-off-btn");
+    const onBtn = document.getElementById("shield-on-btn");
     
-    const feedbackEl = document.getElementById("exception-feedback");
-    const codeDisplayEl = document.getElementById("exception-code-display");
-    const shieldButtons = document.querySelectorAll(".shield-btn");
-    const nextBtn = document.getElementById("next-level-btn");
+    if (offBtn && onBtn) {
+        if (isActive) {
+            onBtn.classList.add("active");
+            offBtn.classList.remove("active");
+        } else {
+            offBtn.classList.add("active");
+            onBtn.classList.remove("active");
+        }
+    }
     
-    // Find selected button
-    let clickedBtn = null;
-    shieldButtons.forEach(btn => {
-        if (btn.textContent.includes(selectedError)) {
-            clickedBtn = btn;
+    // Reset console and hide explanation
+    document.getElementById("exc-explanation-card").style.display = "none";
+    document.getElementById("exc-console-text").textContent = "Click \"Run Code Simulation\" to execute the script.";
+    document.getElementById("exc-console-status").textContent = "Idle";
+    document.getElementById("exc-console-status").style.color = "var(--text-muted)";
+    
+    const consoleBox = document.getElementById("exc-console-box");
+    if (consoleBox) {
+        consoleBox.style.borderColor = "var(--border-color)";
+    }
+    
+    renderExceptionCode();
+}
+
+function renderExceptionCode(highlightLines = [], isCrashRun = false) {
+    const container = document.getElementById("exc-code-display");
+    if (!container) return;
+    
+    const scenario = exceptionScenarios[currentExcScenario];
+    const codeArr = excShieldActive ? scenario.codeShielded : scenario.codeRaw;
+    
+    let html = "";
+    codeArr.forEach(lineObj => {
+        const lineText = lineObj.text;
+        const highlighted = highlightPythonLine(lineText);
+        
+        let lineClass = "flow-code-line";
+        if (highlightLines.includes(lineObj.line)) {
+            lineClass += isCrashRun && lineObj.isCrash ? " crash" : " active";
+        }
+        
+        if (lineObj.isCode) {
+            html += `<span class="${lineClass}">${highlighted}</span>`;
+        } else {
+            html += `<span class="flow-code-comment" style="padding: 3px 8px; display: block;">${highlighted}</span>`;
         }
     });
     
-    if (isCorrect) {
-        hasSelectedShield = true;
-        
-        if (clickedBtn) {
-            clickedBtn.className = "shield-btn selected-correct";
-        }
-        
-        // Disable other buttons
-        shieldButtons.forEach(btn => {
-            if (btn !== clickedBtn) btn.disabled = true;
-        });
-        
-        // Show wrapped code execution
-        if (codeDisplayEl) {
-            codeDisplayEl.textContent = level.codeWrapped.replace(/\\n/g, '\n');
-        }
-        
-        // Show success feedback
-        if (feedbackEl) {
-            feedbackEl.style.display = "block";
-            feedbackEl.className = "minigame-feedback success";
-            feedbackEl.innerHTML = `<strong><i class="fa-solid fa-shield-halved"></i> Shield Deployed Successfully!</strong><br>${level.successText}<br><em style="font-size:11px; opacity:0.85;">Details: ${level.explanation}</em>`;
-        }
-        
-        // Update current dot to completed
-        const dot = document.getElementById("exc-dot-" + (currentExceptionLevelIdx + 1));
-        if (dot) {
-            dot.className = "dot completed";
-        }
-        
-        // Show next button
-        if (nextBtn) {
-            nextBtn.style.display = "inline-flex";
-        }
-    } else {
-        if (clickedBtn) {
-            clickedBtn.className = "shield-btn selected-incorrect";
-            clickedBtn.disabled = true;
-        }
-        
-        // Simulate python crash traceback
-        if (codeDisplayEl) {
-            const crashTraceback = `Traceback (most recent call last):
-  File "vulnerable_program.py", line 4, in <module>
-${level.correctAnswer}: exception raised in expression
-
-CRASH! Your shield [${selectedError}] did not catch the error. Try deploying a different shield!`;
-            codeDisplayEl.textContent = crashTraceback;
-        }
-        
-        // Show error feedback
-        if (feedbackEl) {
-            feedbackEl.style.display = "block";
-            feedbackEl.className = "minigame-feedback error";
-            feedbackEl.innerHTML = `<strong><i class="fa-solid fa-circle-xmark"></i> Runtime Crash!</strong><br>The selected shield failed to catch the exception. The program has terminated unexpectedly. Try another shield!`;
-        }
-    }
+    container.innerHTML = html;
 }
 
-function advanceExceptionLevel() {
-    if (currentExceptionLevelIdx < exceptionLevels.length - 1) {
-        loadExceptionLevel(currentExceptionLevelIdx + 1);
+function runExceptionSimulation() {
+    const scenario = exceptionScenarios[currentExcScenario];
+    if (!scenario) return;
+    
+    const consoleText = document.getElementById("exc-console-text");
+    const consoleStatus = document.getElementById("exc-console-status");
+    const consoleBox = document.getElementById("exc-console-box");
+    const explanationCard = document.getElementById("exc-explanation-card");
+    
+    if (excShieldActive) {
+        // Run shielded code
+        if (consoleText) consoleText.textContent = scenario.shieldedOutput;
+        if (consoleStatus) {
+            consoleStatus.textContent = "Success";
+            consoleStatus.style.color = "var(--accent-green)";
+        }
+        if (consoleBox) {
+            consoleBox.style.borderColor = "var(--accent-green)";
+        }
+        
+        // Highlight try, except and handler lines
+        renderExceptionCode([3, 8, 9, 11], false);
+        
+        if (explanationCard) {
+            explanationCard.style.display = "block";
+            explanationCard.style.borderLeftColor = "var(--accent-green)";
+            explanationCard.innerHTML = `<strong><i class="fa-solid fa-circle-check" style="color: var(--accent-green); margin-right: 6px;"></i> try-except Recovery:</strong><br>${scenario.explanation}`;
+        }
     } else {
-        resetExceptionGame();
+        // Run unshielded code (Crashes!)
+        if (consoleText) consoleText.textContent = scenario.crashOutput;
+        if (consoleStatus) {
+            consoleStatus.textContent = "Crashed";
+            consoleStatus.style.color = "var(--accent-red)";
+        }
+        if (consoleBox) {
+            consoleBox.style.borderColor = "var(--accent-red)";
+            consoleBox.classList.add("type-error-flash");
+            setTimeout(() => consoleBox.classList.remove("type-error-flash"), 400);
+        }
+        
+        // Find crash line number
+        const crashLineObj = scenario.codeRaw.find(l => l.isCrash);
+        const crashLineNum = crashLineObj ? crashLineObj.line : null;
+        
+        // Highlight line that crashed
+        renderExceptionCode(crashLineNum ? [crashLineNum] : [], true);
+        
+        if (explanationCard) {
+            explanationCard.style.display = "block";
+            explanationCard.style.borderLeftColor = "var(--accent-red)";
+            explanationCard.innerHTML = `<strong><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-red); margin-right: 6px;"></i> Exception Crash:</strong><br>The program crashed on line ${crashLineNum}. Because there was no <code>try-except</code> shield to catch the <code>${scenario.title}</code>, execution halted immediately. Notice that subsequent lines of code were never reached!`;
+        }
     }
-}
-
-function resetExceptionGame() {
-    loadExceptionLevel(0);
 }
 
 // Bind to window to allow HTML onClick access
@@ -2813,7 +3366,6 @@ window.updateGpaBranches = updateGpaBranches;
 window.selectLoopType = selectLoopType;
 window.stepLoopSimulation = stepLoopSimulation;
 window.resetLoopSimulation = resetLoopSimulation;
-window.selectExceptionShield = selectExceptionShield;
-window.advanceExceptionLevel = advanceExceptionLevel;
-window.resetExceptionGame = resetExceptionGame;
-window.loadExceptionLevel = loadExceptionLevel;
+window.switchExceptionScenario = switchExceptionScenario;
+window.setExceptionShieldState = setExceptionShieldState;
+window.runExceptionSimulation = runExceptionSimulation;
