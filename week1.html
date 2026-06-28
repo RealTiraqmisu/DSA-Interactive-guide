@@ -23,31 +23,32 @@
     <div class="app-container">
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
-            <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" title="Toggle Sidebar">
-                <i class="fa-solid fa-angles-left"></i>
-            </button>
             <div class="sidebar-header">
                 <div class="logo-area">
                     <span class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></span>
                     <div class="logo-text">
-                        <h1>DSA Course</h1>
+                        <h1>Week 1</h1>
+                        <span class="subtitle">Introduction & Basic Python</span>
                     </div>
                 </div>
+                <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" title="Toggle Sidebar">
+                    <i class="fa-solid fa-angles-left"></i>
+                </button>
             </div>
 
             <nav class="sidebar-nav">
                 <!-- <div class="nav-section-title">Course Overview</div> -->
                 <button class="nav-item active" data-target="welcome-section">
-                    <i class="fa-solid fa-door-open"></i> Course Introduction
+                    <i class="fa-solid fa-door-open"></i> <span>Course Introduction</span>
                 </button>
 
                 <!-- <div class="nav-section-title"> Basics & Recursion</div> -->
                 <button class="nav-item" data-target="module1-section">
-                    <i class="fa-solid fa-code"></i> Module 1: Python Basics
+                    <i class="fa-solid fa-code"></i> <span>Module 1: Python Basics</span>
                 </button>
 
                 <button class="nav-item" data-target="module2-section">
-                    <i class="fa-solid fa-arrows-spin"></i> Module 2: Recursion
+                    <i class="fa-solid fa-arrows-spin"></i> <span>Module 2: Recursion</span>
                 </button>
 
                 <!-- <div class="nav-section-title">Complexity & OOP</div>
@@ -60,7 +61,7 @@
 
                 <!-- <div class="nav-section-title">Evaluation</div> -->
                 <button class="nav-item" data-target="quiz-section">
-                    <i class="fa-solid fa-clipboard-question"></i> Transition Quiz
+                    <i class="fa-solid fa-clipboard-question"></i> <span>Transition Quiz</span>
                 </button>
             </nav>
 
@@ -77,20 +78,21 @@
             <!-- Header -->
             <header class="main-header">
                 <div class="header-left" style="display: flex; align-items: center; gap: 16px;">
-                    <a href="index.html" class="back-home-btn" title="Back to Main Page">
-                        <i class="fa-solid fa-arrow-left"></i>
-                    </a>
                     <div>
                         <span class="breadcrumb">Python Programming Guide</span>
                         <h2 id="current-section-title">Course Introduction</h2>
                     </div>
                 </div>
                 <div class="header-right" style="display: flex; gap: 12px;">
+                    <a href="index.html" class="btn btn-secondary" id="back-dashboard-btn" title="Back to Dashboard">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Back to Dashboard</span>
+                    </a>
                     <button class="btn btn-secondary" id="theme-toggle-btn" title="Toggle Light/Dark Mode">
-                        <i class="fa-solid fa-moon"></i> <span id="theme-text" class="btn-text">Dark Mode</span>
+                        <i class="fa-solid fa-moon"></i>
                     </button>
                     <button class="btn btn-secondary toggle-console-btn" id="toggle-console-btn" title="Toggle Terminal Console">
-                        <i class="fa-solid fa-terminal"></i> <span class="btn-text">Terminal Console</span>
+                        <i class="fa-solid fa-terminal"></i>
                     </button>
                 </div>
             </header>
@@ -112,26 +114,29 @@
                         </div>
                         <div class="why-horizontal-tabs">
                             <button class="why-tab-btn active" data-tab="logic">
+                                <span class="tab-step-num">01</span>
                                 <i class="fa-solid fa-brain"></i>
                                 <div class="tab-btn-text">
                                     <span class="tab-btn-title">Focus on Logic</span>
                                     <span class="tab-btn-desc">Memory Resizing</span>
-                            </div>
-                        </button>
-                        <button class="why-tab-btn" data-tab="types">
-                            <i class="fa-solid fa-database"></i>
-                            <div class="tab-btn-text">
-                                <span class="tab-btn-title">Rich Built-in Types</span>
-                                <span class="tab-btn-desc">Hash Map Lookup</span>
-                            </div>
-                        </button>
-                        <button class="why-tab-btn" data-tab="readability">
-                            <i class="fa-solid fa-bolt"></i>
-                            <div class="tab-btn-text">
-                                <span class="tab-btn-title">Readability & Speed</span>
-                                <span class="tab-btn-desc">Clean & Fast Operations</span>
-                            </div>
-                        </button>
+                                </div>
+                            </button>
+                            <button class="why-tab-btn" data-tab="types">
+                                <span class="tab-step-num">02</span>
+                                <i class="fa-solid fa-database"></i>
+                                <div class="tab-btn-text">
+                                    <span class="tab-btn-title">Rich Built-in Types</span>
+                                    <span class="tab-btn-desc">Hash Map Lookup</span>
+                                </div>
+                            </button>
+                            <button class="why-tab-btn" data-tab="readability">
+                                <span class="tab-step-num">03</span>
+                                <i class="fa-solid fa-bolt"></i>
+                                <div class="tab-btn-text">
+                                    <span class="tab-btn-title">Readability & Speed</span>
+                                    <span class="tab-btn-desc">Clean & Fast Operations</span>
+                                </div>
+                            </button>
                     </div>
                 </div>
 
@@ -152,7 +157,8 @@
                                         <div class="code-compare-grid compact-compare">
                                             <div class="code-compare-block c-block">
                                                 <div class="block-title">C Dynamic Array</div>
-                                                <pre><code>// Resize array from 5 to 10
+                                                <div class="live-editor-wrapper">
+                                                    <pre><code>// Resize array from 5 to 10
 int *arr = malloc(5 * sizeof(int));
 if (arr == NULL) return ERROR;
 int *temp = realloc(arr, 10 * sizeof(int));
@@ -160,6 +166,9 @@ if (temp == NULL) { free(arr); return ERROR; }
 arr = temp;
 // ... do operations ...
 free(arr); // Don't forget!</code></pre>
+                                                    <button class="btn-run-live" onclick="runStaticCCode('logic-c-output')"><i class="fa-solid fa-play"></i> Run Code</button>
+                                                </div>
+                                                <pre class="live-code-output" id="logic-c-output">Click Run Code to execute...</pre>
                                             </div>
                                             <div class="code-compare-block py-block live-editor-block">
                                                 <div class="block-title">Python List Resizing (Live Editor)</div>
@@ -214,8 +223,9 @@ print("Length:", len(arr))</textarea>
                                                 </div>
 
                                                 <!-- Right Side: Python Memory -->
+                                                <div class="mem-vs-badge">VS</div>
                                                 <div class="mem-side py-mem-side">
-                                                    <div class="panel-subtitle-small">Python: Dynamic Over-allocation List</div>
+                                                    <div class="panel-subtitle-small"><i class="fa-brands fa-python" style="margin-right:5px;"></i>Python: Dynamic Over-allocation List</div>
                                                     <div class="mem-blocks-container">
                                                         <div class="mem-row-label" style="display: flex; justify-content: space-between; align-items: center;">
                                                             <span>Active List Slots</span>
@@ -239,7 +249,8 @@ print("Length:", len(arr))</textarea>
                                         <div class="code-compare-grid compact-compare">
                                             <div class="code-compare-block c-block">
                                                 <div class="block-title">C Hash Map (Custom)</div>
-                                                <pre><code>// Requires writing hash function, 
+                                                <div class="live-editor-wrapper">
+                                                    <pre><code>// Requires writing hash function, 
 // structs, handling collisions, etc.
 int hash = hash_function("Alice");
 HashNode *node = hash_table[hash];
@@ -250,6 +261,9 @@ while(node != NULL) {
     }
     node = node->next;
 }</code></pre>
+                                                    <button class="btn-run-live" onclick="runStaticCCode('types-c-output')"><i class="fa-solid fa-play"></i> Run Code</button>
+                                                </div>
+                                                <pre class="live-code-output" id="types-c-output">Click Run Code to execute...</pre>
                                             </div>
                                             <div class="code-compare-block py-block live-editor-block">
                                                 <div class="block-title">Python native Dict (Live Editor)</div>
@@ -457,12 +471,16 @@ for(int i = 0; i &lt; n; i++) {
                                         <div class="code-compare-grid compact-compare">
                                             <div class="code-compare-block c-block">
                                                 <div class="block-title">C Array Slicing</div>
-                                                <pre><code id="c-slice-code">// Slice array indices 2 to 5 (3 elements)
+                                                <div class="live-editor-wrapper">
+                                                    <pre><code id="c-slice-code">// Slice array indices 2 to 5 (3 elements)
 int slice[3];
 int count = 0;
 for(int i = 2; i &lt; 5; i++) {
     slice[count++] = arr[i];
 }</code></pre>
+                                                    <button class="btn-run-live" onclick="runStaticCCode('readability-c-output')"><i class="fa-solid fa-play"></i> Run Code</button>
+                                                </div>
+                                                <pre class="live-code-output" id="readability-c-output">Click Run Code to execute...</pre>
                                             </div>
                                             <div class="code-compare-block py-block live-editor-block">
                                                 <div class="block-title">Python Slicing (Live Editor)</div>

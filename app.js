@@ -110,36 +110,104 @@ function navigateToSection(sectionId) {
     }
 }
 
+// Dynamic Section Navigation Footers (Next / Previous Buttons)
+function setupSectionNavigation() {
+    const navItems = Array.from(document.querySelectorAll(".sidebar-nav .nav-item"));
+    if (navItems.length === 0) return;
+
+    navItems.forEach((item, index) => {
+        const targetId = item.getAttribute("data-target");
+        const section = document.getElementById(targetId);
+        if (!section) return;
+
+        // Check if there is already a footer to avoid duplicate injections
+        if (section.querySelector(".section-nav-footer")) return;
+
+        const footer = document.createElement("div");
+        footer.className = "section-nav-footer";
+
+        // Previous button
+        if (index > 0) {
+            const prevItem = navItems[index - 1];
+            const prevTarget = prevItem.getAttribute("data-target");
+            const prevTitle = prevItem.innerText.trim();
+
+            const prevBtn = document.createElement("button");
+            prevBtn.className = "sec-nav-btn prev-btn";
+            prevBtn.innerHTML = `
+                <span class="nav-label"><i class="fa-solid fa-arrow-left"></i> Previous Section</span>
+                <span class="nav-title">${prevTitle}</span>
+            `;
+            prevBtn.addEventListener("click", () => {
+                navigateToSection(prevTarget);
+            });
+            footer.appendChild(prevBtn);
+        } else {
+            // Placeholder to keep "Next" button aligned to the right if there's no "Previous"
+            const placeholder = document.createElement("div");
+            placeholder.style.flex = "1";
+            footer.appendChild(placeholder);
+        }
+
+        // Next button
+        if (index < navItems.length - 1) {
+            const nextItem = navItems[index + 1];
+            const nextTarget = nextItem.getAttribute("data-target");
+            const nextTitle = nextItem.innerText.trim();
+
+            const nextBtn = document.createElement("button");
+            nextBtn.className = "sec-nav-btn next-btn";
+            nextBtn.innerHTML = `
+                <span class="nav-label">Next Section <i class="fa-solid fa-arrow-right"></i></span>
+                <span class="nav-title">${nextTitle}</span>
+            `;
+            nextBtn.addEventListener("click", () => {
+                navigateToSection(nextTarget);
+            });
+            footer.appendChild(nextBtn);
+        } else {
+            // Placeholder to keep "Previous" button aligned to the left if there's no "Next"
+            const placeholder = document.createElement("div");
+            placeholder.style.flex = "1";
+            footer.appendChild(placeholder);
+        }
+
+        section.appendChild(footer);
+    });
+}
+
 // Setup navigation listeners
 document.addEventListener("DOMContentLoaded", () => {
     // Sidebar toggle trigger
     const sidebarToggleBtn = document.getElementById("sidebar-toggle-btn");
     const appContainer = document.querySelector(".app-container");
+    
     if (sidebarToggleBtn && appContainer) {
         sidebarToggleBtn.addEventListener("click", () => {
             appContainer.classList.toggle("collapsed");
-            const icon = sidebarToggleBtn.querySelector("i");
-            if (appContainer.classList.contains("collapsed")) {
-                icon.className = "fa-solid fa-angles-right";
-            } else {
-                icon.className = "fa-solid fa-angles-left";
-            }
         });
     }
 
     // Theme toggle trigger
     const themeToggleBtn = document.getElementById("theme-toggle-btn");
     const themeText = document.getElementById("theme-text");
-    if (themeToggleBtn && themeText) {
+    if (themeToggleBtn) {
         themeToggleBtn.addEventListener("click", () => {
             document.body.classList.toggle("light-mode");
             const icon = themeToggleBtn.querySelector("i");
-            if (document.body.classList.contains("light-mode")) {
-                icon.className = "fa-solid fa-moon";
-                themeText.textContent = "Dark Mode";
-            } else {
-                icon.className = "fa-solid fa-sun";
-                themeText.textContent = "Light Mode";
+            if (icon) {
+                if (document.body.classList.contains("light-mode")) {
+                    icon.className = "fa-solid fa-moon";
+                } else {
+                    icon.className = "fa-solid fa-sun";
+                }
+            }
+            if (themeText) {
+                if (document.body.classList.contains("light-mode")) {
+                    themeText.textContent = "Dark Mode";
+                } else {
+                    themeText.textContent = "Light Mode";
+                }
             }
         });
     }
@@ -212,6 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupWhyPythonSimulators();
     setupDynamicTypingVisualizer();
     setupCollectionsExplorer();
+    setupSectionNavigation();
     if (typeof switchExceptionScenario === "function") {
         switchExceptionScenario('ZeroDivisionError');
     }
@@ -3583,3 +3652,150 @@ function switchRecursionTab(tabName) {
     }
 }
 window.switchRecursionTab = switchRecursionTab;
+
+function runStaticCCode(outputId) {
+    const outputEl = document.getElementById(outputId);
+    if (!outputEl) return;
+    
+    // Clear previous interval if any
+    if (outputEl.dataset.intervalId) {
+        clearInterval(parseInt(outputEl.dataset.intervalId));
+    }
+    
+    outputEl.style.display = "block";
+    outputEl.innerHTML = "Compiling with gcc...\nRunning program...\n\n";
+    
+    let finalOutput = "";
+    if (outputId === "logic-c-output") {
+        finalOutput = "Array resized from 5 to 10 elements.\nOriginal elements preserved.\nMemory safely deallocated.\n\n[Process completed with exit code 0]";
+    } else if (outputId === "types-c-output") {
+        finalOutput = "Hash function calculated hash 4 for 'Alice'.\nSearching in linked list...\nFound entry: 'Alice' -> 'A'\n\n[Process completed with exit code 0]";
+    } else if (outputId === "readability-c-output") {
+        finalOutput = "Extracted slice from index 2 to 5:\nslice[0] = 30\nslice[1] = 40\nslice[2] = 50\n\n[Process completed with exit code 0]";
+    }
+    
+    let i = 0;
+    const intervalId = setInterval(() => {
+        outputEl.innerHTML += finalOutput[i];
+        i++;
+        if (i >= finalOutput.length) {
+            clearInterval(intervalId);
+            outputEl.removeAttribute("data-interval-id");
+        }
+    }, 15);
+    
+    outputEl.dataset.intervalId = intervalId;
+}
+window.runStaticCCode = runStaticCCode;
+
+/* ─── Live Editor: Real-time Python Syntax Highlighting ─── */
+function highlightPythonSyntax(code) {
+    // Escape HTML first
+    const escaped = code
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+    // Apply token patterns in order (each replaces on the escaped string)
+    // We build tokens sequentially; use placeholders to avoid double-matching
+    let result = escaped;
+
+    // 1. Strings (single/double/triple quoted)
+    result = result.replace(/("""[\s\S]*?"""|'''[\s\S]*?'''|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g,
+        '<span style="color:#a3e635">$1</span>');
+
+    // 2. Comments (# to end of line) — but not inside already-tagged spans
+    result = result.replace(/(#[^\n]*)/g,
+        '<span style="color:#6b7280;font-style:italic">$1</span>');
+
+    // 3. Keywords
+    const keywords = ['def', 'class', 'return', 'if', 'elif', 'else', 'for', 'while',
+        'in', 'not', 'and', 'or', 'import', 'from', 'as', 'with', 'try', 'except',
+        'finally', 'raise', 'pass', 'break', 'continue', 'lambda', 'yield',
+        'True', 'False', 'None', 'is', 'del', 'global', 'nonlocal', 'assert'];
+    const kwRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
+    result = result.replace(kwRegex, '<span style="color:#ff79c6;font-weight:600">$1</span>');
+
+    // 4. Built-in functions
+    const builtins = ['print', 'len', 'range', 'list', 'dict', 'set', 'tuple',
+        'int', 'float', 'str', 'bool', 'type', 'input', 'open', 'enumerate',
+        'zip', 'map', 'filter', 'sorted', 'reversed', 'sum', 'min', 'max',
+        'abs', 'round', 'append', 'extend', 'pop', 'remove', 'insert', 'get',
+        'update', 'keys', 'values', 'items', 'split', 'join', 'strip', 'format'];
+    const biRegex = new RegExp(`\\b(${builtins.join('|')})(?=\\()`, 'g');
+    result = result.replace(biRegex, '<span style="color:#8be9fd">$1</span>');
+
+    // 5. Numbers
+    result = result.replace(/\b(\d+\.?\d*)\b/g, '<span style="color:#ffb86c">$1</span>');
+
+    // 6. Self / cls
+    result = result.replace(/\b(self|cls)\b/g, '<span style="color:#bd93f9">$1</span>');
+
+    // 7. Decorators
+    result = result.replace(/(@\w+)/g, '<span style="color:#50fa7b">$1</span>');
+
+    return result;
+}
+
+function autoResizeTextarea(ta) {
+    ta.style.height = 'auto';
+    ta.style.height = ta.scrollHeight + 'px';
+    // Also sync the highlight overlay height
+    const wrap = ta.closest('.live-editor-highlight-wrap');
+    if (wrap) {
+        const hl = wrap.querySelector('.live-code-highlight');
+        if (hl) hl.style.height = ta.scrollHeight + 'px';
+    }
+}
+
+function initLiveEditorHighlighting() {
+    document.querySelectorAll('.live-code-textarea').forEach(ta => {
+        // Wrap in highlight container if not already done
+        const parent = ta.parentElement;
+        if (parent.classList.contains('live-editor-highlight-wrap')) return;
+
+        // Create wrapper
+        const wrap = document.createElement('div');
+        wrap.className = 'live-editor-highlight-wrap';
+
+        // Create highlight overlay
+        const hlPre = document.createElement('pre');
+        hlPre.className = 'live-code-highlight';
+        hlPre.setAttribute('aria-hidden', 'true');
+
+        // Insert: wrap replaces textarea, then both go inside wrap
+        ta.parentNode.insertBefore(wrap, ta);
+        wrap.appendChild(hlPre);
+        wrap.appendChild(ta);
+
+        // Mark textarea as having highlight overlay
+        ta.classList.add('with-highlight');
+
+        // Sync function
+        function syncHighlight() {
+            hlPre.innerHTML = highlightPythonSyntax(ta.value);
+            // Sync scroll
+            hlPre.scrollTop = ta.scrollTop;
+            hlPre.scrollLeft = ta.scrollLeft;
+            autoResizeTextarea(ta);
+        }
+
+        // Initial sync
+        syncHighlight();
+
+        // Listen for changes
+        ta.addEventListener('input', syncHighlight);
+        ta.addEventListener('scroll', () => {
+            hlPre.scrollTop = ta.scrollTop;
+            hlPre.scrollLeft = ta.scrollLeft;
+        });
+        ta.addEventListener('keydown', () => setTimeout(syncHighlight, 0));
+    });
+}
+
+// Initialize after DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLiveEditorHighlighting);
+} else {
+    initLiveEditorHighlighting();
+}
