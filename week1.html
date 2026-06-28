@@ -108,8 +108,8 @@
                                 <i class="fa-solid fa-door-open mod-glow-icon"></i>
                             </div>
                             <div class="mod-header-text">
-                                <h2>Why Python for Data Structures & Algorithms?</h2>
-                                <p>Discover how Python's design philosophy empowers clean algorithm design by abstracting memory management.</p>
+                                <h2>3 Reasons Why Python for Data Structures and Algorithms</h2>
+                                <p>From memory management to built-in types and readability — three core advantages Python gives you over C when studying Data Structures & Algorithms.</p>
                             </div>
                         </div>
                         <div class="why-horizontal-tabs">
@@ -640,7 +640,7 @@ age = "twenty"   # Now refers to a string</code></pre>
                                     
                                     <div class="visualizer-grid-2col" style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 1.5rem; min-height: 280px;">
                                         <!-- Code Steps column -->
-                                        <div class="visualizer-code-steps-panel" style="background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between;">
+                                        <div class="visualizer-code-steps-panel" style="padding: 1rem; display: flex; flex-direction: column; justify-content: space-between;">
                                             <div>
                                                 <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px;">Active Code Trace</div>
                                                 <div class="visualizer-code-lines" style="display: flex; flex-direction: column; gap: 8px; font-family: 'Fira Code', monospace; font-size: 13px;">
@@ -666,7 +666,7 @@ age = "twenty"   # Now refers to a string</code></pre>
                                         </div>
                                         
                                         <!-- Memory Graph column -->
-                                        <div class="visualizer-memory-panel" style="background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; position: relative; overflow: hidden; min-height: 280px;">
+                                        <div class="visualizer-memory-panel" style="padding: 1rem; display: flex; flex-direction: column; position: relative; overflow: hidden; min-height: 280px;">
                                             <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px;">Dynamic Memory (Stack Namespace & Heap Objects)</div>
                                             
                                             <div class="memory-flex-layout" style="display: flex; justify-content: space-between; flex: 1; position: relative; min-height: 220px;">
@@ -794,7 +794,7 @@ age = "twenty"   # Now refers to a string</code></pre>
                                         </div>
                                     <div class="explorer-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; min-height: 260px;">
                                         <!-- Control Column -->
-                                        <div class="explorer-control-panel" style="background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between;">
+                                        <div class="explorer-control-panel" style="padding: 1rem; display: flex; flex-direction: column; justify-content: space-between;">
                                             <div>
                                                 <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted); margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px;">Interactive Actions</div>
                                                 <div id="explorer-actions-container" style="display: flex; flex-direction: column; gap: 8px;">
@@ -805,12 +805,12 @@ age = "twenty"   # Now refers to a string</code></pre>
                                             <!-- Code Syntax box -->
                                             <div class="explorer-syntax-box" style="margin-top: 1rem;">
                                                 <div style="font-size: 0.7rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">Python Statement:</div>
-                                                <pre><code id="explorer-statement-code" class="language-python" style="font-family: 'Fira Code', monospace; font-size: 12px; color: #a855f7;"># Click an action to execute</code></pre>
+                                                <pre><code id="explorer-statement-code" class="language-python" style="font-family: 'Fira Code', monospace; font-size: 12px;"># Click an action to execute</code></pre>
                                             </div>
                                         </div>
                                         
                                         <!-- Display Column -->
-                                        <div class="explorer-display-panel" style="background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 250px;">
+                                        <div class="explorer-display-panel" style="padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 250px;">
                                             <div>
                                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px;">
                                                     <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted);">Memory Visualization</span>
@@ -842,7 +842,7 @@ age = "twenty"   # Now refers to a string</code></pre>
                                     </p>
                                     
                                     <div class="embedded-editor-container" data-editor-id="collections-editor" style="margin-top: 0;">
-                                        <textarea class="editor-textarea"># Let's explore Python structures
+                                        <textarea class="editor-textarea live-code-textarea"># Let's explore Python structures
 point = (3, 4) # Tuple
 names = ["Alice", "Bob", "Charlie"] # List
 grades = {"Alice": "A", "Bob": "B"} # Dictionary
@@ -1020,6 +1020,165 @@ for index, val in enumerate(arr):
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accordion 3.5: Functions -->
+                        <div class="accordion-item glass">
+                            <button class="accordion-trigger">
+                                <span><i class="fa-solid fa-f"></i> Functions: Defining & Calling</span>
+                                <span class="accordion-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                            </button>
+                            <div class="accordion-content">
+                                <p>In <strong>C</strong>, every function must declare its return type and parameter types at compile time. In <strong>Python</strong>, the <code>def</code> keyword creates a function without requiring type declarations — making it cleaner and faster to write, especially for algorithm design.</p>
+
+                                <!-- 1. Basic def Syntax -->
+                                <h4><i class="fa-solid fa-pen-to-square" style="color:var(--accent-blue); margin-right:6px;"></i>1. Basic <code>def</code> Syntax</h4>
+                                <div class="code-compare-grid">
+                                    <div class="code-compare-block c-block">
+                                        <div class="block-title"><i class="fa-solid fa-copyright" style="margin-right:5px;"></i>C: Typed Function</div>
+                                        <pre><code>int add(int a, int b) {
+    return a + b;
+}
+
+// Calling the function
+int result = add(3, 5); // result = 8</code></pre>
+                                    </div>
+                                    <div class="code-compare-block py-block">
+                                        <div class="block-title"><i class="fa-brands fa-python" style="margin-right:5px;"></i>Python: def (No types required)</div>
+                                        <pre><code>def add(a, b):
+    return a + b
+
+# Calling the function
+result = add(3, 5)  # result = 8</code></pre>
+                                    </div>
+                                </div>
+
+                                <!-- 2. Multiple Return Values -->
+                                <h4><i class="fa-solid fa-layer-group" style="color:var(--accent-purple); margin-right:6px;"></i>2. Multiple Return Values</h4>
+                                <p>Python functions can return multiple values at once via a <strong>tuple</strong>. In C you would need a struct or output pointer parameters.</p>
+                                <div class="code-compare-grid">
+                                    <div class="code-compare-block c-block">
+                                        <div class="block-title"><i class="fa-solid fa-copyright" style="margin-right:5px;"></i>C: Output via pointer</div>
+                                        <pre><code>void min_max(int* arr, int n,
+             int* out_min, int* out_max) {
+    *out_min = arr[0];
+    *out_max = arr[0];
+    for (int i = 1; i &lt; n; i++) {
+        if (arr[i] &lt; *out_min) *out_min = arr[i];
+        if (arr[i] &gt; *out_max) *out_max = arr[i];
+    }
+}
+// Calling:
+int lo, hi;
+min_max(arr, n, &lo, &hi);</code></pre>
+                                    </div>
+                                    <div class="code-compare-block py-block">
+                                        <div class="block-title"><i class="fa-brands fa-python" style="margin-right:5px;"></i>Python: Return multiple values (tuple)</div>
+                                        <pre><code>def min_max(lst):
+    return min(lst), max(lst)
+
+# Calling — unpack directly:
+lo, hi = min_max([3, 1, 9, 2])
+print(lo, hi)  # 1 9</code></pre>
+                                    </div>
+                                </div>
+
+                                <!-- 3. Default Arguments -->
+                                <h4><i class="fa-solid fa-sliders" style="color:var(--accent-green); margin-right:6px;"></i>3. Default Arguments</h4>
+                                <p>Python lets you specify a <strong>default value</strong> for any parameter. If the caller omits that argument, Python uses the default. <strong>C has no equivalent</strong> — you must provide all arguments or use macros.</p>
+                                <div class="code-compare-grid">
+                                    <div class="code-compare-block c-block">
+                                        <div class="block-title"><i class="fa-solid fa-copyright" style="margin-right:5px;"></i>C: No default args (must pass all)</div>
+                                        <pre><code>void greet(char* name, char* greeting) {
+    printf("%s, %s!\n", greeting, name);
+}
+// Must always pass both:
+greet("Alice", "Hello");
+greet("Bob",   "Hi");    // cannot omit greeting</code></pre>
+                                    </div>
+                                    <div class="code-compare-block py-block">
+                                        <div class="block-title"><i class="fa-brands fa-python" style="margin-right:5px;"></i>Python: Default argument value</div>
+                                        <pre><code>def greet(name, greeting="Hello"):
+    print(f"{greeting}, {name}!")
+
+greet("Alice")         # Hello, Alice!
+greet("Bob", "Hi")     # Hi, Bob!</code></pre>
+                                    </div>
+                                </div>
+
+                                <!-- 4. Keyword Arguments -->
+                                <h4><i class="fa-solid fa-key" style="color:var(--accent-cyan); margin-right:6px;"></i>4. Keyword Arguments</h4>
+                                <p>You can call a Python function with arguments in <strong>any order</strong> by naming them explicitly. This makes code much more readable at the call site.</p>
+                                <pre><code style="display:block; background:#18181b; color:#e2e8f0; padding:16px; border-radius:8px; font-family:'Fira Code',monospace; font-size:12px;">def connect(host, port=3306, timeout=30):
+    print(f"Connecting to {host}:{port} (timeout={timeout}s)")
+
+# All equivalent — keyword args can go in any order:
+connect("localhost", port=5432, timeout=10)
+connect(timeout=5, host="db.example.com", port=5432)
+connect("localhost")                    # uses defaults</code></pre>
+
+                                <!-- 5. *args and **kwargs -->
+                                <h4><i class="fa-solid fa-asterisk" style="color:var(--accent-orange); margin-right:6px;"></i>5. <code>*args</code> and <code>**kwargs</code></h4>
+                                <p><code>*args</code> collects extra positional arguments into a <strong>tuple</strong>. <code>**kwargs</code> collects extra keyword arguments into a <strong>dict</strong>. This is Python's equivalent of C's variadic <code>...</code> parameter.</p>
+                                <div class="code-compare-grid">
+                                    <div class="code-compare-block c-block">
+                                        <div class="block-title"><i class="fa-solid fa-copyright" style="margin-right:5px;"></i>C: Variadic with stdarg</div>
+                                        <pre><code>#include &lt;stdarg.h&gt;
+int sum_all(int count, ...) {
+    va_list args;
+    va_start(args, count);
+    int total = 0;
+    for (int i = 0; i &lt; count; i++)
+        total += va_arg(args, int);
+    va_end(args);
+    return total;
+}
+// count must be passed manually
+sum_all(4, 1, 2, 3, 4);</code></pre>
+                                    </div>
+                                    <div class="code-compare-block py-block">
+                                        <div class="block-title"><i class="fa-brands fa-python" style="margin-right:5px;"></i>Python: *args and **kwargs</div>
+                                        <pre><code>def sum_all(*args):
+    return sum(args)     # args is a tuple
+
+sum_all(1, 2, 3, 4)     # → 10
+sum_all(10, 20)          # → 30
+
+def log(**kwargs):
+    for key, val in kwargs.items():
+        print(f"{key}: {val}")
+
+log(user="Alice", score=95)
+# user: Alice
+# score: 95</code></pre>
+                                    </div>
+                                </div>
+
+                                <!-- Live Editor -->
+                                <h4><i class="fa-solid fa-terminal" style="color:var(--accent-green); margin-right:6px;"></i>Try It Yourself</h4>
+                                <p style="font-size: 0.85rem; color: var(--text-muted);">Edit the function below and click <strong>Run Code</strong> to see the output. Try changing the default value, adding more arguments, or writing your own function.</p>
+                                <div class="code-compare-block py-block live-editor-block" style="max-width: 100%;">
+                                    <div class="block-title"><i class="fa-brands fa-python" style="margin-right:5px;"></i>Python Functions — Live Editor</div>
+                                    <div class="live-editor-wrapper">
+                                        <textarea class="live-code-textarea" id="func-py-code" rows="10">def greet(name, greeting="Hello"):
+    return f"{greeting}, {name}!"
+
+def add(a, b):
+    return a + b
+
+def sum_all(*args):
+    return sum(args)
+
+# Test the functions:
+print(greet("Alice"))
+print(greet("Bob", "Hi"))
+print(add(10, 25))
+print(sum_all(1, 2, 3, 4, 5))</textarea>
+                                        <button class="btn-run-live" onclick="runLiveCode('func-py-code', 'func-py-output')"><i class="fa-solid fa-play"></i> Run Code</button>
+                                    </div>
+                                    <pre class="live-code-output" id="func-py-output">Click Run Code to execute...</pre>
                                 </div>
                             </div>
                         </div>
@@ -1249,6 +1408,72 @@ except IOError:
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Card 3: Recursive Self-Call -->
+                            <div class="card glass rec-card-theory rec-card-cyan" style="margin-top: 24px;">
+                                <div class="card-header">
+                                    <span class="card-icon"><i class="fa-solid fa-rotate-right"></i></span>
+                                    <h3>How a Recursive Function Calls Itself</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p class="rec-intro-text">Recursion happens when a function calls its own name from inside its body. Each call adds a new stack frame until the base case stops the chain.</p>
+
+                                    <div class="annotated-code-box">
+                                        <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted); margin-bottom: 0.75rem; letter-spacing: 0.08em;">Annotated Example: factorial(n)</div>
+                                        <pre style="margin: 0; background: transparent; border: none; padding: 0; color: var(--text-primary); font-family: 'Fira Code', monospace; font-size: 12px; line-height: 1.7; white-space: pre-wrap;"><code>def factorial(n):              # function definition
+    if n <= 1:                 # base case: stop recursing
+        return 1
+    return n * factorial(n-1)  # recursive call: calls itself with smaller n</code></pre>
+                                    </div>
+
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+                                        <div class="embedded-editor-container" style="margin-top: 0;">
+                                            <div class="panel-subtitle">factorial(5) -> 120</div>
+                                            <textarea class="editor-textarea live-code-textarea">def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+
+print(factorial(5))</textarea>
+                                            <div class="editor-actions">
+                                                <button class="btn btn-success run-editor-btn"><i class="fa-solid fa-play"></i> Run Code</button>
+                                            </div>
+                                            <div class="editor-output-header">Output:</div>
+                                            <pre class="editor-output">Click Run Code to see output...</pre>
+                                        </div>
+
+                                        <div class="embedded-editor-container" style="margin-top: 0;">
+                                            <div class="panel-subtitle">sum_list([1, 2, 3, 4]) -> 10</div>
+                                            <textarea class="editor-textarea live-code-textarea">def sum_list(items):
+    if not items:
+        return 0
+    return items[0] + sum_list(items[1:])
+
+print(sum_list([1, 2, 3, 4]))</textarea>
+                                            <div class="editor-actions">
+                                                <button class="btn btn-success run-editor-btn"><i class="fa-solid fa-play"></i> Run Code</button>
+                                            </div>
+                                            <div class="editor-output-header">Output:</div>
+                                            <pre class="editor-output">Click Run Code to see output...</pre>
+                                        </div>
+
+                                        <div class="embedded-editor-container" style="margin-top: 0;">
+                                            <div class="panel-subtitle">power(2, 8) -> 256</div>
+                                            <textarea class="editor-textarea live-code-textarea">def power(base, exponent):
+    if exponent == 0:
+        return 1
+    return base * power(base, exponent - 1)
+
+print(power(2, 8))</textarea>
+                                            <div class="editor-actions">
+                                                <button class="btn btn-success run-editor-btn"><i class="fa-solid fa-play"></i> Run Code</button>
+                                            </div>
+                                            <div class="editor-output-header">Output:</div>
+                                            <pre class="editor-output">Click Run Code to see output...</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div> <!-- closes grid-2col -->
 
                         <!-- Interactive Recursion Visualizer -->
@@ -1463,9 +1688,7 @@ except IOError:
                                     <li><strong>List append (lst.append(x)):</strong> Amortized O(1) - over-allocates
                                         space.</li>
                                     <li><strong>List search (x in lst):</strong> O(N) - linear scan.</li>
-                                    <li><strong>Dict lookup (dict[key]):</strong> Average O(1) - hash table buckets.
-                                    </li>
-                                    <li><strong>Dict insertion (dict[key] = val):</strong> Average O(1).</li>
+
                                 </ul>
                                 <div class="info-alert">
                                     <i class="fa-solid fa-circle-info"></i>
@@ -1671,7 +1894,7 @@ pt.move(5, -5)</code></pre>
                                 <code>super().__init__()</code> to initialize base attributes.
                             </p>
                             <div class="embedded-editor-container" data-editor-id="oop-editor">
-                                <textarea class="editor-textarea">class Animal:
+                                <textarea class="editor-textarea live-code-textarea">class Animal:
     def __init__(self, name):
         self.name = name
     

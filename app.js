@@ -242,8 +242,11 @@ document.addEventListener("DOMContentLoaded", () => {
             // Toggle current item
             item.classList.toggle("open", !isOpen);
             
-            // Scroll to the newly opened item
+            // Trigger resize/sync for any live editors inside the newly opened accordion
             if (item.classList.contains("open")) {
+                item.querySelectorAll('.live-code-textarea').forEach(ta => {
+                    ta.dispatchEvent(new Event('input'));
+                });
                 setTimeout(() => {
                     item.scrollIntoView({ behavior: "smooth", block: "start" });
                 }, 150);
@@ -2350,7 +2353,7 @@ function resetCollectionExplorerStates() {
     
     const statementCode = document.getElementById("explorer-statement-code");
     if (statementCode) {
-        statementCode.textContent = `# Initializing collection:\n${getInitialStatement()}`;
+        statementCode.innerHTML = highlightPythonSyntax(`# Initializing collection:\n${getInitialStatement()}`);
     }
     
     const explanationBox = document.getElementById("explorer-explanation-box");
@@ -2625,7 +2628,7 @@ function executeCollectionAction(action) {
     const explanationBox = document.getElementById("explorer-explanation-box");
     
     if (statementCode) {
-        statementCode.textContent = action.syntax;
+        statementCode.innerHTML = highlightPythonSyntax(action.syntax);
     }
     
     explanationBox.style.borderLeftColor = "var(--accent-purple)";
@@ -3696,17 +3699,24 @@ function highlightPythonSyntax(code) {
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;');
 
-    // Apply token patterns in order (each replaces on the escaped string)
-    // We build tokens sequentially; use placeholders to avoid double-matching
+    // Apply token patterns using placeholders so generated HTML is not
+    // re-processed by later regex passes.
     let result = escaped;
+    const tokens = [];
+
+    const stashToken = (html) => {
+        const token = `__HL_${tokens.length}__`;
+        tokens.push([token, html]);
+        return token;
+    };
 
     // 1. Strings (single/double/triple quoted)
     result = result.replace(/("""[\s\S]*?"""|'''[\s\S]*?'''|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g,
-        '<span style="color:#a3e635">$1</span>');
+        (match) => stashToken(`<span style="color:#a3e635">${match}</span>`));
 
     // 2. Comments (# to end of line) — but not inside already-tagged spans
     result = result.replace(/(#[^\n]*)/g,
-        '<span style="color:#6b7280;font-style:italic">$1</span>');
+        (match) => stashToken(`<span style="color:#6b7280;font-style:italic">${match}</span>`));
 
     // 3. Keywords
     const keywords = ['def', 'class', 'return', 'if', 'elif', 'else', 'for', 'while',
@@ -3714,7 +3724,7 @@ function highlightPythonSyntax(code) {
         'finally', 'raise', 'pass', 'break', 'continue', 'lambda', 'yield',
         'True', 'False', 'None', 'is', 'del', 'global', 'nonlocal', 'assert'];
     const kwRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
-    result = result.replace(kwRegex, '<span style="color:#ff79c6;font-weight:600">$1</span>');
+    result = result.replace(kwRegex, (match) => stashToken(`<span style="color:#ff79c6;font-weight:600">${match}</span>`));
 
     // 4. Built-in functions
     const builtins = ['print', 'len', 'range', 'list', 'dict', 'set', 'tuple',
@@ -3723,16 +3733,22 @@ function highlightPythonSyntax(code) {
         'abs', 'round', 'append', 'extend', 'pop', 'remove', 'insert', 'get',
         'update', 'keys', 'values', 'items', 'split', 'join', 'strip', 'format'];
     const biRegex = new RegExp(`\\b(${builtins.join('|')})(?=\\()`, 'g');
-    result = result.replace(biRegex, '<span style="color:#8be9fd">$1</span>');
+    result = result.replace(biRegex, (match) => stashToken(`<span style="color:#8be9fd">${match}</span>`));
 
     // 5. Numbers
-    result = result.replace(/\b(\d+\.?\d*)\b/g, '<span style="color:#ffb86c">$1</span>');
+    result = result.replace(/\b(\d+\.?\d*)\b/g, (match) => stashToken(`<span style="color:#ffb86c">${match}</span>`));
 
     // 6. Self / cls
-    result = result.replace(/\b(self|cls)\b/g, '<span style="color:#bd93f9">$1</span>');
+    result = result.replace(/\b(self|cls)\b/g, (match) => stashToken(`<span style="color:#bd93f9">${match}</span>`));
 
     // 7. Decorators
-    result = result.replace(/(@\w+)/g, '<span style="color:#50fa7b">$1</span>');
+    result = result.replace(/(@\w+)/g, (match) => stashToken(`<span style="color:#50fa7b">${match}</span>`));
+
+    // Restore any stashed spans after all token replacements are done.
+    for (let i = tokens.length - 1; i >= 0; i--) {
+        const [token, html] = tokens[i];
+        result = result.split(token).join(html);
+    }
 
     return result;
 }

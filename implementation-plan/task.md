@@ -36,16 +36,40 @@
 - [x] class mem-side c-mem-side กับอันข้าง ๆ ทำให้มันเป็นสีแดงใส ๆ น้ำเงินใส ๆ แล้วก็เพิ่ม versus เข้าไปด้วย (ตามข้อด้านบน)
 - [x] เหนือคำว่า Focus on Logic, rich--build..., readability ... ให้มีเลข 1-3 อยู่ข้างบนด้วย มองแล้วให้รู้ว่านี่คือสรรพคุณของการใช้ python
 - [x] เจอว่าตรงไหน text ไม่ชัด ให้แก้ไขได้เลย
-- [] สีของ code-compare-block ทุกกล่อง ทำให้cant see text properly
-- [] Why Python for Data Structures & Algorithms? อยากเปลี่ยนเป็นประมาณว่า 3 reason why python อะไรประมาณนั้น เพราะข้างล่างจะมีเลข 1-3 อยู่ เลยอยากให้สอดคล้องกัน
+- [x] สีของ code-compare-block ทุกกล่อง ทำให้ can see text properly         
+    - ถ้าหาไม่เจอ ยกตัวอย่าง เช่นกล่องที่มี class visualizer-code-steps-panel หัวข้อ active code trace สีแบบมองไม่เห็นอะไรเลย
+- [x] Why Python for Data Structures & Algorithms? อยากเปลี่ยนเป็นประมาณว่า 3 reason why python อะไรประมาณนั้น เพราะข้างล่างจะมีเลข 1-3 อยู่ เลยอยากให้สอดคล้องกัน
+- [x] ปุ่ม run code แก้เป็นสีเขียวที่มองแล้วสวยน่ากด
+- [x] ปุ่ม next section/previous section แก้ให้เป็นเขียว/เทา สด ๆ ที่มองแล้วน่ากด รู้ว่าเป็นปุ่ม ไม่ใช่กล่องใส ๆ แบบเดิม
+
+- [x] ตรงโค้ดอันนี้ กล่องยังสีอ่อนอยู่ แก้เป็นกล่องสีเข้มเลยก็ได้ เหมือนกล่องโค้ด ถ้า syntax  color ไม่ขึ้น ให้ทำให้มันขึ้นด้วย แต่นายต้องอ่านก่อนนะว่ามันเป็นกล่องสำหรับโค้ดใช่ไหม ไม่ใช่ output 
+    # Initializing collection:
+    fruits = ["apple", "banana", "cherry"] 
+    หรือพวก class code-container exception-code-panel flow-code-panel editor-textarea visualizer-code-display แก้เป็นกล่องสีเข้มไปเลยก็ได้ ลุยๆ
+
+- [x] background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem 1.1rem; margin-bottom: 1.25rem; กล่องที่มี style ยาว ๆ แบบนี้ จริงๆถ้ามันใช้ class ของเดิมที่มีอยู่แล้วได้จะดีมาก แล้วไม่ต้องมาเขียน style ยาว ๆ แบบนี้ แต่ถ้าทำไม่ได้ก็คงไว้แบบเดิม แค่เช็คหน่อยว่า ถ้า text อ่อน กล่องควรเข้ม
+
+- [x] class editor-output console-output-box visualizer-panel trace-console-panel ทำตัวให้มันเหมือน terminal ด้วย เหมือนบางอันยังหลง ๆ ไม่ใช่อยู่ 
+
+- [x] สี syntax ผิด มันไม่มีสีเลย
+    # Let's explore Python structures
+    point = (3, 4) # Tuple
+    names = ["Alice", "Bob", "Charlie"] # List
+    grades = {"Alice": "A", "Bob": "B"} # Dictionary
+
+    # Try modifying names list
+    names.append("David")
+    print("Names:", names)
+
+- [x] เช็คด้วยว่า กล่องไหนสีอ่อน แล้ว text ยังอ่อน นายก็แก้ไปเลย ตามตัวอย่างที่มีอยู่ในไฟล์นั้นและดุลยพินิจของนาย
 
 # task-5-big-improve-design-n-uxui
-- [] ลองอ่านไฟล์ แล้วหาสิ่งที่คิดว่าควรแก้ไข ทั้งเรื่องหน้าตา ux ที่ดีต้องเป็นยังไง เรื่อง ui สี ความชัดเจนของสี text เอาง่าย ๆ คือเรื่อง design จากนั้นสร้าง implementation-plan ใส่ไว้ใน /implementation-plan folder แล้วตั้งชื่อไฟล์ตาม heading 1 นี้
+- [x] ลองอ่านไฟล์ แล้วหาสิ่งที่คิดว่าควรแก้ไข ทั้งเรื่องหน้าตา ux ที่ดีต้องเป็นยังไง เรื่อง ui สี ความชัดเจนของสี text เอาง่าย ๆ คือเรื่อง design ทำโดยละเอียดนะ ไล่ทุกหัวข้อเลย จากนั้นสร้าง implementation-plan ที่ละเอียดมาก ๆ ใส่ไว้ใน /implementation-plan folder แล้วตั้งชื่อไฟล์ตาม heading 1 นี้
 
-# task-6-update-from-instructor-n-content-fixes
-- [] ศึกษาเรื่อง การเขียน function พื้นฐาน จากนั้น นำมาเขียนเป็นหัวข้อใหม่ให้หน่อย in `week1.html` ในหน้าของ module 1: python basics เพิ่มมาเป็น dropdown ระหว่าง try except กับ loop & conditional เขียนเป็นภาษาอังกฤษตามที่บอกไว้ใน `gemini.md` โดยจะแปะ source ที่จะให้เรียนไว้ใน bullet ข้างล่างนี้
+# task-6-update-from-instructor-n-content-fixes-1
+- [x] ศึกษาเรื่อง การเขียน function พื้นฐาน จากนั้น นำมาเขียนเป็นหัวข้อใหม่ให้หน่อย in `week1.html` ในหน้าของ module 1: python basics เพิ่มมาเป็น dropdown ระหว่าง try except กับ loop & conditional เขียนเป็นภาษาอังกฤษตามที่บอกไว้ใน `gemini.md` โดยจะแปะ source ที่จะให้เรียนไว้ใน bullet ข้างล่างนี้
     - https://www.w3schools.com/python/python_functions.asp
     - https://www.w3schools.com/python/python_arguments.asp
 
-- [] module 2 recursion เหมือนไม่ได้สอนวิธีเขียน recursion ด้วย function เลย รึเปล่า หรือหาไม่เจอเอง ช่วยเติมเข้าไปหน่อยได้ไหม สอนแค่ว่าเขียนยังไง แต่เอาไปใช้ยังไงยังไม่มี แบบที่เอา function ไปใส่ใน def อีกทีนึงอันนี้ยังไม่เห็น เห็นแต่การ return แบบ recursion หรือฉันเข้าใจผิด
+- [x] module 2 recursion เหมือนไม่ได้สอนวิธีเขียน recursion ด้วย function เลย รึเปล่า หรือหาไม่เจอเอง ช่วยเติมเข้าไปหน่อยได้ไหม สอนแค่ว่าเขียนยังไง แต่เอาไปใช้ยังไงยังไม่มี แบบที่เอา function ไปใส่ใน def อีกทีนึงอันนี้ยังไม่เห็น เห็นแต่การ return แบบ recursion หรือฉันเข้าใจผิด
 
